@@ -1,90 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deutsch Test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Miteinander A2 - L1</title>
     <style>
-        body { font-family: sans-serif; background: #f0f2f5; display: flex; justify-content: center; padding: 20px; }
-        .box { background: white; width: 100%; max-width: 400px; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); text-align: center; }
-        .word { font-size: 24px; color: #6c5ce7; font-weight: bold; margin: 10px 0; }
-        .info { color: #e67e22; font-style: italic; margin-bottom: 15px; }
-        .btn { width: 100%; padding: 15px; margin: 5px 0; border: 1px solid #ddd; border-radius: 10px; background: white; font-weight: bold; cursor: pointer; }
-        .start-btn { background: #6c5ce7; color: white; border: none; font-size: 18px; }
-        .next-btn { background: #2ecc71; color: white; border: none; margin-top: 15px; display: none; }
-        .correct { background: #2ecc71 !important; color: white; }
-        .wrong { background: #ff7675 !important; color: white; }
+        body { font-family: -apple-system, sans-serif; background: #f0f2f5; margin: 0; display: flex; justify-content: center; padding-top: 20px; }
+        .container { background: white; width: 95%; max-width: 450px; padding: 20px; border-radius: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); text-align: center; }
+        .word { font-size: 26px; color: #6c5ce7; font-weight: bold; margin: 10px 0; }
+        .info { color: #e67e22; font-style: italic; margin-bottom: 20px; font-weight: 500; }
+        .btn { width: 100%; padding: 15px; margin: 6px 0; border: 2px solid #eee; border-radius: 12px; background: white; font-size: 16px; font-weight: 600; cursor: pointer; -webkit-appearance: none; }
+        .btn-start { background: #6c5ce7; color: white; border: none; font-size: 20px; margin-top: 20px; }
+        .btn-next { background: #2ecc71; color: white; border: none; font-size: 18px; display: none; margin-top: 15px; }
+        .correct { background: #2ecc71 !important; color: white; border-color: #2ecc71; }
+        .wrong { background: #ff7675 !important; color: white; border-color: #ff7675; }
+        #msg { height: 25px; margin: 10px 0; font-weight: bold; }
     </style>
 </head>
 <body>
 
-<div class="box">
-    <div id="m-start">
-        <h2 style="color:#6c5ce7">Miteinander A2</h2>
-        <p>Lektion 1: Vocabulary Test</p>
-        <button class="btn start-btn" onclick="startQuiz()">STARTEN</button>
+<div class="container">
+    <div id="start-box">
+        <h1 style="color:#6c5ce7; margin-bottom:5px;">Deutsch A2</h1>
+        <p>Lektion 1: Vocabulary (45 Words)</p>
+        <button class="btn btn-start" onclick="startApp()">STARTEN</button>
     </div>
 
-    <div id="m-quiz" style="display:none">
-        <div id="prog" style="font-size:12px; color:#999"></div>
+    <div id="quiz-box" style="display:none">
+        <div id="prog" style="font-size:12px; color:#999; margin-bottom:10px;"></div>
         <div class="word" id="word"></div>
         <div class="info" id="info"></div>
-        <div id="opts"></div>
-        <div id="msg" style="margin: 10px; font-weight: bold;"></div>
-        <button id="n-btn" class="btn next-btn" onclick="nextQ()">NÄCHSTE FRAGE</button>
+        <div id="options"></div>
+        <div id="msg"></div>
+        <button id="next-btn" class="btn btn-next" onclick="nextQ()">NÄCHSTE FRAGE</button>
     </div>
 </div>
 
 <script>
-    // Dữ liệu mẫu (tôi để 5 từ để bạn test trước, nếu chạy tôi gửi đủ 45 từ)
     const data = [
-        {w: "die Muttersprache", f: "die Muttersprache, -n", read: "die Muttersprache, die Muttersprachen", o: ["Tiếng mẹ đẻ", "Ngoại ngữ", "Thủ đô", "Quốc tịch"], a: 0},
-        {w: "zurückgehen", f: "zurückgehen, ist zurückgegangen", read: "zurückgehen, ist zurückgegangen", o: ["Đi tới", "Quay lại", "Bắt đầu", "Kết thúc"], a: 1},
-        {w: "die Hauptstadt", f: "die Hauptstadt, -ä-e", read: "die Hauptstadt, die Hauptstädte", o: ["Thành phố", "Biên giới", "Thủ đô", "Quê hương"], a: 2},
-        {w: "die Ahnung", f: "die Ahnung, -en", read: "die Ahnung, die Ahnungen", o: ["Kinh nghiệm", "Điện thoại", "Hiểu biết", "Sở thích"], a: 2},
-        {w: "die Grenze", f: "die Grenze, -n", read: "die Grenze, die Grenzen", o: ["Biên giới", "Bệnh viện", "Kinh nghiệm", "Trường học"], a: 0}
-    ];
-
-    let curr = 0;
-    let locked = false;
-
-    function speak(text) {
-        if (!window.speechSynthesis) return;
-        window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'de-DE';
-        msg.rate = 0.8;
-        window.speechSynthesis.speak(msg);
-    }
-
-    function startQuiz() {
-        document.getElementById('m-start').style.display = 'none';
-        document.getElementById('m-quiz').style.display = 'block';
-        showQ();
-    }
-
-    function showQ() {
-        locked = false;
-        const q = data[curr];
-        document.getElementById('prog').innerText = "Frage " + (curr+1) + "/" + data.length;
-        document.getElementById('word').innerText = q.w;
-        document.getElementById('info').innerText = q.f;
-        document.getElementById('msg').innerText = "";
-        document.getElementById('n-btn').style.display = "none";
-        
-        const optBox = document.getElementById('opts');
-        optBox.innerHTML = "";
-        
-        q.o.forEach((txt, i) => {
-            const b = document.createElement('button');
-            b.className = "btn";
-            b.innerText = txt;
-            b.onclick = function() {
-                if (locked) return;
-                if (i === q.a) {
-                    locked = true;
-                    b.classList.add('correct');
-                    document.getElementById('msg').innerHTML = "<span style='color:green'>Richtig!</span>";
-                    document.getElementById('n-btn').style.display = "block";
-                    speak(q.read); // Đọc đầy đủ số ít số nhiều
-                } else {
+        {w: "die Muttersprache", f: "die Muttersprache, -n", r: "die Muttersprache, die Muttersprachen", o: ["Tiếng mẹ đẻ", "Ngoại ngữ", "Thủ đô", "Quốc tịch"], a: 0},
+        {w: "zurückgehen", f: "zurückgehen, ist zurückgegangen", r: "zurückgehen, ist zurückgegangen", o: ["Đi tới", "Quay lại", "Bắt đầu", "Kết thúc"], a: 1},
+        {w: "die Hauptstadt", f: "die Hauptstadt, -ä-e", r: "die Hauptstadt, die Hauptstädte", o: ["Thành phố", "Biên giới", "Thủ đô", "Quê hương"], a: 2},
+        {w: "nachts", f: "nachts", r: "nachts", o: ["Ban ngày", "Ban đêm", "Hàng ngày", "Buổi chiều"], a: 1},
+        {w: "sauer", f: "sauer", r: "sauer", o: ["Vui vẻ", "Mệt mỏi", "Giận dữ", "Đói bụng"], a: 2},
+        {w: "verdienen", f: "verdienen, hat verdient", r: "verdienen, hat verdient", o: ["Tiết kiệm", "Tiêu tiền", "Kiếm tiền", "Đầu tư"], a: 2},
+        {w: "die Ahnung", f: "die Ahnung, -en", r: "die Ahnung, die Ahnungen", o: ["Kinh nghiệm", "Điện thoại", "Hiểu biết", "Sở thích"], a: 2},
+        {w: "glücklich", f: "glücklich", r: "glücklich", o: ["Buồn bã", "Hạnh phúc", "Mệt mỏi", "Giận dữ"], a: 1},
+        {w: "die Grenze", f: "die Grenze, -n", r: "die Grenze, die Grenzen", o: ["Biên giới", "Bệnh viện", "Kinh nghiệm", "Trường học"], a: 0},
+        {w: "mutig", f: "mutig", r: "mutig", o: ["Nhút nhát", "Thông minh", "Dũng cảm", "Yếu đuối"], a: 2},
+        {w: "dringend", f: "dringend", r: "dringend", o: ["Khẩn cấp", "Từ từ", "Thong thả", "Bình thường"], a: 0},
+        {w: "das Ausland
