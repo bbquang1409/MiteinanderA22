@@ -22,7 +22,20 @@
     </style>
 </head>
 <body>
-
+function safeSpeak(text) {
+    if (!('speechSynthesis' in window)) return;
+    
+    // Hủy các yêu cầu đọc cũ để tránh bị kẹt
+    window.speechSynthesis.cancel(); 
+    
+    const msg = new SpeechSynthesisUtterance(text);
+    
+    // Ép trình duyệt dùng mã ngôn ngữ Đức
+    msg.lang = 'de-DE'; 
+    msg.rate = 0.85; // Tốc độ vừa phải để dễ nghe
+    
+    window.speechSynthesis.speak(msg);
+}
 <div class="quiz-card" id="card">
     <div id="start-screen">
         <h1 style="color:var(--p)">Wortschatz-Training</h1>
@@ -163,3 +176,4 @@
 </script>
 </body>
 </html>
+
