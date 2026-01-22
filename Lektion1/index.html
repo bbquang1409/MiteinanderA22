@@ -24,7 +24,7 @@
         .wrong { background: var(--d) !important; color: white; border-color: var(--d) !important; animation: shake 0.3s; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         #feedback { font-size: 1.1rem; font-weight: bold; margin: 15px 0; min-height: 1.5rem; }
-        #next-btn, #start-btn { width: 100%; padding: 18px; background: var(--p); color: white; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
+        .main-btn { width: 100%; padding: 18px; background: var(--p); color: white; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
@@ -34,7 +34,7 @@
         <div class="flag-box"><div class="f-black"></div><div class="f-red"></div><div class="f-gold"></div></div>
         <h1 style="color:var(--p); margin: 0;">Deutsch Lernen</h1>
         <p style="color: #636e72; margin-bottom: 25px;">Lektion 1: Weggehen und Ankommen</p>
-        <button id="start-btn" onclick="startQuiz()">STARTEN</button>
+        <button id="btn-start" class="main-btn">STARTEN</button>
     </div>
 
     <div id="quiz-ui" style="display:none">
@@ -45,7 +45,7 @@
         <div class="example-de" id="e"></div>
         <div class="options" id="opts"></div>
         <div id="feedback"></div>
-        <button id="next-btn" style="display:none" onclick="nextQuestion()">NÄCHSTE FRAGE ➔</button>
+        <button id="btn-next" class="main-btn" style="display:none">NÄCHSTE FRAGE ➔</button>
     </div>
 </div>
 
@@ -54,4 +54,38 @@
         {w: "die Muttersprache", f: "die Muttersprache, -n", audio: "die Muttersprache, die Muttersprachen", e: "Meine ______ ist Portugiesisch.", o: ["Tiếng mẹ đẻ", "Ngoại ngữ", "Thủ đô", "Quốc tịch"], a: 0},
         {w: "zurückgehen", f: "zurückgehen, ist zurückgegangen", audio: "zurückgehen, ist zurückgegangen", e: "In ein paar Tagen gehe ich ______ nach Brasilien.", o: ["Đi tới", "Quay lại", "Bắt đầu", "Kết thúc"], a: 1},
         {w: "die Hauptstadt", f: "die Hauptstadt, -ä-e", audio: "die Hauptstadt, die Hauptstädte", e: "Die ______ von Ghana ist Accra.", o: ["Thành phố", "Biên giới", "Thủ đô", "Quê hương"], a: 2},
-        {w: "nachts", f: "nachts", audio
+        {w: "nachts", f: "nachts", audio: "nachts", e: "Ich arbeite viermal pro Woche ______.", o: ["Ban ngày", "Ban đêm", "Hàng ngày", "Buổi chiều"], a: 1},
+        {w: "sauer", f: "sauer", audio: "sauer", e: "Meine Freundin ist đôi khi richtig ______.", o: ["Vui vẻ", "Mệt mỏi", "Giận dữ", "Đói bụng"], a: 2},
+        {w: "verdienen", f: "verdienen, hat verdient", audio: "verdienen, hat verdient", e: "Aber ich muss ja Geld ______.", o: ["Tiết kiệm", "Tiêu tiền", "Kiếm tiền", "Đầu tư"], a: 2},
+        {w: "die Ahnung", f: "die Ahnung, -en", audio: "die Ahnung, die Ahnungen", e: "Von Smartphones hat er keine ______.", o: ["Kinh nghiệm", "Điện thoại", "Hiểu biết", "Sở thích"], a: 2},
+        {w: "glücklich", f: "glücklich", audio: "glücklich", e: "Du siehst ja so ______ aus!", o: ["Buồn bã", "Hạnh phúc", "Mệt mỏi", "Giận dữ"], a: 1},
+        {w: "die Grenze", f: "die Grenze, -n", audio: "die Grenze, die Grenzen", e: "Ärzte ohne ______.", o: ["Biên giới", "Bệnh viện", "Kinh nghiệm", "Trường học"], a: 0},
+        {w: "mutig", f: "mutig", audio: "mutig", e: "Du bist ja ______!", o: ["Nhút nhát", "Thông minh", "Dũng cảm", "Yếu đuối"], a: 2},
+        {w: "dringend", f: "dringend", audio: "dringend", e: "Ich suche ______ eine Wohnung.", o: ["Khẩn cấp", "Từ từ", "Thong thả", "Bình thường"], a: 0},
+        {w: "das Ausland", f: "das Ausland (Sg.)", audio: "das Ausland", e: "Ich gehe für một năm ins ______.", o: ["Vùng quê", "Nước ngoài", "Thành phố", "Biên giới"], a: 1},
+        {w: "das Studium", f: "das Studium, Studien", audio: "das Studium, die Studien", e: "Nach seinem Architektur______...", o: ["Công việc", "Sở thích", "Học đại học", "Thực tập"], a: 2},
+        {w: "einpacken", f: "einpacken, hat eingepackt", audio: "einpacken, hat eingepackt", e: "Ich ______ gerade meine Sachen ein.", o: ["Mở ra", "Đóng gói", "Vứt đi", "Mua sắm"], a: 1},
+        {w: "passieren", f: "passieren, ist passiert", audio: "passieren, ist passiert", e: "Zum Glück ist nie etwas ______.", o: ["Bắt đầu", "Xảy ra", "Kết thúc", "Thành công"], a: 1},
+        {w: "erleben", f: "erleben, hat erlebt", audio: "erleben, hat erlebt", e: "Er hat viel ______.", o: ["Trải nghiệm", "Quên mất", "Tìm kiếm", "Nhìn thấy"], a: 0},
+        {w: "die Heimat", f: "die Heimat (Sg.)", audio: "die Heimat", e: "Mamas ______stadt Straßburg.", o: ["Nơi ở", "Thành phố lớn", "Quê hương", "Thị trấn"], a: 2},
+        {w: "der Erfolg", f: "der Erfolg, -e", audio: "der Erfolg, die Erfolge", e: "Ich wünsche dir nhiều ______.", o: ["Thành công", "May mắn", "Niềm vui", "Sức khỏe"], a: 0},
+        {w: "verlieren", f: "verlieren, hat verloren", audio: "verlieren, hat verloren", e: "Ich habe meinen Geldbeutel ______.", o: ["Tìm thấy", "Bán", "Làm mất", "Mua"], a: 2},
+        {w: "vermissen", f: "vermissen, hat vermisst", audio: "vermissen, hat vermisst", e: "Sie ______ ihre Familie.", o: ["Quên", "Nhớ nhung", "Yêu", "Gặp gỡ"], a: 1},
+        {w: "die Zukunft", f: "die Zukunft (Sg.)", audio: "die Zukunft", e: "Alles Gute cho tương lai.", o: ["Quá khứ", "Hiện tại", "Tương lai", "Kế hoạch"], a: 2},
+        {w: "fleißig", f: "fleißig", audio: "fleißig", e: "Sie war luôn nett und ______.", o: ["Lười biếng", "Chăm chỉ", "Thông minh", "Cẩn thận"], a: 1},
+        {w: "das Zeugnis", f: "das Zeugnis, -se", audio: "das Zeugnis, die Zeugnisse", e: "Ein gutes Arbeits______.", o: ["Hợp đồng", "Bằng cấp/Chứng chỉ", "Lời khen", "Lương"], a: 1},
+        {w: "das Praktikum", f: "das Praktikum, Praktika", audio: "das Praktikum, die Praktika", e: "Ich mache một ______.", o: ["Khóa học", "Thực tập", "Bài thi", "Công việc"], a: 1},
+        {w: "hart", f: "hart", audio: "hart", e: "Die Arbeit war ______.", o: ["Dễ dàng", "Thú vị", "Nhẹ nhàng", "Vất vả"], a: 3},
+        {w: "die Tankstelle", f: "die Tankstelle, -n", audio: "die Tankstelle, die Tankstellen", e: "Mein Vater làm việc an der ______.", o: ["Cửa hàng", "Trạm xăng", "Garage", "Công ty"], a: 1},
+        {w: "der Vertrag", f: "der Vertrag, -ä-e", audio: "der Vertrag, die Verträge", e: "Ich habe một mới ______.", o: ["Hợp đồng", "Bản vẽ", "Chìa khóa", "Xe hơi"], a: 0},
+        {w: "der Kollege", f: "der Kollege, -n", audio: "der Kollege, die Kollegen", e: "Meine ______n sind nett.", o: ["Bạn bè", "Đồng nghiệp", "Khách hàng", "Sếp"], a: 1},
+        {w: "der Stress", f: "der Stress (Sg.)", audio: "der Stress", e: "Ich habe nhiều ______.", o: ["Tiền bạc", "Căng thẳng", "Thời gian", "Niềm vui"], a: 1},
+        {w: "der Plan", f: "der Plan, -ä-e", audio: "der Plan, die Pläne", e: "Was ist dein ______?", o: ["Sở thích", "Kế hoạch", "Ý kiến", "Câu hỏi"], a: 1},
+        {w: "die Entscheidung", f: "die Entscheidung, -en", audio: "die Entscheidung, die Entscheidungen", e: "Eine ______ treffen.", o: ["Hành động", "Lời khuyên", "Quyết định", "Thông báo"], a: 2},
+        {w: "die Erfahrung", f: "die Erfahrung, -en", audio: "die Erfahrung, die Erfahrungen", e: "Eine quan trọng ______.", o: ["Quyết định", "Kinh nghiệm", "Kết quả", "Công việc"], a: 1},
+        {w: "unglaublich", f: "unglaublich", audio: "unglaublich", e: "Das ist ______!", o: ["Bình thường", "Không thể tin nổi", "Xấu hổ", "Tệ hại"], a: 1},
+        {w: "stolz", f: "stolz", audio: "stolz", e: "Ich bin ______ auf dich.", o: ["Tự hào", "Lo lắng", "Sợ hãi", "Giận dữ"], a: 0},
+        {w: "die Angst", f: "die Angst, -ä-e", audio: "die Angst, die Ängste", e: "Hab keine ______!", o: ["Hy vọng", "Nỗi sợ", "Niềm vui", "Bất ngờ"], a: 1},
+        {w: "der Abschied", f: "der Abschied, -e", audio: "der Abschied, die Abschiede", e: "Der ______ war schwer.", o: ["Gặp gỡ", "Sự chia tay", "Lễ hội", "Chuyến đi"], a: 1},
+        {w: "ankommen", f: "ankommen, ist angekommen", audio: "ankommen, ist angekommen", e: "Wann bist du ______?", o: ["Đi khỏi", "Đến nơi", "Ở lại", "Quay về"], a: 1},
+        {w: "die Sache", f: "die Sache, -n", audio: "die Sache, die Sachen", e: "Nimm deine ______n mit.", o: ["Tiền bạc", "Đồ đạc", "Bạn bè", "Sách"], a
