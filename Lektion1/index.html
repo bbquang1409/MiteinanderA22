@@ -4,38 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Deutsch Lernen - Lektion 1</title>
-    
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="mobile-web-app-capable" content="yes">
-    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg">
-
     <style>
         :root { --p: #6c5ce7; --s: #2ecc71; --d: #ff7675; --bg: #f0f3f9; }
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
         body { font-family: 'Segoe UI', sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .quiz-card { background: white; width: 95%; max-width: 500px; padding: 25px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; margin: 10px; }
+        .quiz-card { background: white; width: 95%; max-width: 500px; padding: 25px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; }
         
-        /* Cờ Đức chuẩn vector */
-        .flag-img { width: 140px; height: 85px; object-fit: cover; margin-bottom: 20px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1)); border-radius: 8px; border: 1px solid #eee; }
-        
+        /* Cờ Đức chuẩn nhúng trực tiếp bằng code để không bao giờ lỗi link */
+        .flag-box { width: 120px; height: 72px; margin: 0 auto 20px; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.2); border: 1px solid #ddd; }
+        .f-black { background: #000; height: 33.33%; }
+        .f-red { background: #FF0000; height: 33.33%; }
+        .f-gold { background: #FFCC00; height: 33.33%; }
+
         .progress-bar { width: 100%; height: 8px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
         #fill { height: 100%; background: var(--p); width: 0%; transition: 0.4s; }
         .word-de { font-size: 1.8rem; color: var(--p); font-weight: 800; margin: 5px 0; }
         .info-de { color: #e67e22; font-style: italic; margin-bottom: 15px; font-weight: 600; }
         .example-de { background: #f8faff; border-radius: 15px; padding: 15px; margin-bottom: 20px; font-size: 1.1rem; text-align: left; border-left: 5px solid var(--p); line-height: 1.5; min-height: 60px; }
-        
         .options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .opt-btn { background: white; border: 2px solid #e0e0e0; padding: 15px 10px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: 0.2s; color: #333; }
-        
         .correct { background: var(--s) !important; color: white; border-color: var(--s) !important; }
         .wrong { background: var(--d) !important; color: white; border-color: var(--d) !important; animation: shake 0.3s; }
-        
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-5px); }
-            75% { transform: translateX(5px); }
-        }
-
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         #feedback { font-size: 1.1rem; font-weight: bold; margin: 15px 0; min-height: 1.5rem; }
         #next-btn, #start-btn { width: 100%; padding: 18px; background: var(--p); color: white; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
     </style>
@@ -44,7 +34,7 @@
 
 <div class="quiz-card" id="card">
     <div id="start-screen">
-        <img src="https://upload.wikimedia.org/wikipedia/en/b/ba/Flag_of_Germany.svg" class="flag-img" alt="Germany">
+        <div class="flag-box"><div class="f-black"></div><div class="f-red"></div><div class="f-gold"></div></div>
         <h1 style="color:var(--p); margin: 0;">Deutsch Lernen</h1>
         <p style="color: #636e72; margin-bottom: 25px;">Lektion 1: Weggehen und Ankommen</p>
         <button id="start-btn" onclick="startApp()">STARTEN</button>
@@ -75,7 +65,7 @@
         {w: "die Grenze", f: "die Grenze, -n", e: "Ärzte ohne ______.", o: ["Biên giới", "Bệnh viện", "Kinh nghiệm", "Trường học"], a: 0},
         {w: "mutig", f: "mutig", e: "Du bist ja ______!", o: ["Nhút nhát", "Thông minh", "Dũng cảm", "Yếu đuối"], a: 2},
         {w: "dringend", f: "dringend", e: "Ich suche ______ eine Wohnung.", o: ["Khẩn cấp", "Từ từ", "Thong thả", "Bình thường"], a: 0},
-        {w: "das Ausland", f: "das Ausland (Sg.)", e: "Ich gehe für ein Jahr ins ______.", o: ["Vùng quê", "Nước ngoài", "Thành phố", "Biên giới"], a: 1},
+        {w: "das Ausland", f: "das Ausland (Sg.)", e: "Ich gehe cho một năm ins ______.", o: ["Vùng quê", "Nước ngoài", "Thành phố", "Biên giới"], a: 1},
         {w: "das Studium", f: "das Studium, Studien", e: "Nach seinem Architektur______...", o: ["Công việc", "Sở thích", "Học đại học", "Thực tập"], a: 2},
         {w: "einpacken", f: "einpacken, hat eingepackt", e: "Ich ______ gerade meine Sachen ein.", o: ["Mở ra", "Đóng gói", "Vứt đi", "Mua sắm"], a: 1},
         {w: "passieren", f: "passieren, ist passiert", e: "Zum Glück ist nie etwas ______.", o: ["Bắt đầu", "Xảy ra", "Kết thúc", "Thành công"], a: 1},
@@ -84,15 +74,15 @@
         {w: "der Erfolg", f: "der Erfolg, -e", e: "Ich wünsche dir viel ______.", o: ["Thành công", "May mắn", "Niềm vui", "Sức khỏe"], a: 0},
         {w: "verlieren", f: "verlieren, hat verloren", e: "Ich habe meinen Geldbeutel ______.", o: ["Tìm thấy", "Bán", "Làm mất", "Mua"], a: 2},
         {w: "vermissen", f: "vermissen, hat vermisst", e: "Sie ______ ihre Familie.", o: ["Quên", "Nhớ nhung", "Yêu", "Gặp gỡ"], a: 1},
-        {w: "die Zukunft", f: "die Zukunft (Sg.)", e: "Alles Gute für die ______.", o: ["Quá khứ", "Hiện tại", "Tương lai", "Kế hoạch"], a: 2},
-        {w: "fleißig", f: "fleißig", e: "Sie war immer nett und ______.", o: ["Lười biếng", "Chăm chỉ", "Thông minh", "Cẩn thận"], a: 1},
+        {w: "die Zukunft", f: "die Zukunft (Sg.)", e: "Alles Gute cho tương lai.", o: ["Quá khứ", "Hiện tại", "Tương lai", "Kế hoạch"], a: 2},
+        {w: "fleißig", f: "fleißig", e: "Sie war luôn nett und ______.", o: ["Lười biếng", "Chăm chỉ", "Thông minh", "Cẩn thận"], a: 1},
         {w: "das Zeugnis", f: "das Zeugnis, -se", e: "Ein gutes Arbeits______.", o: ["Hợp đồng", "Bằng cấp/Chứng chỉ", "Lời khen", "Lương"], a: 1},
         {w: "das Praktikum", f: "das Praktikum, Praktika", e: "Ich mache một ______.", o: ["Khóa học", "Thực tập", "Bài thi", "Công việc"], a: 1},
         {w: "hart", f: "hart", e: "Die Arbeit war ______.", o: ["Dễ dàng", "Thú vị", "Nhẹ nhàng", "Vất vả"], a: 3},
-        {w: "die Tankstelle", f: "die Tankstelle, -n", e: "Mein Vater arbeitet an der ______.", o: ["Cửa hàng", "Trạm xăng", "Garage", "Công ty"], a: 1},
+        {w: "die Tankstelle", f: "die Tankstelle, -n", e: "Mein Vater làm việc an der ______.", o: ["Cửa hàng", "Trạm xăng", "Garage", "Công ty"], a: 1},
         {w: "der Vertrag", f: "der Vertrag, -ä-e", e: "Ich habe một mới ______.", o: ["Hợp đồng", "Bản vẽ", "Chìa khóa", "Xe hơi"], a: 0},
         {w: "der Kollege", f: "der Kollege, -n", e: "Meine ______n sind nett.", o: ["Bạn bè", "Đồng nghiệp", "Khách hàng", "Sếp"], a: 1},
-        {w: "der Stress", f: "der Stress (Sg.)", e: "Ich habe viel ______.", o: ["Tiền bạc", "Căng thẳng", "Thời gian", "Niềm vui"], a: 1},
+        {w: "der Stress", f: "der Stress (Sg.)", e: "Ich habe nhiều ______.", o: ["Tiền bạc", "Căng thẳng", "Thời gian", "Niềm vui"], a: 1},
         {w: "der Plan", f: "der Plan, -ä-e", e: "Was ist dein ______?", o: ["Sở thích", "Kế hoạch", "Ý kiến", "Câu hỏi"], a: 1},
         {w: "die Entscheidung", f: "die Entscheidung, -en", e: "Eine ______ treffen.", o: ["Hành động", "Lời khuyên", "Quyết định", "Thông báo"], a: 2},
         {w: "die Erfahrung", f: "die Erfahrung, -en", e: "Eine quan trọng ______.", o: ["Quyết định", "Kinh nghiệm", "Kết quả", "Công việc"], a: 1},
@@ -102,7 +92,7 @@
         {w: "der Abschied", f: "der Abschied, -e", e: "Der ______ war schwer.", o: ["Gặp gỡ", "Sự chia tay", "Lễ hội", "Chuyến đi"], a: 1},
         {w: "ankommen", f: "ankommen, ist angekommen", e: "Wann bist du ______?", o: ["Đi khỏi", "Đến nơi", "Ở lại", "Quay về"], a: 1},
         {w: "die Sache", f: "die Sache, -n", e: "Nimm deine ______n mit.", o: ["Tiền bạc", "Đồ đạc", "Bạn bè", "Sách"], a: 1},
-        {w: "damals", f: "damals", e: "______ war alles khác.", o: ["Bây giờ", "Hồi đó", "Tương lai", "Hôm nay"], a: 1},
+        {w: "damals", f: "damals", e: "______ war tất cả khác.", o: ["Bây giờ", "Hồi đó", "Tương lai", "Hôm nay"], a: 1},
         {w: "niederlassen", f: "sich niederlassen", e: "Er hat sich in Berlin ______.", o: ["Du lịch", "Định cư", "Bỏ đi", "Tìm kiếm"], a: 1},
         {w: "die Chance", f: "die Chance, -n", e: "Nutze deine ______.", o: ["Khó khăn", "Kế hoạch", "Cơ hội", "Thách thức"], a: 2},
         {w: "der Koffer", f: "der Koffer, -", e: "Ich packe den ______.", o: ["Túi xách", "Vali", "Balo", "Ví"], a: 1},
@@ -119,3 +109,61 @@
         document.getElementById('start-screen').style.display = 'none';
         document.getElementById('quiz-ui').style.display = 'block';
         render();
+    }
+
+    function safeSpeak(text) {
+        if (!('speechSynthesis' in window)) return;
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'de-DE';
+        msg.rate = 0.85;
+        window.speechSynthesis.speak(msg);
+    }
+
+    function render() {
+        if (curr >= data.length) {
+            document.getElementById('quiz-ui').innerHTML = `
+                <div class="flag-box"><div class="f-black"></div><div class="f-red"></div><div class="f-gold"></div></div>
+                <h2 style="color:var(--p)">Fertig!</h2>
+                <div style="font-size:3.5rem; margin:20px 0;">${score}/${data.length}</div>
+                <button onclick="location.reload()" id="start-btn">WIEDERHOLEN</button>
+            `;
+            return;
+        }
+        canProceed = false;
+        const q = data[curr];
+        document.getElementById('fill').style.width = (curr/data.length)*100 + "%";
+        document.getElementById('stat').innerText = "FRAGE " + (curr + 1) + " / " + data.length;
+        document.getElementById('w').innerText = q.w;
+        document.getElementById('i').innerText = q.f;
+        document.getElementById('e').innerText = q.e;
+        document.getElementById('feedback').innerText = "";
+        document.getElementById('next-btn').style.display = 'none';
+        const box = document.getElementById('opts');
+        box.innerHTML = '';
+        q.o.forEach((opt, idx) => {
+            const btn = document.createElement('button');
+            btn.className = 'opt-btn';
+            btn.innerText = opt;
+            btn.onclick = function() {
+                if(canProceed) return;
+                if(idx === q.a) {
+                    canProceed = true;
+                    btn.classList.add('correct');
+                    document.getElementById('feedback').innerHTML = `<span style="color:var(--s)">${praises[Math.floor(Math.random()*praises.length)]}</span>`;
+                    document.getElementById('next-btn').style.display = 'block';
+                    score++;
+                    safeSpeak(q.f);
+                } else {
+                    btn.classList.add('wrong');
+                    document.getElementById('feedback').innerHTML = `<span style="color:var(--d)">${tries[Math.floor(Math.random()*tries.length)]}</span>`;
+                    setTimeout(() => btn.classList.remove('wrong'), 800);
+                }
+            };
+            box.appendChild(btn);
+        });
+    }
+    function nextQuestion() { curr++; render(); }
+</script>
+</body>
+</html>
