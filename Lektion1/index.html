@@ -3,50 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Deutsch Lernen</title>
+    <title>Deutsch Lernen A2</title>
     <style>
         :root { --p: #6c5ce7; --s: #2ecc71; --d: #ff7675; --bg: #f0f3f9; }
-        body { font-family: sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .quiz-card { background: white; width: 90%; max-width: 450px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; }
-        .flag-box { width: 100px; height: 60px; margin: 0 auto 15px; border: 1px solid #ddd; }
-        .f-black { background: #000; height: 33.3%; }
-        .f-red { background: #f00; height: 33.3%; }
-        .f-gold { background: #ff0; height: 33.3%; }
-        .word-de { font-size: 1.6rem; color: var(--p); font-weight: bold; }
-        .info-de { color: #e67e22; font-style: italic; margin-bottom: 10px; }
-        .example-de { background: #f8faff; padding: 15px; border-radius: 10px; margin-bottom: 15px; text-align: left; border-left: 4px solid var(--p); }
-        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-        .opt-btn { background: white; border: 1px solid #ddd; padding: 12px 5px; border-radius: 10px; cursor: pointer; font-weight: bold; }
-        .correct { background: var(--s) !important; color: white; }
-        .wrong { background: var(--d) !important; color: white; }
-        .main-btn { width: 100%; padding: 15px; background: var(--p); color: white; border: none; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        body { font-family: -apple-system, sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .card { background: white; width: 92%; max-width: 450px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; }
+        .flag { width: 100px; height: 60px; margin: 0 auto 15px; border: 1px solid #ddd; display: flex; flex-direction: column; }
+        .f-1 { background: #000; flex: 1; } .f-2 { background: #f00; flex: 1; } .f-3 { background: #ff0; flex: 1; }
+        .word { font-size: 1.7rem; color: var(--p); font-weight: bold; margin: 10px 0; }
+        .info { color: #e67e22; font-style: italic; margin-bottom: 15px; font-weight: 600; }
+        .example { background: #f8faff; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; border-left: 5px solid var(--p); line-height: 1.4; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .opt { background: white; border: 2px solid #eee; padding: 15px 5px; border-radius: 12px; cursor: pointer; font-weight: bold; font-size: 0.95rem; }
+        .correct { background: var(--s) !important; color: white; border-color: var(--s); }
+        .wrong { background: var(--d) !important; color: white; border-color: var(--d); }
+        .btn-main { width: 100%; padding: 18px; background: var(--p); color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: bold; cursor: pointer; margin-top: 15px; }
     </style>
 </head>
 <body>
 
-<div class="quiz-card">
-    <div id="start-screen">
-        <div class="flag-box"><div class="f-black"></div><div class="f-red"></div><div class="f-gold"></div></div>
-        <h2 style="color:var(--p)">Lektion 1</h2>
-        <p>Weggehen und Ankommen</p>
-        <button class="main-btn" onclick="startQuiz()">STARTEN</button>
+<div class="card">
+    <div id="screen-start">
+        <div class="flag"><div class="f-1"></div><div class="f-2"></div><div class="f-3"></div></div>
+        <h1 style="color:var(--p); margin:0;">Deutsch A2</h1>
+        <p>Lektion 1: Weggehen und Ankommen</p>
+        <button class="btn-main" onclick="start()">STARTEN</button>
     </div>
 
-    <div id="quiz-screen" style="display:none">
-        <div id="stat" style="font-size: 0.8rem; color: #999; margin-bottom: 10px;"></div>
-        <div class="word-de" id="w"></div>
-        <div class="info-de" id="i"></div>
-        <div class="example-de" id="e"></div>
-        <div class="options" id="opts"></div>
-        <div id="feedback" style="margin: 10px 0; font-weight: bold; min-height: 20px;"></div>
-        <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">NÄCHSTE FRAGE</button>
+    <div id="screen-quiz" style="display:none">
+        <div id="progress" style="font-size:0.8rem; color:#999; margin-bottom:10px"></div>
+        <div class="word" id="word"></div>
+        <div class="info" id="info"></div>
+        <div class="example" id="example"></div>
+        <div class="grid" id="options"></div>
+        <div id="feedback" style="margin:15px 0; font-weight:bold; min-height:20px"></div>
+        <button id="btn-next" class="btn-main" style="display:none" onclick="next()">NÄCHSTE FRAGE</button>
     </div>
 </div>
 
 <script>
     const data = [
-        {w: "die Muttersprache", f: "die Muttersprache, -n", audio: "die Muttersprache, die Muttersprachen", e: "Meine ______ ist Portugiesisch.", o: ["Tiếng mẹ đẻ", "Ngoại ngữ", "Thủ đô", "Quốc tịch"], a: 0},
-        {w: "zurückgehen", f: "zurückgehen, ist zurückgegangen", audio: "zurückgehen, ist zurückgegangen", e: "In ein paar Tagen gehe ich ______ nach Brasilien.", o: ["Đi tới", "Quay lại", "Bắt đầu", "Kết thúc"], a: 1},
-        {w: "die Hauptstadt", f: "die Hauptstadt, -ä-e", audio: "die Hauptstadt, die Hauptstädte", e: "Die ______ von Ghana ist Accra.", o: ["Thành phố", "Biên giới", "Thủ đô", "Quê hương"], a: 2},
-        {w: "nachts", f: "nachts", audio: "nachts", e: "Ich arbeite viermal pro Woche ______.", o: ["Ban ngày", "Ban đêm", "Hàng ngày", "Buổi chiều"], a: 1},
-        {
+        {w: "die Muttersprache", f: "die Muttersprache, -n", a: "die Muttersprache, die Muttersprachen", e: "Meine ______ ist Portugiesisch.", o: ["Tiếng mẹ đẻ", "Ngoại ngữ", "Thủ đô", "Quốc tịch"], ans: 0},
+        {w: "zurückgehen", f: "zurückgehen, ist zurückgegangen", a: "zurückgehen, ist zurückgegangen", e: "In ein paar Tagen gehe ich ______ nach Brasilien.", o: ["Đi tới", "Quay lại", "Bắt đầu", "Kết thúc"], ans: 1},
+        {w: "die Hauptstadt", f: "die Hauptstadt, -ä-e", a: "die Hauptstadt, die Hauptstädte", e: "Die ______ von Ghana ist Accra.", o: ["Thành phố", "Biên giới", "Thủ đô", "Quê hương"], ans: 2},
+        {w: "nachts", f: "nachts", a: "nachts", e: "Ich arbeite viermal pro Woche ______.", o: ["Ban ngày", "Ban đêm", "Hàng ngày", "Buổi chiều"], ans: 1},
+        {w: "sauer", f: "sauer", a: "sauer", e: "Meine Freundin ist đôi khi richtig ______.", o: ["Vui vẻ", "Mệt mỏi", "Giận dữ", "Đói bụng"], ans: 2},
+        {w: "verdienen", f: "verdienen, hat verdient", a: "verdienen, hat verdient", e: "Aber ich muss ja Geld ______.", o: ["Tiết kiệm", "Tiêu tiền", "Kiếm tiền", "Đầu tư"], ans: 2},
+        {w: "die Ahnung", f: "die Ahnung, -en", a: "die Ahnung, die Ahnungen", e: "Von Smartphones hat er keine ______.", o: ["Kinh nghiệm", "Điện thoại", "Hiểu biết", "Sở thích"], ans: 2},
+        {w: "glücklich", f: "glücklich", a: "glücklich", e: "Du siehst ja so ______ aus!", o: ["Buồn bã", "Hạnh phúc", "Mệt mỏi", "Giận dữ"], ans: 1},
+        {w: "die Grenze", f: "die Grenze, -n", a: "die Grenze, die Grenzen", e: "Ärzte ohne ______.", o: ["Biên giới", "Bệnh viện", "Kinh nghiệm", "Trường học"], ans: 0},
+        {w: "mutig", f: "mutig", a: "mutig", e: "Du bist ja ______!", o: ["Nhút nhát", "Thông minh", "Dũng cảm", "Yếu đuối"], ans: 2},
+        {w: "dringend", f: "dringend", a: "dringend", e: "Ich suche ______ eine Wohnung.", o: ["Khẩn cấp", "Từ từ", "Thong thả", "Bình thường"], ans: 0},
+        {w: "das Ausland", f: "das Ausland (Sg.)", a: "das Ausland", e: "Ich gehe für một năm ins ______.", o: ["Vùng quê", "Nước ngoài", "Thành phố", "Biên giới"], ans: 1},
+        {w: "das Studium", f: "das Studium, Studien", a: "das Studium, die Studien", e: "Nach seinem Architektur______...", o: ["Công việc", "Sở thích", "Học đại học", "Thực tập"], ans: 2},
+        {w: "einpacken", f: "einpacken, hat eingepackt", a: "einpacken, hat eingepackt", e: "Ich ______ gerade meine Sachen ein.", o: ["Mở ra", "Đóng gói", "Vứt đi", "Mua sắm"], ans: 1},
+        {w: "passieren", f: "passieren, ist passiert", a: "passieren, ist passiert", e: "Zum Glück ist nie etwas ______.", o: ["Bắt đầu", "Xảy ra", "Kết thúc", "Thành công"], ans: 1},
+        {w: "erleben", f: "erleben, hat erlebt", a:
