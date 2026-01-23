@@ -27,4 +27,120 @@
             {w: "der Betrag", f: "der Betrag, -ä-e", e: "Diesen ______ muss man bezahlen.", o: ["Hóa đơn", "Số tiền", "Biên lai", "Tiền thừa"], a: 1},
             
             // Phần B: Vay mượn & Chi tiêu
-            {w: "akzeptieren", f
+            {w: "akzeptieren", f: "akzeptieren, hat akzeptiert", e: "Kreditkarten werden überall ______.", o: ["Từ chối", "Chấp nhận", "Hủy bỏ", "Cấm"], a: 1},
+            {w: "der Zins", f: "der Zins, -en", e: "Für den Bankkredit zahlt man ______.", o: ["Tiền gốc", "Lãi suất", "Tiền phạt", "Phí"], a: 1},
+            {w: "đie Kreditkarte", f: "die Kreditkarte, -n", e: "Wann wird eine mới ______ zugeschickt?", o: ["Thẻ ghi nợ", "Thẻ tín dụng", "Tiền mặt", "Sổ hộ chiếu"], a: 1},
+            {w: "leihen", f: "sich leihen, hat geliehen", e: "Amadou ______ sich kein Geld von Eltern.", o: ["Cho vay", "Vay/Mượn", "Trả tiền", "Kiếm tiền"], a: 1},
+            {w: "teilen", f: "teilen, hat geteilt", e: "Man sollte alle Kosten ______.", o: ["Cộng dồn", "Chia sẻ/Chia đều", "Trừ bớt", "Nhân lên"], a: 1},
+            {w: "die Steuer", f: "die Steuer, -n", e: "Wir lassen unsere ______erklärung machen.", o: ["Phí", "Thuế", "Tiền phạt", "Bảo hiểm"], a: 1},
+            {w: "übersetzen", f: "übersetzen, hat übersetzt", e: "Ich muss meine Geburtsurkunde ______.", o: ["Viết lại", "Dịch thuật", "Công chứng", "Nộp"], a: 1},
+            {w: "đie Voraussetzung", f: "die Voraussetzung, -en", e: "______en erfüllen.", o: ["Kết quả", "Điều kiện tiên quyết", "Yêu cầu", "Hợp đồng"], a: 1},
+            {w: "der Kredit", f: "der Kredit, -e", e: "Amadou sollte keinen ______ aufnehmen.", o: ["Khoản vay", "Tiền mặt", "Tiết kiệm", "Lương"], a: 0},
+            {w: "bar", f: "bar bezahlen", e: "Ein Eis bezahle ich ______.", o: ["Thẻ", "Chuyển khoản", "Tiền mặt", "Nợ"], a: 2},
+            
+            // Phần C: Mối quan hệ & Tài chính
+            {w: "das Paar", f: "das Paar, -e", e: "Ihr seid ein ______.", o: ["Bạn bè", "Cặp đôi", "Đồng nghiệp", "Người lạ"], a: 1},
+            {w: "finanzieren", f: "finanzieren, hat finanziert", e: "Wir sollten selbst ______.", o: ["Tiết kiệm", "Tài trợ/Chi trả tài chính", "Tìm kiếm", "Mua sắm"], a: 1},
+            {w: "die Beziehung", f: "die Beziehung, -en", e: "Wichtig für unsere ______.", o: ["Công việc", "Mối quan hệ", "Gia đình", "Sức khỏe"], a: 1},
+            {w: "übertreiben", f: "übertreiben, hat übertrieben", e: "Jetzt ______ du aber!", o: ["Nói dối", "Nói quá/Làm quá", "Nói thật", "Nói nhỏ"], a: 1},
+            {w: "fremd", f: "fremd", e: "Amadou möchte keine ______e Hilfe.", o: ["Người quen", "Xa lạ/Người ngoài", "Gia đình", "Bạn bè"], a: 1},
+            {w: "đie Lösung", f: "die Lösung, -en", e: "Elisa findet eine ______.", o: ["Vấn đề", "Giải pháp", "Câu hỏi", "Lỗi"], a: 1},
+            {w: "recht haben", f: "recht haben, hat recht gehabt", e: "Ich finde, Rajana ______.", o: ["Sai", "Có lý/Đúng", "Nhầm lẫn", "Giận dữ"], a: 1},
+            {w: "đie Freundschaft", f: "die Freundschaft, -en", e: "Geld in einer ______.", o: ["Tình yêu", "Tình bạn", "Tình đồng nghiệp", "Tình quê hương"], a: 1},
+            {w: "đie Kosten", f: "die Kosten (Pl.)", e: "Alle ______ genau teilen.", o: ["Lợi nhuận", "Chi phí", "Hóa đơn", "Giá cả"], a: 1},
+            {w: "widersprechen", f: "widersprechen, hat widersprochen", e: "Da muss ich dir ______!", o: ["Đồng ý", "Phản đối/Ngắt lời", "Lắng nghe", "Hỏi lại"], a: 1}
+        ];
+
+        let curr = 0, score = 0, canProceed = false;
+
+        function startApp() {
+            document.getElementById('start-screen').style.display = 'none';
+            document.getElementById('quiz-ui').style.display = 'block';
+            render();
+        }
+
+        function safeSpeak(text) {
+            if (!('speechSynthesis' in window)) return;
+            window.speechSynthesis.cancel();
+            const msg = new SpeechSynthesisUtterance(text);
+            msg.lang = 'de-DE';
+            msg.rate = 0.8;
+            window.speechSynthesis.speak(msg);
+        }
+
+        function render() {
+            if (curr >= vocabData.length) {
+                document.getElementById('quiz-ui').innerHTML = `<h2 style="color:#6c5ce7">Lektion 15 Fertig!</h2><div style="font-size:3rem; margin:20px 0;">${score}/${vocabData.length}</div><button onclick="location.reload()" class="main-btn">WIEDERHOLEN</button>`;
+                return;
+            }
+            canProceed = false;
+            const q = vocabData[curr];
+            document.getElementById('fill').style.width = (curr/vocabData.length)*100 + "%";
+            document.getElementById('stat').innerText = "FRAGE " + (curr + 1) + " / " + vocabData.length;
+            document.getElementById('w').innerText = q.w;
+            document.getElementById('i').innerText = q.f;
+            document.getElementById('e').innerText = q.e;
+            document.getElementById('feedback').innerText = "";
+            document.getElementById('next-btn').style.display = 'none';
+
+            const box = document.getElementById('opts');
+            box.innerHTML = '';
+            q.o.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'opt-btn';
+                btn.innerText = opt;
+                btn.onclick = function() {
+                    if(canProceed) return;
+                    if(idx === q.a) {
+                        canProceed = true; score++;
+                        btn.style.background = "#2ecc71"; btn.style.color = "white";
+                        document.getElementById('feedback').innerHTML = `<span style="color:#2ecc71">Richtig! (Chuẩn!)</span>`;
+                        document.getElementById('next-btn').style.display = 'block';
+                        safeSpeak(q.w); 
+                    } else {
+                        btn.style.background = "#ff7675"; btn.style.color = "white";
+                        document.getElementById('feedback').innerHTML = `<span style="color:#ff7675">Falsch! (Sai rồi)</span>`;
+                        setTimeout(() => { btn.style.background = "white"; btn.style.color = "black"; }, 600);
+                    }
+                };
+                box.appendChild(btn);
+            });
+        }
+
+        function nextQuestion() { curr++; render(); }
+    </script>
+    <style>
+        body { font-family: -apple-system, system-ui, sans-serif; background: #f0f3f9; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .quiz-card { background: white; width: 95%; max-width: 450px; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        .flag-css { width: 80px; height: 48px; margin: 0 auto 15px; display: flex; flex-direction: column; border: 1px solid #ddd; }
+        .f-b { background: #000; flex: 1; } .f-r { background: #f00; flex: 1; } .f-g { background: #ff0; flex: 1; }
+        .progress-bar { width: 100%; height: 6px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
+        #fill { height: 100%; background: #6c5ce7; width: 0%; transition: 0.3s; }
+        .word-de { font-size: 1.8rem; color: #6c5ce7; font-weight: bold; }
+        .info-de { color: #e67e22; font-size: 0.9rem; font-style: italic; margin-bottom: 15px; }
+        .example-de { background: #f8faff; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: left; border-left: 4px solid #6c5ce7; font-size: 1rem; line-height: 1.4; }
+        .opt-btn { width: 100%; background: white; border: 1px solid #ddd; padding: 15px; border-radius: 12px; margin: 5px 0; font-size: 1rem; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+        .main-btn { width: 100%; padding: 18px; background: #6c5ce7; color: white; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="quiz-card">
+        <div id="start-screen">
+            <div class="flag-css"><div class="f-b"></div><div class="f-r"></div><div class="f-g"></div></div>
+            <h1 style="color:#6c5ce7">Lektion 15</h1>
+            <p>Ngân hàng & Tài chính cá nhân</p>
+            <button class="main-btn" onclick="startApp()">STARTEN</button>
+        </div>
+        <div id="quiz-ui" style="display:none">
+            <div class="progress-bar"><div id="fill"></div></div>
+            <div id="stat" style="font-size:11px; color:#999; margin-bottom: 5px;"></div>
+            <div class="word-de" id="w"></div>
+            <div class="info-de" id="i"></div>
+            <div class="example-de" id="e"></div>
+            <div id="opts"></div>
+            <div id="feedback" style="margin:10px; font-weight:bold; min-height: 20px;"></div>
+            <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">NÄCHSTE FRAGE</button>
+        </div>
+    </div>
+</body>
+</html>
