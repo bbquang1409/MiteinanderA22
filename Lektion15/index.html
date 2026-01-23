@@ -3,52 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lektion 15 - 45 Words</title>
+    <title>Deutsch Lektion 15 - Bank & Finanzen</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #f0f3f9; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .quiz-card { background: white; width: 90%; max-width: 400px; padding: 25px; border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
-        .flag { width: 60px; height: 36px; margin: 0 auto 15px; display: flex; flex-direction: column; border: 1px solid #ddd; border-radius: 4px; overflow: hidden; }
-        .f-b { background: #000; flex: 1; } .f-r { background: #f00; flex: 1; } .f-g { background: #ff0; flex: 1; }
-        .word-de { font-size: 1.7rem; color: #6c5ce7; font-weight: bold; margin-bottom: 5px; }
-        .example-de { background: #f8faff; padding: 15px; border-radius: 12px; margin: 15px 0; text-align: left; border-left: 5px solid #6c5ce7; font-size: 0.95rem; line-height: 1.5; }
-        .opt-btn { width: 100%; background: white; border: 2px solid #edf2f7; padding: 14px; border-radius: 15px; margin: 6px 0; font-size: 1rem; cursor: pointer; font-weight: 600; transition: 0.2s; }
-        .main-btn { width: 100%; padding: 18px; background: #6c5ce7; color: white; border: none; border-radius: 18px; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
-        .prog-bg { width: 100%; background: #eee; height: 8px; border-radius: 10px; margin-bottom: 20px; }
-        #fill { height: 100%; background: #6c5ce7; width: 0%; border-radius: 10px; transition: 0.3s; }
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            background: linear-gradient(135deg, #f0f3f9, #e0e7ff); 
+            margin: 0; 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 15px; 
+            box-sizing: border-box;
+        }
+        .quiz-card { 
+            background: white; 
+            width: 100%; 
+            max-width: 520px; 
+            padding: 28px; 
+            border-radius: 24px; 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15); 
+            text-align: center; 
+        }
+        .flag { 
+            width: 100px; height: 60px; 
+            margin: 0 auto 20px; 
+            display: flex; flex-direction: column; 
+            border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
+        }
+        .f-b { background: #000; flex: 1; } 
+        .f-r { background: #d00; flex: 1; } 
+        .f-g { background: #ff0; flex: 1; }
+        h2 { color: #6c5ce7; margin: 0 0 10px; font-size: 2.1rem; }
+        .subtitle { color: #555; margin-bottom: 28px; font-size: 1.1rem; }
+        .word-de { font-size: 2.5rem; color: #6c5ce7; font-weight: 700; margin: 15px 0; }
+        .info-de { color: #e67e22; font-size: 1.15rem; font-style: italic; margin: 10px 0 20px; }
+        .example-de { 
+            background: #f8fbff; padding: 18px; border-radius: 14px; 
+            margin: 20px 0 28px; text-align: left; 
+            border-left: 6px solid #6c5ce7; font-size: 1.1rem; line-height: 1.5; 
+        }
+        .opt-btn { 
+            width: 100%; background: #fff; border: 2px solid #e0e0e0; 
+            padding: 16px 18px; border-radius: 14px; margin: 10px 0; 
+            font-size: 1.15rem; font-weight: 600; cursor: pointer; 
+            transition: all 0.25s; text-align: left;
+        }
+        .opt-btn:hover:not(:disabled) { border-color: #6c5ce7; background: #f8f5ff; }
+        .opt-btn:disabled { opacity: 0.75; cursor: not-allowed; }
+        .main-btn { 
+            width: 100%; padding: 18px; background: #6c5ce7; color: white; 
+            border: none; border-radius: 16px; font-size: 1.2rem; font-weight: bold; 
+            cursor: pointer; margin-top: 15px;
+        }
+        #feedback { font-size: 1.3rem; font-weight: bold; margin: 20px 0; min-height: 40px; }
+        #stat, #score { font-size: 1rem; color: #666; margin-bottom: 15px; }
+        .correct   { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
+        .wrong     { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
+        .highlight { background: #e8f5e9 !important; border-color: #4caf50 !important; font-weight: bold; cursor: pointer !important; }
     </style>
 </head>
 <body>
+    <div class="quiz-card">
+        <div id="start-screen">
+            <div class="flag">
+                <div class="f-b"></div><div class="f-r"></div><div class="f-g"></div>
+            </div>
+            <h2>Lektion 15</h2>
+            <div class="subtitle">Bank & Finanzen (Amadou – Stadtbank Neuberg)</div>
+            <button class="main-btn" onclick="startApp()">STARTEN</button>
+        </div>
 
-<div class="quiz-card">
-    <div id="start-screen">
-        <div class="flag"><div class="f-b"></div><div class="f-r"></div><div class="f-g"></div></div>
-        <h2 style="color:#6c5ce7">Lektion 15</h2>
-        <p>Ngân hàng & Tài chính (A-C)<br><b>45 Từ vựng - 4 Lựa chọn</b></p>
-        <button class="main-btn" onclick="initQuiz()">STARTEN</button>
+        <div id="quiz-ui" style="display:none">
+            <div id="stat"></div>
+            <div class="word-de" id="w"></div>
+            <div class="info-de" id="i"></div>
+            <div class="example-de" id="e"></div>
+            <div id="opts"></div>
+            <div id="feedback"></div>
+            <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">WEITER</button>
+        </div>
+
+        <div id="end-screen" style="display:none">
+            <h2 style="color:#27ae60">Fertig!</h2>
+            <div id="score"></div>
+            <button class="main-btn" onclick="restartQuiz()">NOCHMAL</button>
+        </div>
     </div>
 
-    <div id="quiz-ui" style="display:none">
-        <div class="prog-bg"><div id="fill"></div></div>
-        <div id="stat" style="font-size:12px; color:#999; margin-bottom:10px; font-weight:bold"></div>
-        <div class="word-de" id="w"></div>
-        <div id="i" style="color:#e67e22; font-style:italic; margin-bottom:15px"></div>
-        <div class="example-de" id="e"></div>
-        <div id="opts"></div>
-        <div id="feedback" style="margin:15px; font-weight:bold; min-height:20px"></div>
-        <button id="next-btn" class="main-btn" style="display:none" onclick="renderNext()">TIẾP TỤC</button>
-    </div>
-</div>
+    <script>
+        const vocabData = [
+            {w: "die Bank", f: "die Bank, die Banken", e: "Henry ist sehr zufrieden mit seiner ______. ", o: ["Ngân hàng", "Công ty", "Nhà sách", "Bệnh viện"], a: 0},
+            {w: "das Konto", f: "das Konto, die Konten", e: "Dann ist dein ______ bei uns komplett kostenlos!", o: ["Tài khoản", "Thẻ tín dụng", "Tiền mặt", "Hợp đồng"], a: 0},
+            {w: "erledigen", f: "erledigen, hat erledigt", e: "Mit der sicheren Banking-App kann man Bankgeschäfte unterwegs ______. ", o: ["Xử lý/Hoàn thành", "Hủy bỏ", "Bắt đầu", "Tìm kiếm"], a: 0},
+            {w: "das (Online-)Banking", f: "das (Online-)Banking (Singular)", e: "Für unser ______ brauchst du nur dein Handy oder Tablet.", o: ["Ngân hàng trực tuyến", "Tài khoản", "Ứng dụng", "Giao dịch"], a: 0},
+            {w: "abheben", f: "abheben, hat abgehoben", e: "Am Geldautomaten kannst du Geld ______. ", o: ["Rút tiền", "Gửi tiền", "Chuyển khoản", "Đổi tiền"], a: 0},
+            {w: "das Bargeld", f: "das Bargeld (Singular)", e: "Geld ______ und Bargeld einzahlen.", o: ["Tiền mặt", "Tiền lẻ", "Tiền xu", "Tiền giấy"], a: 0},
+            {w: "einzahlen", f: "einzahlen, hat eingezahlt", e: "Geld abheben und Bargeld ______. ", o: ["Gửi vào", "Rút ra", "Mượn", "Trả nợ"], a: 0},
+            {w: "überweisen", f: "überweisen, hat überwiesen", e: "Kann man am Geldautomat auch Geld ______? ", o: ["Chuyển khoản", "Đổi tiền", "Rút tiền", "Trả tiền"], a: 0},
+            {w: "die PIN", f: "die PIN, die PINs", e: "Wie kann ich die ______ von der Debitkarte ändern?", o: ["Mã PIN", "Số tài khoản", "Tên", "Địa chỉ"], a: 0},
+            {w: "die Debitkarte", f: "die Debitkarte, die Debitkarten", e: "Die ______ und die PIN werden zusammen zugeschickt.", o: ["Thẻ nợ", "Thẻ tín dụng", "Tiền mặt", "Sổ hộ chiếu"], a: 0},
+            {w: "die Gebühr", f: "die Gebühr, die Gebühren", e: "Er ärgert sich: Die Bank hat die ______en erhöht.", o: ["Phí dịch vụ", "Lãi suất", "Tiền phạt", "Tiền thuế"], a: 0},
+            {w: "erhöhen", f: "erhöhen, hat erhöht", e: "Die Bank hat die Gebühren ______. ", o: ["Tăng lên", "Giảm xuống", "Giữ nguyên", "Hủy bỏ"], a: 0},
+            {w: "kompliziert", f: "kompliziert", e: "Er findet das Online-Banking ______. ", o: ["Phức tạp", "Đơn giản", "Nhanh chóng", "An toàn"], a: 0},
+            {w: "einen Antrag stellen", f: "einen Antrag stellen, hat gestellt", e: "Für das neue Online-Banking muss man einen ______ stellen.", o: ["Nộp đơn", "Gửi tiền", "Rút tiền", "Chuyển khoản"], a: 0},
+            {w: "der Bekannte", f: "der Bekannte, die Bekannten", e: "Bei einem ______ war das so: ...", o: ["Người quen", "Người lạ", "Bạn bè", "Đồng nghiệp"], a: 0},
+            {w: "die Bekannte", f: "die Bekannte, die Bekannten", e: "Bei einer ______ war das so: ...", o: ["Người quen nữ", "Người lạ", "Bạn bè", "Đồng nghiệp"], a: 0},
+            {w: "eröffnen", f: "eröffnen, hat eröffnet", e: "Ich würde kein Konto bei der SBN ______. ", o: ["Mở", "Đóng", "Chuyển", "Kiểm tra"], a: 0},
+            {w: "vergleichen", f: "vergleichen, hat verglichen", e: "Aber ich würde verschiedene Angebote ______. ", o: ["So sánh", "Chọn", "Hủy", "Gửi"], a: 0},
+            {w: "die Durchwahl", f: "die Durchwahl, die Durchwahlen", e: "Könnten Sie mir die ______ von ... geben?", o: ["Số trực tiếp", "Số fax", "Số di động", "Số tổng đài"], a: 0},
+            {w: "das Girokonto", f: "das Girokonto, die Girokonten", e: "Amadou hat ein ______ eröffnet.", o: ["Tài khoản vãng lai", "Tài khoản tiết kiệm", "Thẻ nợ", "Sổ nợ"], a: 0},
+            {w: "der Dauerauftrag", f: "der Dauerauftrag, die Daueraufträge", e: "Die Miete wird per ______ abgebucht.", o: ["Lệnh chi định kỳ", "Yêu cầu", "Hợp đồng", "Hóa đơn"], a: 0},
+            {w: "abbuchen", f: "abbuchen, hat abgebucht", e: "Die Miete wird automatisch ______. ", o: ["Trích tiền", "Cộng tiền", "Hủy", "Gửi"], a: 0},
+            {w: "zuschicken", f: "zuschicken, hat zugeschickt", e: "Die Debitkarte und die PIN werden zusammen ______. ", o: ["Gửi đến", "Hủy", "Thay đổi", "Kiểm tra"], a: 0},
+            {w: "der Kontoauszug", f: "der Kontoauszug, die Kontoauszüge", e: "Die ______ werden per Post gesendet.", o: ["Sao kê tài khoản", "Thẻ ATM", "Tiền mặt", "Giấy nợ"], a: 0},
+            {w: "die Überweisung", f: "die Überweisung, die Überweisungen", e: "Bankkunden zahlen Rechnungen meistens per ______. ", o: ["Chuyển khoản", "Hóa đơn", "Lãi suất", "Phí"], a: 0},
+            {w: "der Betrag", f: "der Betrag, die Beträge", e: "Diesen ______ muss man insgesamt bezahlen.", o: ["Số tiền", "Hóa đơn", "Biên lai", "Tiền lẻ"], a: 0},
+            {w: "der IBAN", f: "der IBAN, die IBANs", e: "Wo muss ich den ______ angeben?", o: ["Mã IBAN", "Mã BIC", "Số tài khoản", "Tên ngân hàng"], a: 0},
+            {w: "der BIC", f: "der BIC, die BICs", e: "Jede Bank hat einen ______. ", o: ["Mã BIC", "Mã IBAN", "Mã PIN", "Mã thẻ"], a: 0},
+            {w: "der Verwendungszweck", f: "der Verwendungszweck, die Verwendungszwecke", e: "Bitte geben Sie unbedingt den ______ an.", o: ["Mục đích sử dụng", "Số tiền", "Tên người nhận", "Ngày tháng"], a: 0},
+            {w: "akzeptieren", f: "akzeptieren, hat akzeptiert", e: "Die Kreditkarte wird auch im Ausland in den meisten Geschäften ______. ", o: ["Chấp nhận", "Từ chối", "Hủy bỏ", "Cấm"], a: 0},
+            {w: "der Zins", f: "der Zins, die Zinsen", e: "Für den Bankkredit zahlt man ______. ", o: ["Lãi suất", "Tiền gốc", "Tiền phạt", "Phí"], a: 0},
+            {w: "die Kreditkarte", f: "die Kreditkarte, die Kreditkarten", e: "Wann wird eine neue ______ zugeschickt?", o: ["Thẻ tín dụng", "Thẻ nợ", "Tiền mặt", "Sổ hộ chiếu"], a: 0},
+            {w: "gültig", f: "gültig", e: "Zum Beispiel, wenn die alte Karte nicht mehr ______. ", o: ["Hợp lệ", "Hết hạn", "Mới", "Cũ"], a: 0},
+            {w: "leihen", f: "leihen, hat geliehen", e: "Amadou ______ sich auf keinen Fall Geld von Elisas Eltern.", o: ["Vay/Mượn", "Cho vay", "Trả tiền", "Kiếm tiền"], a: 0},
+            {w: "teilen", f: "teilen, hat geteilt", e: "Wenn man mit Freunden unterwegs ist, sollte man alle Kosten genau ______. ", o: ["Chia đều", "Cộng dồn", "Trừ bớt", "Nhân lên"], a: 0},
+            {w: "die Steuer", f: "die Steuer, die Steuern", e: "Wir lassen unsere ______erklärung machen.", o: ["Thuế", "Phí", "Tiền phạt", "Bảo hiểm"], a: 0},
+            {w: "die Steuererklärung", f: "die Steuererklärung, die Steuererklärungen", e: "Wir lassen unsere ______ machen.", o: ["Khai thuế", "Báo cáo tài chính", "Hóa đơn", "Hợp đồng"], a: 0},
+            {w: "der Kredit", f: "der Kredit, die Kredite", e: "Einen ______ aufnehmen.", o: ["Khoản vay", "Tiền mặt", "Tiết kiệm", "Lương"], a: 0},
+            {w: "die Rate", f: "die Rate, die Raten", e: "Man kann bar, mit Karte oder auf ______ bezahlen.", o: ["Trả góp", "Một lần", "Tiền mặt", "Chuyển khoản"], a: 0},
+            {w: "insgesamt", f: "insgesamt", e: "Diesen Betrag muss man ______ bezahlen.", o: ["Tổng cộng", "Phần", "Một phần", "Riêng lẻ"], a: 0},
+            {w: "aufnehmen", f: "aufnehmen, hat aufgenommen", e: "Ich denke, Amadou sollte keinen Kredit ______. ", o: ["Vay", "Trả", "Hủy", "Gửi"], a: 0},
+            {w: "abhängig", f: "abhängig", e: "Die Gefahr ist groß, dass KundInnen immer mehr Kurzzeitkredite aufnehmen und ______ werden.", o: ["Phụ thuộc", "Độc lập", "Tự do", "Giàu có"], a: 0},
+            {w: "bar", f: "bar bezahlen", e: "Ein Eis bezahle ich ______. ", o: ["Tiền mặt", "Thẻ", "Chuyển khoản", "Nợ"], a: 0},
+            {w: "der Beitrag", f: "der Beitrag, die Beiträge", e: "Den Jahresbeitrag für die Krankenkasse bezahle ich per Dauerauftrag.", o: ["Khoản đóng góp", "Tiền phạt", "Lãi suất", "Phí"], a: 0},
+            {w: "die Krankenkasse", f: "die Krankenkasse, die Krankenkassen", e: "Den Jahresbeitrag für die ______ bezahle ich per Dauerauftrag.", o: ["Bảo hiểm y tế", "Ngân hàng", "Thuế vụ", "Quỹ hưu trí"], a: 0},
+            {w: "das Benzin", f: "das Benzin (Singular)", e: "Benzin an der Tankstelle bezahle ich mit Karte.", o: ["Xăng", "Dầu", "Nước", "Điện"], a: 0}
+        ];
 
-<script>
-    let current = 0; let score = 0; let busy = false;
-    const items = [
-        {w:"die Bank", f:"die Bank, -en", e:"Henry ist zufrieden mit seiner ______.", o:["Ngân hàng","Công ty","Nhà sách","Bệnh viện"], a:0},
-        {w:"das Konto", f:"das Konto, Konten", e:"Dein ______ ist bei uns kostenlos!", o:["Thẻ tín dụng","Tài khoản","Tiền mặt","Hợp đồng"], a:1},
-        {w:"erledigen", f:"erledigen, hat erledigt", e:"Bankgeschäfte unterwegs ______.", o:["Hủy bỏ","Xử lý/Hoàn thành","Bắt đầu","Tìm kiếm"], a:1},
-        {w:"abheben", f:"abheben, hat abgehoben", e:"Geld am Geldautomaten ______.", o:["Gửi tiền","Rút tiền","Đổi tiền","Mượn tiền"], a:1},
-        {w:"das Bargeld", f:"das Bargeld (Sg.)", e:"Geld rút và ______ gửi vào.", o:["Tiền mặt","Tiền lẻ","Tiền xu","Séc"], a:0},
-        {w:"einzahlen", f:"einzahlen, hat eingezahlt", e:"Bargeld auf das Konto ______.", o:["Rút ra","Gửi vào","Mượn","Cho vay"], a:1},
-        {w:"überweisen", f:"überweisen, hat überwiesen", e:"Geld auf ein anderes Konto ______.", o:["Đổi tiền","Chuyển khoản","Trả mặt","Cất tiền"], a:1},
-        {w:"wechseln", f:"wechseln, hat gewechselt", e:"Ich will Euro in Dollar ______.", o:["Đổi ngoại tệ","Gửi tiền","Nhận tiền","Mất tiền"], a:0},
-        {w:"die PIN", f:"die PIN, -s", e:"Wie kann ich die ______ ändern?", o:["Mã PIN","Số tài khoản","Tên","Địa chỉ"], a:0},
-        {w:"die Gebühr", f:"die Gebühr, -en", e:"Die ______en sind hier sehr hoch.", o:["Lãi suất","Phí dịch
+        let currentQuestion = 0;
+        let score = 0;
+
+        const positiveFeedback = ["Gut gemacht!", "Sehr gut!", "Super!", "Toll!", "Weiter so!", "Prima!", "Genau richtig!"];
+        const negativeFeedback = ["Leider falsch!", "Noch nicht richtig!", "Versuch es noch einmal!", "Nicht ganz richtig!", "Schade!", "Falsch!"];
+
+        function speakGerman(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE';
+                utterance.rate = 0.9;
+                utterance.volume = 0.9;
+                const voices = speechSynthesis.getVoices();
+                const deVoice = voices.find(v => v.lang.startsWith('de-'));
+                if (deVoice) utterance.voice = deVoice;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startApp() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("end-screen").style.display = "none";
+            document.getElementById("quiz-ui").style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= vocabData.length) {
+                showResult();
+                return;
+            }
+            const q = vocabData[currentQuestion];
+            document.getElementById("stat").textContent = `Frage ${currentQuestion + 1} von ${vocabData.length}`;
+            document.getElementById("w").textContent = q.w;
+            document.getElementById("i").textContent = q.f;
+            document.getElementById("e").innerHTML = q.e.replace(/______/g, "___");
+
+            const optsDiv = document.getElementById("opts");
+            optsDiv.innerHTML = "";
+            q.o.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "opt-btn";
+                btn.textContent = opt;
+                btn.onclick = () => handleClick(idx, btn, q);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function handleClick(selectedIdx, btn, q) {
+            const allBtns = document.querySelectorAll(".opt-btn");
+
+            // Nếu đã trả lời xong (disable), ấn vào nút đúng thì chỉ đọc 1 lần dạng đầy đủ
+            if (allBtns[0].disabled) {
+                if (selectedIdx === q.a) {
+                    speakGerman(q.f);  // Chỉ đọc dạng đầy đủ từ sách, ví dụ "das Konto, die Konten"
+                }
+                return;
+            }
+
+            // Disable tất cả sau khi chọn lần đầu
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selectedIdx === q.a) {
+                score++;
+                const msg = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#27ae60";
+                btn.classList.add("correct");
+
+                setTimeout(() => {
+                    speakGerman("Richtig! " + q.f);
+                }, 400);
+            } else {
+                const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#e74c3c";
+                btn.classList.add("wrong");
+
+                // Highlight đáp án đúng màu xanh
+                allBtns[q.a].classList.add("highlight");
+
+                setTimeout(() => {
+                    speakGerman("Falsch! " + q.f);
+                }, 400);
+            }
+
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResult() {
+            document.getElementById("quiz-ui").style.display = "none";
+            document.getElementById("end-screen").style.display = "block";
+            const percent = Math.round((score / vocabData.length) * 100);
+            let comment = percent >= 85 ? "Ausgezeichnet! 🌟" : percent >= 70 ? "Sehr gut! 👍" : percent >= 50 ? "Gut – weiter üben! 💪" : "Nächstes Mal besser! 😊";
+            document.getElementById("score").innerHTML = `Du hast <strong>${score}/${vocabData.length}</strong> richtig!<br>(${percent} %)<br><br>${comment}`;
+        }
+
+        function restartQuiz() {
+            startApp();
+        }
+    </script>
+</body>
+</html>
