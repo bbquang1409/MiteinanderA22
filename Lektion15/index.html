@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Deutsch Lektion 15</title>
+    <title>Deutsch Lektion 15 - 45 từ</title>
     <style>
         body { font-family: -apple-system, sans-serif; background: #f0f3f9; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .quiz-card { background: white; width: 92%; max-width: 450px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
@@ -12,9 +12,10 @@
         .word-de { font-size: 1.6rem; color: #6c5ce7; font-weight: bold; margin: 10px 0; }
         .info-de { color: #e67e22; font-size: 0.9rem; font-style: italic; margin-bottom: 10px; }
         .example-de { background: #f8faff; padding: 12px; border-radius: 10px; margin-bottom: 15px; text-align: left; border-left: 4px solid #6c5ce7; font-size: 0.95rem; }
-        .opt-btn { width: 100%; background: white; border: 1px solid #ddd; padding: 14px; border-radius: 12px; margin: 4px 0; font-size: 1rem; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+        .opt-btn { width: 100%; background: white; border: 1px solid #ddd; padding: 14px; border-radius: 12px; margin: 4px 0; font-size: 1rem; cursor: pointer; font-weight: 600; }
         .main-btn { width: 100%; padding: 16px; background: #6c5ce7; color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
-        #feedback { margin: 10px; font-weight: bold; min-height: 20px; }
+        #fill { height: 6px; background: #6c5ce7; width: 0%; transition: 0.3s; border-radius: 10px; }
+        .prog-bg { width: 100%; background: #eee; height: 6px; border-radius: 10px; margin-bottom: 15px; }
     </style>
 </head>
 <body>
@@ -22,113 +23,24 @@
         <div id="start-screen">
             <div class="flag"><div class="f-b"></div><div class="f-r"></div><div class="f-g"></div></div>
             <h2 style="color:#6c5ce7">Lektion 15</h2>
-            <p>Ngân hàng & Tài chính (Phần A-C)</p>
+            <p>Đầy đủ 45 từ vựng (A-C)</p>
             <button class="main-btn" onclick="startApp()">STARTEN</button>
         </div>
         <div id="quiz-ui" style="display:none">
+            <div class="prog-bg"><div id="fill"></div></div>
             <div id="stat" style="font-size:11px; color:#999; margin-bottom: 5px;"></div>
             <div class="word-de" id="w"></div>
             <div class="info-de" id="i"></div>
             <div class="example-de" id="e"></div>
             <div id="opts"></div>
-            <div id="feedback"></div>
+            <div id="feedback" style="margin:10px; font-weight:bold; min-height:20px"></div>
             <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">TIẾP TỤC</button>
         </div>
     </div>
 
     <script>
         const vocabData = [
-            {w: "die Bank", f: "die Bank, -en", e: "Henry ist sehr zufrieden mit seiner ______.", o: ["Ngân hàng", "Công ty", "Nhà sách"], a: 0},
-            {w: "das Konto", f: "das Konto, Konten", e: "Dann ist dein ______ tại chúng tôi miễn phí!", o: ["Thẻ tín dụng", "Tài khoản", "Tiền mặt"], a: 1},
-            {w: "erledigen", f: "erledigen, hat erledigt", e: "Bankgeschäfte unterwegs ______.", o: ["Bắt đầu", "Giải quyết/Xử lý", "Hủy bỏ"], a: 1},
-            {w: "abheben", f: "abheben, hat abgehoben", e: "Geld ______ am Geldautomaten.", o: ["Gửi tiền", "Rút tiền", "Đổi tiền"], a: 1},
-            {w: "das Bargeld", f: "das Bargeld (Sg.)", e: "Geld abheben und ______ einzahlen.", o: ["Tiền mặt", "Tiền lẻ", "Tiền xu"], a: 0},
-            {w: "einzahlen", f: "einzahlen, hat eingezahlt", e: "Bargeld ______.", o: ["Rút ra", "Gửi vào", "Mượn"], a: 1},
-            {w: "überweisen", f: "überweisen, hat überwiesen", e: "Geld ______?", o: ["Đổi tiền", "Chuyển khoản", "Trả tiền mặt"], a: 1},
-            {w: "wechseln", f: "wechseln, hat gewechselt", e: "Ich will Geld ______.", o: ["Đổi (ngoại tệ)", "Nhận", "Mất"], a: 0},
-            {w: "die PIN", f: "die PIN, -s", e: "Wie kann ich die ______ ändern?", o: ["Mật khẩu thẻ", "Số tài khoản", "Tên"], a: 0},
-            {w: "die Gebühr", f: "die Gebühr, -en", e: "Die Bank hat die ______en erhöht.", o: ["Lãi suất", "Phí dịch vụ", "Tiền phạt"], a: 1},
-            {w: "eröffnen", f: "eröffnen, hat eröffnet", e: "Ein Konto ______.", o: ["Đóng", "Mở (tài khoản)", "Chuyển"], a: 1},
-            {w: "das Girokonto", f: "das Girokonto, -konten", e: "Ein ______ eröffnet.", o: ["TK tiết kiệm", "TK vãng lai", "Sổ nợ"], a: 1},
-            {w: "der Dauerauftrag", f: "der Dauerauftrag, -ä-e", e: "Fragen zu seinen ______en.", o: ["Yêu cầu", "Lệnh chi định kỳ", "Hợp đồng"], a: 1},
-            {w: "abbuchen", f: "abbuchen, hat abgebucht", e: "Die Miete wird ______.", o: ["Cộng vào", "Trích tiền/Trừ nợ", "Ghi lại"], a: 1},
-            {w: "der Kontoauszug", f: "der Kontoauszug, -ä-e", e: "______ per Post.", o: ["Thẻ ngân hàng", "Sao kê tài khoản", "Tiền mặt"], a: 1},
-            {w: "der Betrag", f: "der Betrag, -ä-e", e: "Diesen ______ bezahlen.", o: ["Hóa đơn", "Số tiền", "Tiền thừa"], a: 1},
-            {w: "akzeptieren", f: "akzeptieren, hat akzeptiert", e: "Kreditkarten ______.", o: ["Từ chối", "Chấp nhận", "Hủy bỏ"], a: 1},
-            {w: "der Zins", f: "der Zins, -en", e: "Zinsen cho khoản vay.", o: ["Tiền gốc", "Lãi suất", "Phí"], a: 1},
-            {w: "die Kreditkarte", f: "die Kreditkarte, -n", e: "Wann kommt die ______?", o: ["Thẻ ghi nợ", "Thẻ tín dụng", "Ví tiền"], a: 1},
-            {w: "leihen", f: "sich leihen, hat geliehen", e: "Geld ______ von Eltern.", o: ["Cho vay", "Vay/Mượn", "Trả tiền"], a: 1},
-            {w: "teilen", f: "teilen, hat geteilt", e: "Kosten ______.", o: ["Cộng", "Chia sẻ/Chia đều", "Trừ"], a: 1},
-            {w: "die Steuer", f: "die Steuer, -n", e: "______erklärung machen.", o: ["Phí", "Thuế", "Tiền phạt"], a: 1},
-            {w: "übersetzen", f: "übersetzen, hat übersetzt", e: "Geburtsurkunde ______.", o: ["Viết lại", "Dịch thuật", "Nộp"], a: 1},
-            {w: "die Voraussetzung", f: "die Voraussetzung, -en", e: "______en erfüllen.", o: ["Kết quả", "Điều kiện tiên quyết", "Yêu cầu"], a: 1},
-            {w: "der Kredit", f: "der Kredit, -e", e: "Keinen ______ aufnehmen.", o: ["Khoản vay", "Tiền mặt", "Lương"], a: 0},
-            {w: "bar", f: "bar bezahlen", e: "Ich bezahle ______.", o: ["Thẻ", "Tiền mặt", "Nợ"], a: 1},
-            {w: "das Paar", f: "das Paar, -e", e: "Ihr seid ein ______.", o: ["Bạn bè", "Cặp đôi", "Đồng nghiệp"], a: 1},
-            {w: "finanzieren", f: "finanzieren, hat finanziert", e: "Selbst ______.", o: ["Tiết kiệm", "Chi trả tài chính", "Mua sắm"], a: 1},
-            {w: "die Beziehung", f: "die Beziehung, -en", e: "Wichtig für unsere ______.", o: ["Công việc", "Mối quan hệ", "Sức khỏe"], a: 1},
-            {w: "übertreiben", f: "übertreiben, hat übertrieben", e: "Jetzt ______ du!", o: ["Nói dối", "Nói quá/Làm quá", "Nói thật"], a: 1},
-            {w: "fremd", f: "fremd", e: "______e Hilfe.", o: ["Người quen", "Xa lạ/Ngoài", "Gia đình"], a: 1},
-            {w: "die Lösung", f: "die Lösung, -en", e: "Eine ______ finden.", o: ["Vấn đề", "Giải pháp", "Lỗi"], a: 1},
-            {w: "recht haben", f: "hat recht gehabt", e: "Rajana ______.", o: ["Sai", "Đúng/Có lý", "Giận"], a: 1},
-            {w: "die Freundschaft", f: "die Freundschaft, -en", e: "Geld in einer ______.", o: ["Tình yêu", "Tình bạn", "Công việc"], a: 1},
-            {w: "die Kosten", f: "die Kosten (Pl.)", e: "Alle ______ teilen.", o: ["Lợi nhuận", "Chi phí", "Giá"], a: 1},
-            {w: "widersprechen", f: "hat widersprochen", e: "Da muss ich ______!", o: ["Đồng ý", "Phản đối", "Lắng nghe"], a: 1}
-        ];
-
-        let curr = 0, score = 0, canProceed = false;
-
-        function startApp() {
-            document.getElementById('start-screen').style.display = 'none';
-            document.getElementById('quiz-ui').style.display = 'block';
-            render();
-        }
-
-        function safeSpeak(text) {
-            if (!('speechSynthesis' in window)) return;
-            window.speechSynthesis.cancel();
-            const msg = new SpeechSynthesisUtterance(text);
-            msg.lang = 'de-DE';
-            msg.rate = 0.85;
-            window.speechSynthesis.speak(msg);
-        }
-
-        function render() {
-            if (curr >= vocabData.length) {
-                document.getElementById('quiz-ui').innerHTML = `<h2>Kết quả: ${score}/${vocabData.length}</h2><button onclick="location.reload()" class="main-btn">LÀM LẠI</button>`;
-                return;
-            }
-            canProceed = false;
-            const q = vocabData[curr];
-            document.getElementById('stat').innerText = "CÂU " + (curr + 1) + " / " + vocabData.length;
-            document.getElementById('w').innerText = q.w;
-            document.getElementById('i').innerText = q.f;
-            document.getElementById('e').innerText = q.e;
-            document.getElementById('feedback').innerText = "";
-            document.getElementById('next-btn').style.display = 'none';
-            const box = document.getElementById('opts');
-            box.innerHTML = '';
-            q.o.forEach((opt, idx) => {
-                const btn = document.createElement('button');
-                btn.className = 'opt-btn';
-                btn.innerText = opt;
-                btn.onclick = function() {
-                    if(canProceed) return;
-                    if(idx === q.a) {
-                        canProceed = true; score++;
-                        btn.style.background = "#2ecc71"; btn.style.color = "white";
-                        document.getElementById('feedback').innerHTML = "<span style='color:#2ecc71'>Chuẩn!</span>";
-                        document.getElementById('next-btn').style.display = 'block';
-                        safeSpeak(q.w); 
-                    } else {
-                        btn.style.background = "#ff7675"; btn.style.color = "white";
-                        document.getElementById('feedback').innerHTML = "<span style='color:#ff7675'>Sai rồi!</span>";
-                    }
-                };
-                box.appendChild(btn);
-            });
-        }
-        function nextQuestion() { curr++; render(); }
-    </script>
-</body>
-</html>
+            {w: "die Bank", f: "die Bank, -en", e: "Henry ist zufrieden mit seiner ______.", o: ["Ngân hàng", "Công ty", "Nhà sách"], a: 0},
+            {w: "das Konto", f: "das Konto, Konten", e: "Dein ______ ist kostenlos.", o: ["Thẻ", "Tài khoản", "Tiền mặt"], a: 1},
+            {w: "erledigen", f: "erledigen, hat erledigt", e: "Bankgeschäfte unterwegs ______.", o: ["Bắt đầu", "Xử lý/Hoàn thành", "Hủy bỏ"], a: 1},
+            {w: "abheben", f: "abheben, hat abgehoben", e: "Geld am Automaten ______.", o: ["Gửi tiền", "Rút tiền", "Chuyển khoản"], a: 1},
