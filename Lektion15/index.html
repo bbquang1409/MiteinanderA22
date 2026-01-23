@@ -5,28 +5,111 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Deutsch Lektion 15</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #f0f3f9; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .quiz-card { background: white; width: 92%; max-width: 450px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
-        .flag { width: 80px; height: 48px; margin: 0 auto 15px; display: flex; flex-direction: column; border: 1px solid #ddd; }
-        .f-b { background: #000; flex: 1; } .f-r { background: #f00; flex: 1; } .f-g { background: #ff0; flex: 1; }
-        .word-de { font-size: 1.6rem; color: #6c5ce7; font-weight: bold; margin: 10px 0; }
-        .info-de { color: #e67e22; font-size: 0.9rem; font-style: italic; margin-bottom: 10px; }
-        .example-de { background: #f8faff; padding: 12px; border-radius: 10px; margin-bottom: 15px; text-align: left; border-left: 4px solid #6c5ce7; font-size: 0.95rem; }
-        .opt-btn { width: 100%; background: white; border: 1px solid #ddd; padding: 14px; border-radius: 12px; margin: 4px 0; font-size: 1rem; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
-        .main-btn { width: 100%; padding: 16px; background: #6c5ce7; color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
-        #feedback { margin: 10px; font-weight: bold; min-height: 20px; }
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif; 
+            background: #f0f3f9; 
+            margin: 0; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            min-height: 100vh; 
+        }
+        .quiz-card { 
+            background: white; 
+            width: 92%; 
+            max-width: 450px; 
+            padding: 20px; 
+            border-radius: 20px; 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1); 
+            text-align: center; 
+        }
+        .flag { 
+            width: 80px; 
+            height: 48px; 
+            margin: 0 auto 15px; 
+            display: flex; 
+            flex-direction: column; 
+            border: 1px solid #ddd; 
+            overflow: hidden;
+        }
+        .f-b { background: #000; flex: 1; } 
+        .f-r { background: #f00; flex: 1; } 
+        .f-g { background: #ff0; flex: 1; }
+        .word-de { 
+            font-size: 1.8rem; 
+            color: #6c5ce7; 
+            font-weight: bold; 
+            margin: 10px 0; 
+        }
+        .info-de { 
+            color: #e67e22; 
+            font-size: 0.95rem; 
+            font-style: italic; 
+            margin-bottom: 12px; 
+        }
+        .example-de { 
+            background: #f8faff; 
+            padding: 14px; 
+            border-radius: 10px; 
+            margin-bottom: 20px; 
+            text-align: left; 
+            border-left: 5px solid #6c5ce7; 
+            font-size: 1rem; 
+            line-height: 1.4; 
+        }
+        .opt-btn { 
+            width: 100%; 
+            background: white; 
+            border: 1px solid #ddd; 
+            padding: 14px; 
+            border-radius: 12px; 
+            margin: 6px 0; 
+            font-size: 1.05rem; 
+            cursor: pointer; 
+            font-weight: 600; 
+            transition: all 0.2s; 
+        }
+        .opt-btn:hover { background: #f8f9fa; }
+        .main-btn { 
+            width: 100%; 
+            padding: 16px; 
+            background: #6c5ce7; 
+            color: white; 
+            border: none; 
+            border-radius: 15px; 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            cursor: pointer; 
+            margin-top: 10px;
+        }
+        #feedback { 
+            margin: 12px 0; 
+            font-weight: bold; 
+            font-size: 1.1rem; 
+            min-height: 28px; 
+        }
+        #stat {
+            font-size: 0.85rem; 
+            color: #777; 
+            margin-bottom: 8px;
+        }
     </style>
 </head>
 <body>
     <div class="quiz-card">
         <div id="start-screen">
-            <div class="flag"><div class="f-b"></div><div class="f-r"></div><div class="f-g"></div></div>
+            <div class="flag">
+                <div class="f-b"></div>
+                <div class="f-r"></div>
+                <div class="f-g"></div>
+            </div>
             <h2 style="color:#6c5ce7">Lektion 15</h2>
             <p>Ngân hàng & Tài chính (Phần A-C)</p>
             <button class="main-btn" onclick="startApp()">STARTEN</button>
         </div>
+
         <div id="quiz-ui" style="display:none">
-            <div id="stat" style="font-size:11px; color:#999; margin-bottom: 5px;"></div>
+            <div id="stat"></div>
             <div class="word-de" id="w"></div>
             <div class="info-de" id="i"></div>
             <div class="example-de" id="e"></div>
@@ -38,7 +121,122 @@
 
     <script>
         const vocabData = [
-            {w: "die Bank", f: "die Bank, -en", e: "Henry ist sehr zufrieden mit seiner ______.", o: ["Ngân hàng", "Công ty", "Nhà sách"], a: 0},
-            {w: "das Konto", f: "das Konto, Konten", e: "Dann ist dein ______ tại chúng tôi miễn phí!", o: ["Thẻ tín dụng", "Tài khoản", "Tiền mặt"], a: 1},
-            {w: "erledigen", f: "erledigen, hat erledigt", e: "Bankgeschäfte unterwegs ______.", o: ["Bắt đầu", "Giải quyết/Xử lý", "Hủy bỏ"], a: 1},
-            {w: "abheben", f: "abheben, hat abgeh
+            { 
+                w: "die Bank", 
+                f: "die Bank, -en", 
+                e: "Henry ist sehr zufrieden mit seiner ______. (ngân hàng)", 
+                o: ["Ngân hàng", "Công ty", "Nhà sách"], 
+                a: 0 
+            },
+            { 
+                w: "das Konto", 
+                f: "das Konto, Konten", 
+                e: "Dann ist dein ______ bei uns kostenlos!", 
+                o: ["Thẻ tín dụng", "Tài khoản", "Tiền mặt"], 
+                a: 1 
+            },
+            { 
+                w: "erledigen", 
+                f: "erledigen, hat erledigt", 
+                e: "Bankgeschäfte unterwegs schnell ______. ", 
+                o: ["Bắt đầu", "Giải quyết / Xử lý", "Hủy bỏ"], 
+                a: 1 
+            },
+            { 
+                w: "abheben", 
+                f: "abheben, hat abgehoben", 
+                e: "Ich muss noch 200 Euro von meinem Konto ______. ", 
+                o: ["Rút (tiền)", "Gửi tiền", "Chuyển khoản"], 
+                a: 0 
+            },
+            { 
+                w: "überweisen", 
+                f: "überweisen, hat überwiesen", 
+                e: "Kannst du mir bitte 50 Euro auf mein Konto ______?", 
+                o: ["Rút tiền", "Chuyển khoản", "Thanh toán bằng thẻ"], 
+                a: 1 
+            },
+            { 
+                w: "die Überweisung", 
+                f: "die Überweisung, -en", 
+                e: "Die ______ dauert normalerweise 1–2 Tage.", 
+                o: ["Giao dịch", "Chuyển khoản", "Lãi suất"], 
+                a: 1 
+            }
+        ];
+
+        let currentQuestion = 0;
+
+        function startApp() {
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("quiz-ui").style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= vocabData.length) {
+                document.getElementById("w").textContent = "Hoàn thành!";
+                document.getElementById("i").textContent = "";
+                document.getElementById("e").textContent = "Bạn đã học xong " + vocabData.length + " từ vựng.";
+                document.getElementById("opts").innerHTML = "";
+                document.getElementById("feedback").textContent = "Gut gemacht! 🎉";
+                document.getElementById("feedback").style.color = "#27ae60";
+                document.getElementById("next-btn").style.display = "none";
+                return;
+            }
+
+            const q = vocabData[currentQuestion];
+            document.getElementById("stat").textContent = `Câu ${currentQuestion + 1} / ${vocabData.length}`;
+            document.getElementById("w").textContent = q.w;
+            document.getElementById("i").textContent = q.f;
+            document.getElementById("e").innerHTML = q.e.replace("______", "___");
+
+            const optsDiv = document.getElementById("opts");
+            optsDiv.innerHTML = "";
+
+            q.o.forEach((option, index) => {
+                const btn = document.createElement("button");
+                btn.className = "opt-btn";
+                btn.textContent = option;
+                btn.onclick = () => checkAnswer(index, btn);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function checkAnswer(selectedIndex, selectedButton) {
+            const q = vocabData[currentQuestion];
+            const feedback = document.getElementById("feedback");
+            const allButtons = document.querySelectorAll(".opt-btn");
+
+            allButtons.forEach(btn => btn.disabled = true);
+
+            if (selectedIndex === q.a) {
+                feedback.textContent = "Rất tốt! ✓ Đúng rồi!";
+                feedback.style.color = "#27ae60";
+                selectedButton.style.background = "#d4edda";
+                selectedButton.style.borderColor = "#28a745";
+            } else {
+                feedback.textContent = "Sai rồi. Đáp án đúng: " + q.o[q.a];
+                feedback.style.color = "#c0392b";
+                selectedButton.style.background = "#f8d7da";
+                selectedButton.style.borderColor = "#dc3545";
+
+                // Highlight đáp án đúng
+                const correctBtn = allButtons[q.a];
+                correctBtn.style.background = "#d4edda";
+                correctBtn.style.borderColor = "#28a745";
+            }
+
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+    </script>
+</body>
+</html>
