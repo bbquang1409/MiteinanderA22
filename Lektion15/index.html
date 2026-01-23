@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lektion 15 - 45 Vocabulary</title>
+    <title>Deutsch Lektion 15</title>
     <style>
-        body { font-family: -apple-system, sans-serif; background: #f0f3f9; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .quiz-card { background: white; width: 92%; max-width: 450px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        body { font-family: -apple-system, sans-serif; background: #f0f3f9; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+        .quiz-card { background: white; width: 92%; max-width: 420px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
         .word-de { font-size: 1.6rem; color: #6c5ce7; font-weight: bold; margin: 10px 0; }
         .info-de { color: #e67e22; font-size: 0.9rem; font-style: italic; margin-bottom: 10px; }
         .example-de { background: #f8faff; padding: 12px; border-radius: 10px; margin-bottom: 15px; text-align: left; border-left: 4px solid #6c5ce7; font-size: 0.95rem; }
-        .opt-btn { width: 100%; background: white; border: 1px solid #ddd; padding: 14px; border-radius: 12px; margin: 5px 0; font-size: 1rem; cursor: pointer; font-weight: 600; -webkit-tap-highlight-color: transparent; }
+        .opt-btn { width: 100%; background: white; border: 1px solid #ddd; padding: 14px; border-radius: 12px; margin: 5px 0; font-size: 1rem; cursor: pointer; font-weight: 600; }
         .main-btn { width: 100%; padding: 16px; background: #6c5ce7; color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: bold; cursor: pointer; }
         .prog-bg { width: 100%; background: #eee; height: 6px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; }
         #bar { height: 100%; background: #6c5ce7; width: 0%; transition: 0.3s; }
@@ -18,29 +18,50 @@
 </head>
 <body>
     <div class="quiz-card">
-        <div id="screen-start">
+        <div id="box-start">
             <h2 style="color:#6c5ce7">Lektion 15</h2>
-            <p>Chủ đề: Ngân hàng (45 từ)</p>
-            <button class="main-btn" onclick="go()">BẮT ĐẦU HỌC</button>
+            <p>Ngân hàng & Tài chính (45 từ)</p>
+            <button class="main-btn" onclick="startNow()">BẮT ĐẦU HỌC</button>
         </div>
-        <div id="screen-quiz" style="display:none">
+        <div id="box-quiz" style="display:none">
             <div class="prog-bg"><div id="bar"></div></div>
-            <div id="count" style="font-size:11px; color:#999; margin-bottom: 5px;"></div>
-            <div class="word-de" id="display-w"></div>
-            <div class="info-de" id="display-i"></div>
-            <div class="example-de" id="display-e"></div>
-            <div id="display-opts"></div>
-            <div id="feedback" style="margin:10px; font-weight:bold; min-height:20px"></div>
-            <button id="next" class="main-btn" style="display:none" onclick="step()">TIẾP TỤC</button>
+            <div id="info-count" style="font-size:11px; color:#999; margin-bottom: 5px;"></div>
+            <div class="word-de" id="txt-w"></div>
+            <div class="info-de" id="txt-i"></div>
+            <div class="example-de" id="txt-e"></div>
+            <div id="list-opts"></div>
+            <div id="msg" style="margin:10px; font-weight:bold; min-height:20px"></div>
+            <button id="btn-next" class="main-btn" style="display:none" onclick="goNext()">TIẾP TỤC</button>
         </div>
     </div>
 
     <script>
-        // Danh sách 45 từ vựng Lektion 15
-        const myWords = [
+        const data = [
             {w:"die Bank", f:"die Bank, -en", e:"Henry ist zufrieden mit seiner ______.", o:["Ngân hàng","Công ty","Nhà sách"], a:0},
             {w:"das Konto", f:"das Konto, Konten", e:"Dein ______ ist kostenlos.", o:["Thẻ","Tài khoản","Tiền mặt"], a:1},
-            {w:"erledigen", f:"erledigen, hat erledigt", e:"Bankgeschäfte unterwegs ______.", o:["Bắt đầu","Xử lý/Hoàn thành","Hủy bỏ"], a:1},
+            {w:"erledigen", f:"erledigen, hat erledigt", e:"Bankgeschaefte unterwegs ______.", o:["Bắt đầu","Xử lý/Hoàn thành","Hủy bỏ"], a:1},
             {w:"abheben", f:"abheben, hat abgehoben", e:"Geld am Automaten ______.", o:["Gửi tiền","Rút tiền","Chuyển khoản"], a:1},
-            {w:"das Bargeld", f:"das Bargeld (Sg.)", e:"Geld abheben và ______ einzahlen.", o:["Tiền mặt","Tiền xu","Tiền giấy"], a:0},
-            {w:"einzahlen", f:"einzahlen, hat eingezahlt", e:"Bargeld ______.", o:["Rút ra","Gửi tiền vào","
+            {w:"das Bargeld", f:"das Bargeld (Sg.)", e:"Geld abheben und ______ einzahlen.", o:["Tiền mặt","Tiền xu","Tiền giấy"], a:0},
+            {w:"einzahlen", f:"einzahlen, hat eingezahlt", e:"Bargeld ______.", o:["Rút ra","Gửi tiền vào","Mượn"], a:1},
+            {w:"überweisen", f:"überweisen, hat überwiesen", e:"Geld ______?", o:["Đổi tiền","Chuyển khoản","Trả mặt"], a:1},
+            {w:"wechseln", f:"wechseln, hat gewechselt", e:"Ich will Geld ______.", o:["Đổi ngoại tệ","Gửi","Mất"], a:0},
+            {w:"die PIN", f:"die PIN, -s", e:"Wie kann ich die ______ aendern?", o:["Mã PIN","Số tài khoản","Tên"], a:0},
+            {w:"die Gebühr", f:"die Gebühr, -en", e:"Die ______en sind hoch.", o:["Lãi suất","Phí dịch vụ","Thuế"], a:1},
+            {w:"eröffnen", f:"eröffnen, hat eröffnet", e:"Ein Konto ______.", o:["Đóng","Mở","Chuyển"], a:1},
+            {w:"das Girokonto", f:"das Girokonto, -konten", e:"Ein ______ eröffnen.", o:["TK tiết kiệm","TK vãng lai","Sổ nợ"], a:1},
+            {w:"der Dauerauftrag", f:"der Dauerauftrag, -ae-e", e:"Fragen zu ______en.", o:["Yêu cầu","Lệnh chi định kỳ","Hợp đồng"], a:1},
+            {w:"abbuchen", f:"abbuchen, hat abgebucht", e:"Die Miete wird ______.", o:["Cộng vào","Trừ nợ","Ghi"], a:1},
+            {w:"der Kontoauszug", f:"der Kontoauszug, -ae-e", e:"______ per Post.", o:["Thẻ","Sao kê tài khoản","Tiền mặt"], a:1},
+            {w:"der Betrag", f:"der Betrag, -ae-e", e:"Diesen ______ bezahlen.", o:["Hóa đơn","Số tiền","Tiền lẻ"], a:1},
+            {w:"akzeptieren", f:"akzeptieren, hat akzeptiert", e:"Kreditkarten ______.", o:["Từ chối","Chấp nhận","Hủy"], a:1},
+            {w:"der Zins", f:"der Zins, -en", e:"Zinsen cho khoản vay.", o:["Tiền gốc","Lãi suất","Phí"], a:1},
+            {w:"die Kreditkarte", f:"die Kreditkarte, -n", e:"Wann kommt die ______?", o:["Thẻ nợ","Thẻ tín dụng","Ví"], a:1},
+            {w:"leihen", f:"sich leihen, hat geliehen", e:"Geld ______ von Freunden.", o:["Cho vay","Vay/Mượn","Trả"], a:1},
+            {w:"teilen", f:"teilen, hat geteilt", e:"Kosten ______.", o:["Cộng","Chia đều","Trừ"], a:1},
+            {w:"die Steuer", f:"die Steuer, -n", e:"______erklaerung machen.", o:["Phí","Thuế","Tiền phạt"], a:1},
+            {w:"übersetzen", f:"übersetzen, hat übersetzt", e:"Urkunde ______.", o:["Viết lại","Dịch thuật","Nộp"], a:1},
+            {w:"die Voraussetzung", f:"die Voraussetzung, -en", e:"______en erfüllen.", o:["Kết quả","Điều kiện","Yêu cầu"], a:1},
+            {w:"der Kredit", f:"der Kredit, -e", e:"Einen ______ aufnehmen.", o:["Khoản vay","Tiền mặt","Lương"], a:0},
+            {w:"bar", f:"bar bezahlen", e:"Ich bezahle ______.", o:["Thẻ","Tiền mặt","Nợ"], a:1},
+            {w:"das Paar", f:"das Paar, -e", e:"Ihr seid ein ______.", o:["Bạn bè","Cặp đôi","Đồng nghiệp"], a:1},
+            {w:"finanzieren", f:"finanzieren, hat finanziert", e:"Das Haus ______.", o:["Ti
