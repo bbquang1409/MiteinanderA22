@@ -1,179 +1,137 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deutschmeister Lektion 1</title>
+    <title>Deutsch A2</title>
     <style>
-        :root { --p: #6c5ce7; --s: #2ecc71; --d: #ff7675; --bg: #f0f3f9; }
-        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .quiz-card { background: white; width: 95%; max-width: 550px; padding: 35px; border-radius: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; }
-        .progress-bar { width: 100%; height: 10px; background: #eee; border-radius: 5px; margin-bottom: 20px; overflow: hidden; }
-        #fill { height: 100%; background: var(--p); width: 0%; transition: 0.3s; }
-        .word-de { font-size: 2.2rem; color: var(--p); font-weight: 800; margin: 5px 0; }
-        .info-de { color: #e67e22; font-style: italic; margin-bottom: 20px; font-weight: 600; font-size: 1.1rem; }
-        .example-de { background: #f8faff; border-radius: 15px; padding: 20px; margin-bottom: 20px; font-size: 1.3rem; text-align: left; border-left: 5px solid var(--p); line-height: 1.5; }
-        .options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-        .opt-btn { background: white; border: 2px solid #e0e0e0; padding: 15px; border-radius: 12px; font-size: 1.05rem; font-weight: 600; cursor: pointer; transition: 0.2s; }
-        .correct { background: var(--s) !important; color: white; border-color: var(--s) !important; }
-        .wrong { background: var(--d) !important; color: white; border-color: var(--d) !important; }
-        #feedback { font-size: 1.2rem; font-weight: bold; margin: 15px 0; min-height: 1.5rem; }
-        #next-btn, #start-btn { width: 100%; padding: 18px; background: var(--p); color: white; border: none; border-radius: 15px; font-size: 1.2rem; font-weight: bold; cursor: pointer; }
+        body { font-family: sans-serif; text-align: center; background: #f0f3f9; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+        .flag { width: 100px; height: 60px; margin: 0 auto 15px; border: 1px solid #ccc; display: flex; flex-direction: column; }
+        .b { background: #000; flex: 1; } .r { background: #f00; flex: 1; } .g { background: #ff0; flex: 1; }
+        .word { font-size: 24px; color: #6c5ce7; font-weight: bold; }
+        .btn { width: 100%; padding: 15px; margin: 5px 0; border-radius: 10px; border: 1px solid #ddd; background: white; font-size: 16px; cursor: pointer; }
+        .start-btn { background: #6c5ce7; color: white; border: none; font-size: 20px; }
+        .next-btn { background: #2ecc71; color: white; border: none; display: none; }
     </style>
 </head>
 <body>
-function safeSpeak(text) {
-    if (!('speechSynthesis' in window)) return;
-    
-    // Hủy các yêu cầu đọc cũ để tránh bị kẹt
-    window.speechSynthesis.cancel(); 
-    
-    const msg = new SpeechSynthesisUtterance(text);
-    
-    // Ép trình duyệt dùng mã ngôn ngữ Đức
-    msg.lang = 'de-DE'; 
-    msg.rate = 0.85; // Tốc độ vừa phải để dễ nghe
-    
-    window.speechSynthesis.speak(msg);
-}
-<div class="quiz-card" id="card">
-    <div id="start-screen">
-        <h1 style="color:var(--p)">Wortschatz-Training</h1>
-        <p style="font-size: 1.2rem; color: #636e72;">Lektion 1: Weggehen und Ankommen</p>
-        <button id="start-btn" onclick="startApp()">Starten</button>
+
+<div class="card">
+    <div id="s-start">
+        <div class="flag"><div class="b"></div><div class="r"></div><div class="g"></div></div>
+        <h2>Lektion 1</h2>
+        <p>45 từ vựng</p>
+        <button class="btn start-btn" onclick="batDau()">STARTEN</button>
     </div>
 
-    <div id="quiz-ui" style="display:none">
-        <div class="progress-bar"><div id="fill"></div></div>
-        <div id="stat" style="color:#aaa; font-size:0.8rem; margin-bottom:10px; font-weight: bold;"></div>
-        <div class="word-de" id="w"></div>
-        <div class="info-de" id="i"></div>
-        <div class="example-de" id="e"></div>
-        <div class="options" id="opts"></div>
-        <div id="feedback"></div>
-        <button id="next-btn" style="display:none" onclick="nextQuestion()">Nächste Frage</button>
+    <div id="s-quiz" style="display:none">
+        <p id="prog"></p>
+        <div class="word" id="word"></div>
+        <p id="info" style="color:orange; font-style:italic"></p>
+        <p id="ex" style="text-align:left; background:#eee; padding:10px"></p>
+        <div id="opts"></div>
+        <p id="msg" style="font-weight:bold"></p>
+        <button id="btn-next" class="btn next-btn" onclick="tiepTuc()">NÄCHSTE FRAGE</button>
     </div>
 </div>
 
 <script>
+    // Danh sách 45 từ vựng
     const data = [
-        {w: "die Muttersprache", f: "die Muttersprache, die Muttersprachen", e: "Meine ______ ist Portugiesisch.", t: "Tiếng mẹ đẻ", o: ["Tiếng mẹ đẻ", "Ngoại ngữ", "Thủ đô", "Quốc tịch"], a: 0},
-        {w: "zurückgehen", f: "zurückgehen, ist zurückgegangen", e: "In ein paar Tagen gehe ich ______ nach Brasilien.", t: "Quay lại", o: ["Đi tới", "Quay lại", "Bắt đầu", "Kết thúc"], a: 1},
-        {w: "die Hauptstadt", f: "die Hauptstadt, die Hauptstädte", e: "Die ______ von Ghana ist Accra.", t: "Thủ đô", o: ["Thành phố", "Biên giới", "Thủ đô", "Quê hương"], a: 2},
-        {w: "nachts", f: "nachts", e: "Ich arbeite viermal pro Woche ______.", t: "Ban đêm", o: ["Ban ngày", "Ban đêm", "Hàng ngày", "Buổi chiều"], a: 1},
-        {w: "sauer", f: "sauer", e: "Meine Freundin ist manchmal richtig ______.", t: "Giận dữ", o: ["Vui vẻ", "Mệt mỏi", "Giận dữ", "Đói bụng"], a: 2},
-        {w: "verdienen", f: "verdienen, hat verdient", e: "Aber ich muss ja Geld ______.", t: "Kiếm tiền", o: ["Tiết kiệm", "Tiêu tiền", "Kiếm tiền", "Đầu tư"], a: 2},
-        {w: "die Ahnung", f: "die Ahnung, die Ahnungen", e: "Von Smartphones hat er keine ______.", t: "Hiểu biết", o: ["Kinh nghiệm", "Điện thoại", "Hiểu biết", "Sở thích"], a: 2},
-        {w: "glücklich", f: "glücklich", e: "Du siehst ja so ______ aus!", t: "Hạnh phúc", o: ["Buồn bã", "Hạnh phúc", "Mệt mỏi", "Giận dữ"], a: 1},
-        {w: "die Grenze", f: "die Grenze, die Grenzen", e: "Ärzte ohne ______.", t: "Biên giới", o: ["Biên giới", "Bệnh viện", "Kinh nghiệm", "Trường học"], a: 0},
-        {w: "mutig", f: "mutig", e: "Du bist ja ______!", t: "Dũng cảm", o: ["Nhút nhát", "Thông minh", "Dũng cảm", "Yếu đuối"], a: 2},
-        {w: "dringend", f: "dringend", e: "Ich suche ganz ______ eine Wohnung.", t: "Khẩn cấp", o: ["Thong thả", "Từ từ", "Khẩn cấp", "Bình thường"], a: 2},
-        {w: "das Ausland", f: "das Ausland", e: "Ich bin ein Jahr im ______.", t: "Nước ngoài", o: ["Quê hương", "Thành phố", "Nước ngoài", "Vùng quê"], a: 2},
-        {w: "das Studium", f: "das Studium, die Studien", e: "Nach seinem Architektur______...", t: "Việc học đại học", o: ["Công việc", "Kỳ nghỉ", "Việc học đại học", "Thực tập"], a: 2},
-        {w: "einpacken", f: "einpacken, hat eingepackt", e: "Ich packe gerade meine Sachen ______.", t: "Thu dọn/Đóng gói", o: ["Mở ra", "Vứt đi", "Đóng gói", "Mua sắm"], a: 2},
-        {w: "passieren", f: "passieren, ist passiert", e: "Zum Glück ist nie was ______.", t: "Xảy ra", o: ["Bắt đầu", "Xảy ra", "Kết thúc", "Thành công"], a: 1},
-        {w: "erleben", f: "erleben, hat erlebt", e: "Er hat rất nhiều ______.", t: "Trải nghiệm", o: ["Trải nghiệm", "Lãng quên", "Tìm kiếm", "Nhìn thấy"], a: 0},
-        {w: "die Heimat", f: "die Heimat", e: "Mamas ______stadt Straßburg.", t: "Quê hương", o: ["Thành phố lớn", "Quê hương", "Nơi ở", "Thị trấn"], a: 1},
-        {w: "der Erfolg", f: "der Erfolg, die Erfolge", e: "Lotte wünscht Luna viel ______.", t: "Thành công", o: ["Thành công", "May mắn", "Niềm vui", "Sức khỏe"], a: 0},
-        {w: "verlieren", f: "verlieren, hat verloren", e: "Ich habe meinen Geldbeutel ______.", t: "Làm mất", o: ["Tìm thấy", "Mua", "Làm mất", "Bán"], a: 2},
-        {w: "vermissen", f: "vermissen, hat vermisst", e: "Sie hat ihre Familie ______.", t: "Nhớ (ai đó)", o: ["Quên", "Nhớ (ai đó)", "Yêu", "Gặp gỡ"], a: 1},
-        {w: "die Zukunft", f: "die Zukunft", e: "Alles Gute cho berufliche ______.", t: "Tương lai", o: ["Quá khứ", "Hiện tại", "Tương lai", "Kế hoạch"], a: 2},
-        {w: "fleißig", f: "fleißig", e: "Sie war immer nett und ______.", t: "Chăm chỉ", o: ["Lười biếng", "Chăm chỉ", "Thông minh", "Cẩn thận"], a: 1},
-        {w: "das Zeugnis", f: "das Zeugnis, die Zeugnisse", e: "Charlotte hat ein Arbeits______ nhận được.", t: "Bằng cấp/Chứng chỉ", o: ["Hợp đồng", "Bằng cấp", "Lời khen", "Lương"], a: 1},
-        {w: "das Praktikum", f: "das Praktikum, die Praktika", e: "Lotte đã làm một ______.", t: "Thực tập", o: ["Khóa học", "Thực tập", "Bài thi", "Công việc"], a: 1},
-        {w: "hart", f: "hart", e: "Die Arbeit dort war ______.", t: "Vất vả/Cứng", o: ["Dễ dàng", "Thú vị", "Nhẹ nhàng", "Vất vả"], a: 3},
-        {w: "die Tankstelle", f: "die Tankstelle, die Tankstellen", e: "Familie hatte eine ______.", t: "Trạm xăng", o: ["Cửa hàng", "Trạm xăng", "Garage", "Công ty"], a: 1},
-        {w: "der Vertrag", f: "der Vertrag, die Verträge", e: "Sie hat một mới ______.", t: "Hợp đồng", o: ["Hợp đồng", "Bản vẽ", "Chìa khóa", "Xe hơi"], a: 0},
-        {w: "der Kollege", f: "der Kollege, die Kollegen", e: "Die ______ rất tốt bụng.", t: "Đồng nghiệp", o: ["Bạn bè", "Đồng nghiệp", "Khách hàng", "Sếp"], a: 1},
-        {w: "der Stress", f: "der Stress", e: "Ich habe viel ______.", t: "Căng thẳng", o: ["Tiền bạc", "Căng thẳng", "Thời gian", "Niềm vui"], a: 1},
-        {w: "der Plan", f: "der Plan, die Pläne", e: "Was ist dein ______?", t: "Kế hoạch", o: ["Sở thích", "Kế hoạch", "Ý kiến", "Câu hỏi"], a: 1},
-        {w: "die Entscheidung", f: "die Entscheidung, die Entscheidungen", e: "Eine wichtige ______ treffen.", t: "Quyết định", o: ["Hành động", "Lời khuyên", "Quyết định", "Thông báo"], a: 2},
-        {w: "die Erfahrung", f: "die Erfahrung, die Erfahrungen", e: "Đó là một ______ quan trọng.", t: "Trải nghiệm", o: ["Quyết định", "Trải nghiệm", "Kết quả", "Công việc"], a: 1},
-        {w: "unglaublich", f: "unglaublich", e: "Das ist ______!", t: "Không thể tin được", o: ["Bình thường", "Không thể tin được", "Xấu hổ", "Tệ hại"], a: 1},
-        {w: "stolz", f: "stolz", e: "Ich bin ______ auf dich.", t: "Tự hào", o: ["Tự hào", "Lo lắng", "Sợ hãi", "Giận dữ"], a: 0},
-        {w: "die Angst", f: "die Angst, die Ängste", e: "Hab keine ______!", t: "Nỗi sợ", o: ["Hy vọng", "Nỗi sợ", "Niềm vui", "Bất ngờ"], a: 1},
-        {w: "der Abschied", f: "der Abschied, die Abschiede", e: "Der ______ war schwer.", t: "Sự chia tay", o: ["Gặp gỡ", "Chia tay", "Lễ hội", "Chuyến đi"], a: 1},
-        {w: "ankommen", f: "ankommen, ist angekommen", e: "Wann bist du ______?", t: "Đến nơi", o: ["Đi khỏi", "Đến nơi", "Ở lại", "Quay về"], a: 1},
-        {w: "die Sache", f: "die Sache, die Sachen", e: "Nimm deine ______ mit.", t: "Đồ đạc", o: ["Tiền bạc", "Đồ đạc", "Bạn bè", "Sách"], a: 1},
-        {w: "damals", f: "damals", e: "______ war alles khác.", t: "Hồi đó", o: ["Bây giờ", "Hồi đó", "Tương lai", "Hôm nay"], a: 1},
-        {w: "niederlassen", f: "niederlassen, hat niedergelassen", e: "Sie hat sich in Berlin ______.", t: "Định cư", o: ["Du lịch", "Định cư", "Bỏ đi", "Tìm kiếm"], a: 1},
-        {w: "die Chance", f: "die Chance, die Chancen", e: "Nutze deine ______.", t: "Cơ hội", o: ["Khó khăn", "Kế hoạch", "Cơ hội", "Thách thức"], a: 2},
-        {w: "der Koffer", f: "der Koffer, die Koffer", e: "Ich packe den ______.", t: "Vali", o: ["Túi xách", "Vali", "Balo", "Ví"], a: 1},
-        {w: "berühmt", f: "berühmt", e: "Ein ______er Maler.", t: "Nổi tiếng", o: ["Giàu có", "Nổi tiếng", "Kỳ lạ", "Giỏi"], a: 1},
-        {w: "ändern", f: "ändern, hat geändert", e: "Das ______ alles.", t: "Thay đổi", o: ["Giữ nguyên", "Thay đổi", "Bắt đầu", "Kết thúc"], a: 1},
-        {w: "aufhören", f: "aufhören, hat aufgehört", e: "Du musst ______.", t: "Dừng lại", o: ["Tiếp tục", "Dừng lại", "Làm thử", "Tìm kiếm"], a: 1}
+        {w:"die Muttersprache", f:"die Muttersprache, -n", e:"Meine ______ ist Portugiesisch.", o:["Tiếng mẹ đẻ","Ngoại ngữ","Thủ đô","Quốc tịch"], a:0},
+        {w:"zurückgehen", f:"zurückgehen, ist zurückgegangen", e:"In ein paar Tagen gehe ich ______ nach Brasilien.", o:["Đi tới","Quay lại","Bắt đầu","Kết thúc"], a:1},
+        {w:"die Hauptstadt", f:"die Hauptstadt, -ä-e", e:"Die ______ von Ghana ist Accra.", o:["Thành phố","Biên giới","Thủ đô","Quê hương"], a:2},
+        {w:"nachts", f:"nachts", e:"Ich arbeite viermal pro Woche ______.", o:["Ban ngày","Ban đêm","Hàng ngày","Buổi chiều"], a:1},
+        {w:"sauer", f:"sauer", e:"Meine Freundin ist đôi khi richtig ______.", o:["Vui vẻ","Mệt mỏi","Giận dữ","Đói bụng"], a:2},
+        {w:"verdienen", f:"verdienen, hat verdient", e:"Aber ich muss ja Geld ______.", o:["Tiết kiệm","Tiêu tiền","Kiếm tiền","Đầu tư"], a:2},
+        {w:"die Ahnung", f:"die Ahnung, -en", e:"Von Smartphones hat er keine ______.", o:["Kinh nghiệm","Điện thoại","Hiểu biết","Sở thích"], a:2},
+        {w:"glücklich", f:"glücklich", e:"Du siehst ja so ______ aus!", o:["Buồn bã","Hạnh phúc","Mệt mỏi","Giận dữ"], a:1},
+        {w:"die Grenze", f:"die Grenze, -n", e:"Ärzte ohne ______.", o:["Biên giới","Bệnh viện","Kinh nghiệm","Trường học"], a:0},
+        {w:"mutig", f:"mutig", e:"Du bist ja ______!", o:["Nhút nhát","Thông minh","Dũng cảm","Yếu đuối"], a:2},
+        {w:"dringend", f:"dringend", e:"Ich suche ______ eine Wohnung.", o:["Khẩn cấp","Từ từ","Thong thả","Bình thường"], a:0},
+        {w:"das Ausland", f:"das Ausland (Sg.)", e:"Ich gehe für một năm ins ______.", o:["Vùng quê","Nước ngoài","Thành phố","Biên giới"], a:1},
+        {w:"das Studium", f:"das Studium, Studien", e:"Nach seinem Architektur______...", o:["Công việc","Sở thích","Học đại học","Thực tập"], a:2},
+        {w:"einpacken", f:"einpacken, hat eingepackt", e:"Ich ______ gerade meine Sachen ein.", o:["Mở ra","Đóng gói","Vứt đi","Mua sắm"], a:1},
+        {w:"passieren", f:"passieren, ist passiert", e:"Zum Glück ist nie etwas ______.", o:["Bắt đầu","Xảy ra","Kết thúc","Thành công"], a:1},
+        {w:"erleben", f:"erleben, hat erlebt", e:"Er hat viel ______.", o:["Trải nghiệm","Quên mất","Tìm kiếm","Nhìn thấy"], a:0},
+        {w:"die Heimat", f:"die Heimat (Sg.)", e:"Mamas ______stadt Straßburg.", o:["Nơi ở","Thành phố lớn","Quê hương","Thị trấn"], a:2},
+        {w:"der Erfolg", f:"der Erfolg, -e", e:"Ich wünsche dir viel ______.", o:["Thành công","May mắn","Niềm vui","Sức khỏe"], a:0},
+        {w:"verlieren", f:"verlieren, hat verloren", e:"Ich habe meinen Geldbeutel ______.", o:["Tìm thấy","Bán","Làm mất","Mua"], a:2},
+        {w:"vermissen", f:"vermissen, hat vermisst", e:"Sie ______ ihre Familie.", o:["Quên","Nhớ nhung","Yêu","Gặp gỡ"], a:1},
+        {w:"die Zukunft", f:"die Zukunft (Sg.)", e:"Alles Gute für die ______.", o:["Quá khứ","Hiện tại","Tương lai","Kế hoạch"], a:2},
+        {w:"fleißig", f:"fleißig", e:"Sie war luôn nett und ______.", o:["Lười biếng","Chăm chỉ","Thông minh","Cẩn thận"], a:1},
+        {w:"das Zeugnis", f:"das Zeugnis, -se", e:"Ein gutes Arbeits______.", o:["Hợp đồng","Bằng cấp","Lời khen","Lương"], a:1},
+        {w:"das Praktikum", f:"das Praktikum, Praktika", e:"Ich mache một ______.", o:["Khóa học","Thực tập","Bài thi","Công việc"], a:1},
+        {w:"hart", f:"hart", e:"Die Arbeit war ______.", o:["Dễ dàng","Thú vị","Nhẹ nhàng","Vất vả"], a:3},
+        {w:"die Tankstelle", f:"die Tankstelle, -n", e:"Mein Vater làm việc an der ______.", o:["Cửa hàng","Trạm xăng","Garage","Công ty"], a:1},
+        {w:"der Vertrag", f:"der Vertrag, -ä-e", e:"Ich habe một mới ______.", o:["Hợp đồng","Bản vẽ","Chìa khóa","Xe hơi"], a:0},
+        {w:"der Kollege", f:"der Kollege, -n", e:"Meine ______n sind nett.", o:["Bạn bè","Đồng nghiệp","Khách hàng","Sếp"], a:1},
+        {w:"der Stress", f:"der Stress (Sg.)", e:"Ich habe nhiều ______.", o:["Tiền bạc","Căng thẳng","Thời gian","Niềm vui"], a:1},
+        {w:"der Plan", f:"der Plan, -ä-e", e:"Was ist dein ______?", o:["Sở thích","Kế hoạch","Ý kiến","Câu hỏi"], a:1},
+        {w:"die Entscheidung", f:"die Entscheidung, -en", e:"Eine ______ treffen.", o:["Hành động","Lời khuyên","Quyết định","Thông báo"], a:2},
+        {w:"die Erfahrung", f:"die Erfahrung, -en", e:"Eine quan trọng ______.", o:["Quyết định","Kinh nghiệm","Kết quả","Công việc"], a:1},
+        {w:"unglaublich", f:"unglaublich", e:"Das ist ______!", o:["Bình thường","Không thể tin nổi","Xấu hổ","Tệ hại"], a:1},
+        {w:"stolz", f:"stolz", e:"Ich bin ______ auf dich.", o:["Tự hào","Lo lắng","Sợ hãi","Giận dữ"], a:0},
+        {w:"die Angst", f:"die Angst, -ä-e", e:"Hab keine ______!", o:["Hy vọng","Nỗi sợ","Niềm vui","Bất ngờ"], a:1},
+        {w:"der Abschied", f:"der Abschied, -e", e:"Der ______ war schwer.", o:["Gặp gỡ","Sự chia tay","Lễ hội","Chuyến đi"], a:1},
+        {w:"ankommen", f:"ankommen, ist angekommen", e:"Wann bist du ______?", o:["Đi khỏi","Đến nơi","Ở lại","Quay về"], a:1},
+        {w:"die Sache", f:"die Sache, -n", e:"Nimm deine ______n mit.", o:["Tiền bạc","Đồ đạc","Bạn bè","Sách"], a:1},
+        {w:"damals", f:"damals", e:"______ war alles anders.", o:["Bây giờ","Hồi đó","Tương lai","Hôm nay"], a:1},
+        {w:"niederlassen", f:"sich niederlassen", e:"Er hat sich in Berlin ______.", o:["Du lịch","Định cư","Bỏ đi","Tìm kiếm"], a:1},
+        {w:"die Chance", f:"die Chance, -n", e:"Nutze deine ______.", o:["Khó khăn","Kế hoạch","Cơ hội","Thách thức"], a:2},
+        {w:"der Koffer", f:"der Koffer, -", e:"Ich packe den ______.", o:["Túi xách","Vali","Balo","Ví"], a:1},
+        {w:"berühmt", f:"berühmt", e:"Ein ______er Maler.", o:["Giàu có","Nổi tiếng","Kỳ lạ","Giỏi"], a:1},
+        {w:"ändern", f:"ändern, hat geändert", e:"Das ______ alles.", o:["Giữ nguyên","Thay đổi","Bắt đầu","Kết thúc"], a:1},
+        {w:"aufhören", f:"aufhören, hat aufgehört", e:"Du musst ______.", o:["Tiếp tục","Dừng lại","Làm thử","Tìm kiếm"], a:1}
     ];
 
-    let curr = 0, score = 0;
-    const praises = [
-        {de: "Richtig!", vi: "Đúng rồi!"},
-        {de: "Hervorragend!", vi: "Xuất sắc!"},
-        {de: "Super!", vi: "Tuyệt vời!"}
-    ];
+    let chiSo = 0; let diem = 0; let khoa = false;
 
-    function startApp() {
-        document.getElementById('start-screen').style.display = 'none';
-        document.getElementById('quiz-ui').style.display = 'block';
-        render();
+    function batDau() {
+        document.getElementById('s-start').style.display = 'none';
+        document.getElementById('s-quiz').style.display = 'block';
+        hienThi();
     }
 
-    function safeSpeak(text) {
-        if (!('speechSynthesis' in window)) return;
-        try {
-            window.speechSynthesis.cancel();
-            const msg = new SpeechSynthesisUtterance(text);
-            msg.lang = 'de-DE';
-            msg.rate = 0.85;
-            window.speechSynthesis.speak(msg);
-        } catch (e) { console.log("Audio skipped"); }
-    }
-
-    function render() {
-        if (curr >= data.length) {
-            document.getElementById('quiz-ui').innerHTML = `
-                <h2 style="color:var(--p)">Ergebnis</h2>
-                <div style="font-size:3.5rem; margin:20px 0;">${score}/${data.length}</div>
-                <button onclick="location.reload()" id="start-btn">Nochmal</button>
-            `;
+    function hienThi() {
+        khoa = false;
+        if (chiSo >= data.length) {
+            document.getElementById('s-quiz').innerHTML = "<h2>Xong!</h2><h1>" + diem + "/" + data.length + "</h1><button class='btn start-btn' onclick='location.reload()'>Làm lại</button>";
             return;
         }
-        const q = data[curr];
-        document.getElementById('fill').style.width = (curr/data.length)*100 + "%";
-        document.getElementById('stat').innerText = "FRAGE " + (curr + 1) + " / " + data.length;
-        document.getElementById('w').innerText = q.w;
-        document.getElementById('i').innerText = q.f;
-        document.getElementById('e').innerText = q.e;
-        document.getElementById('feedback').innerText = "";
-        document.getElementById('next-btn').style.display = 'none';
-
-        const box = document.getElementById('opts');
-        box.innerHTML = '';
-        q.o.forEach((opt, idx) => {
-            const btn = document.createElement('button');
-            btn.className = 'opt-btn';
-            btn.innerText = opt;
-            btn.onclick = function() {
-                const btns = box.querySelectorAll('button');
-                btns.forEach(b => b.disabled = true);
-                document.getElementById('next-btn').style.display = 'block';
-                if(idx === q.a) {
-                    btn.classList.add('correct');
-                    const p = praises[Math.floor(Math.random()*praises.length)];
-                    document.getElementById('feedback').innerHTML = `<span style="color:var(--s)">${p.de}</span> (${p.vi})`;
-                    score++;
+        const q = data[chiSo];
+        document.getElementById('prog').innerText = "Câu " + (chiSo + 1) + "/" + data.length;
+        document.getElementById('word').innerText = q.w;
+        document.getElementById('info').innerText = q.f;
+        document.getElementById('ex').innerText = q.e;
+        document.getElementById('msg').innerText = "";
+        document.getElementById('btn-next').style.display = "none";
+        
+        const vungChon = document.getElementById('opts');
+        vungChon.innerHTML = "";
+        q.o.forEach((txt, i) => {
+            const b = document.createElement('button');
+            b.className = "btn";
+            b.innerText = txt;
+            b.onclick = function() {
+                if (khoa) return;
+                if (i === q.a) {
+                    khoa = true;
+                    b.style.background = "#2ecc71"; b.style.color = "white";
+                    document.getElementById('msg').innerText = "Richtig!";
+                    document.getElementById('btn-next').style.display = "block";
+                    diem++;
                 } else {
-                    btn.classList.add('wrong');
-                    btns[q.a].classList.add('correct');
-                    document.getElementById('feedback').innerHTML = `<span style="color:var(--d)">Falsch!</span>`;
+                    b.style.background = "#ff7675"; b.style.color = "white";
+                    document.getElementById('msg').innerText = "Leider falsch!";
                 }
-                safeSpeak(q.f);
             };
-            box.appendChild(btn);
+            vungChon.appendChild(b);
         });
     }
 
-    function nextQuestion() { curr++; render(); }
+    function tiepTuc() { chiSo++; hienThi(); }
 </script>
 </body>
 </html>
-
