@@ -3,61 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Deutsch Lernen Lektion 15</title>
+    <title>Deutsch Lektion 15</title>
     <style>
-        :root { --primary: #6c5ce7; --success: #2ecc71; --error: #ff7675; --bg: #f0f3f9; }
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg); margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .quiz-card { background: white; width: 92%; max-width: 450px; padding: 25px; border-radius: 24px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); text-align: center; }
-        .progress-container { width: 100%; height: 8px; background: #eee; border-radius: 10px; margin-bottom: 20px; overflow: hidden; }
-        #progress-fill { height: 100%; background: var(--primary); width: 0%; transition: 0.4s; }
-        .word-de { font-size: 1.8rem; color: var(--primary); font-weight: 800; margin: 10px 0; }
-        .info-de { color: #e67e22; font-size: 0.95rem; font-style: italic; margin-bottom: 15px; }
-        .example-box { background: #f8faff; padding: 15px; border-radius: 12px; margin-bottom: 20px; text-align: left; border-left: 5px solid var(--primary); font-size: 1rem; line-height: 1.5; }
-        .options-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
-        .opt-btn { background: white; border: 2px solid #edf2f7; padding: 14px; border-radius: 15px; font-size: 1rem; cursor: pointer; font-weight: 600; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
-        .opt-btn:active { transform: scale(0.98); }
-        .next-btn { width: 100%; padding: 18px; background: var(--primary); color: white; border: none; border-radius: 18px; font-size: 1.2rem; font-weight: bold; cursor: pointer; margin-top: 20px; display: none; box-shadow: 0 8px 15px rgba(108, 92, 231, 0.3); }
-        .start-btn { width: 100%; padding: 20px; background: var(--primary); color: white; border: none; border-radius: 20px; font-size: 1.3rem; font-weight: bold; cursor: pointer; }
+        body { font-family: -apple-system, sans-serif; background: #f0f3f9; margin: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .quiz-card { background: white; width: 92%; max-width: 450px; padding: 20px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        .flag { width: 80px; height: 48px; margin: 0 auto 15px; display: flex; flex-direction: column; border: 1px solid #ddd; overflow: hidden; border-radius: 4px; }
+        .f-b { background: #000; flex: 1; } .f-r { background: #f00; flex: 1; } .f-g { background: #ff0; flex: 1; }
+        .word-de { font-size: 1.6rem; color: #6c5ce7; font-weight: bold; margin: 10px 0; }
+        .info-de { color: #e67e22; font-size: 0.9rem; font-style: italic; margin-bottom: 10px; }
+        .example-de { background: #f8faff; padding: 12px; border-radius: 10px; margin-bottom: 15px; text-align: left; border-left: 4px solid #6c5ce7; font-size: 0.95rem; line-height: 1.4; }
+        .opt-btn { width: 100%; background: white; border: 1px solid #ddd; padding: 14px; border-radius: 12px; margin: 5px 0; font-size: 1rem; cursor: pointer; font-weight: 600; transition: 0.2s; -webkit-tap-highlight-color: transparent; }
+        .main-btn { width: 100%; padding: 16px; background: #6c5ce7; color: white; border: none; border-radius: 15px; font-size: 1.1rem; font-weight: bold; cursor: pointer; box-shadow: 0 4px 10px rgba(108, 92, 231, 0.3); }
+        .prog-bg { width: 100%; background: #eee; height: 8px; border-radius: 10px; margin-bottom: 15px; overflow: hidden; }
+        #fill { height: 100%; background: #6c5ce7; width: 0%; transition: 0.3s; }
     </style>
 </head>
 <body>
+    <div class="quiz-card">
+        <div id="start-screen">
+            <div class="flag"><div class="f-b"></div><div class="f-r"></div><div class="f-g"></div></div>
+            <h2 style="color:#6c5ce7">Lektion 15</h2>
+            <p>Ngân hàng & Tài chính (A-C)<br><b>45 Từ vựng - 4 Lựa chọn</b></p>
+            <button class="main-btn" onclick="startApp()">STARTEN</button>
+        </div>
 
-<div class="quiz-card">
-    <div id="start-screen">
-        <div style="font-size: 50px; margin-bottom: 10px;">🏦</div>
-        <h1 style="color: var(--primary); margin-top: 0;">Lektion 15</h1>
-        <p style="color: #666; margin-bottom: 30px;">Ngân hàng & Tài chính cá nhân<br><b>(45 Từ vựng đầy đủ A-C)</b></p>
-        <button class="start-btn" onclick="startApp()">BẮT ĐẦU HỌC</button>
+        <div id="quiz-ui" style="display:none">
+            <div class="prog-bg"><div id="fill"></div></div>
+            <div id="stat" style="font-size:11px; color:#999; margin-bottom: 5px; font-weight: bold;"></div>
+            <div class="word-de" id="w"></div>
+            <div class="info-de" id="i"></div>
+            <div class="example-de" id="e"></div>
+            <div id="opts"></div>
+            <div id="feedback" style="margin:10px; font-weight:bold; min-height:22px"></div>
+            <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">TIẾP TỤC</button>
+        </div>
     </div>
 
-    <div id="quiz-screen" style="display:none">
-        <div class="progress-container"><div id="progress-fill"></div></div>
-        <div id="counter" style="font-size: 12px; color: #999; margin-bottom: 5px; font-weight: bold;"></div>
-        <div class="word-de" id="q-word"></div>
-        <div class="info-de" id="q-info"></div>
-        <div class="example-box" id="q-ex"></div>
-        <div class="options-grid" id="options-box"></div>
-        <div id="feedback" style="margin: 15px 0; font-weight: bold; min-height: 24px;"></div>
-        <button class="next-btn" id="next-btn" onclick="nextQuestion()">TIẾP TỤC</button>
-    </div>
-</div>
-
-<script>
-    let currentIdx = 0;
-    let score = 0;
-    let isLocked = false;
-
-    const vocabList = [
-        {w:"die Bank", f:"die Bank, -en", e:"Henry ist zufrieden mit seiner ______.", o:["Ngân hàng","Công ty","Bệnh viện","Trường học"], a:0},
-        {w:"das Konto", f:"das Konto, Konten", e:"Dann ist dein ______ bei uns kostenlos!", o:["Thẻ tín dụng","Tài khoản","Tiền mặt","Hợp đồng"], a:1},
-        {w:"erledigen", f:"erledigen, hat erledigt", e:"Man kann Bankgeschäfte unterwegs ______.", o:["Hủy bỏ","Bắt đầu","Xử lý/Hoàn thành","Tìm kiếm"], a:2},
-        {w:"abheben", f:"abheben, hat abgehoben", e:"Am Geldautomaten kannst du Geld ______.", o:["Gửi tiền","Rút tiền","Chuyển khoản","Đổi tiền"], a:1},
-        {w:"das Bargeld", f:"das Bargeld (Sg.)", e:"Geld abheben und ______ einzahlen.", o:["Tiền mặt","Tiền lẻ","Tiền xu","Tiền giấy"], a:0},
-        {w:"einzahlen", f:"einzahlen, hat eingezahlt", e:"Ich möchte Bargeld ______.", o:["Rút ra","Gửi vào","Mượn","Trả nợ"], a:1},
-        {w:"überweisen", f:"überweisen, hat überwiesen", e:"Kann man am Automat auch Geld ______?", o:["Đổi tiền","Chuyển khoản","Rút tiền","Trả tiền"], a:1},
-        {w:"wechseln", f:"wechseln, hat gewechselt", e:"Ich möchte Euro in Dollar ______.", o:["Đổi (ngoại tệ)","Gửi","Nhận","Mất"], a:0},
-        {w:"die PIN", f:"die PIN, -s", e:"Wie kann ich die ______ ändern?", o:["Mã PIN","Số tài khoản","Tên","Địa chỉ"], a:0},
-        {w:"die Gebühr", f:"die Gebühr, -en", e:"Die Bank hat các khoản ______ tăng lên.", o:["Lãi suất","Phí dịch vụ","Tiền phạt","Tiền thuế"], a:1},
-        {w:"eröffnen", f:"eröffnen, hat eröffnet", e:"Ich möchte ein neues Konto ______.", o:["Đóng","Mở (tài khoản)","Chuyển","Kiểm tra"], a:1},
-        {w:"das Girokonto", f:"das Girokonto, -konten", e:"Amadou hat ein ______ eröffnet.", o:["TK tiết kiệm","TK vãng lai","Thẻ nợ","Sổ nợ"], a:1},
-        {w:"der Dauerauftrag", f:"der Dauer
+    <script>
+        const vocabData = [
+            {w: "die Bank", f: "die Bank, -en", e: "Henry ist zufrieden mit seiner ______.", o: ["Ngân hàng", "Công ty", "Nhà sách", "Bệnh viện"], a: 0},
+            {w: "das Konto", f: "das Konto, Konten", e: "Dein ______ ist bei uns kostenlos!", o: ["Thẻ tín dụng", "Tài khoản", "Tiền mặt", "Hợp đồng"], a: 1},
+            {w: "erledigen", f: "erledigen, hat erledigt", e: "Bankgeschäfte unterwegs ______.", o: ["Hủy bỏ", "Xử lý/Hoàn thành", "Bắt đầu", "Tìm kiếm"], a: 1},
+            {w: "abheben", f: "abheben, hat abgehoben", e
