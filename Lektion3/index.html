@@ -94,33 +94,198 @@
     <script>
         const vocabData = [
             {w: "der Anrufer", f: "der Anrufer, die Anrufer", e: "Aber sie möchte mit dem ______ joggen.", o: ["Người gọi điện", "Người nhận cuộc gọi", "Bạn bè", "Hàng xóm"], a: 0},
-            {w: "die Anruferin", f: "die Anruferin, die Anruferinnen", e: "Aber sie möchte mit dem Anrufer joggen.", o: ["Nữ người gọi điện", "Nữ người nhận cuộc gọi", "Bạn bè", "Hàng xóm"], a: 0},
+            {w: "die Anruferin", f: "die Anruferin, die Anruferinnen", e: "Aber sie möchte mit dem Anrufer joggen.", o: ["Người gọi điện (nữ)", "Người nhận cuộc gọi (nữ)", "Bạn bè", "Hàng xóm"], a: 0},
             {w: "klettern", f: "klettern, ist geklettert", e: "Sie will nicht so gern ______. ", o: ["Leo trèo", "Chạy bộ", "Bơi lội", "Đi bộ"], a: 0},
-            {w: "vorschlagen", f: "vorschlagen, hat vorgeschlagen", e: "Darf ich etwas ______?", o: ["Đề nghị", "Từ chối", "Chấp nhận", "Hỏi"], a: 0},
-            {w: "der Vorschlag", f: "der Vorschlag, die Vorschläge", e: "Ich habe da einen ______. ", o: ["Đề nghị", "Ý kiến", "Kế hoạch", "Lời khuyên"], a: 0},
+            {w: "vorschlagen", f: "vorschlagen, hat vorgeschlagen", e: "Darf ich etwas ______?", o: ["Đề nghị/ Gợi ý", "Từ chối", "Chấp nhận", "Hỏi"], a: 0},
+            {w: "der Vorschlag", f: "der Vorschlag, die Vorschläge", e: "Ich habe da einen ______. ", o: ["Đề nghị/ Gợi ý", "Ý kiến", "Kế hoạch", "Lời khuyên"], a: 0},
             {w: "zustimmen", f: "zustimmen, hat zugestimmt", e: "Sie / Er stimmt ______. ", o: ["Đồng ý", "Từ chối", "Hỏi lại", "Im lặng"], a: 0},
-            {w: "einverstanden", f: "einverstanden", e: "______!", o: ["Đồng ý", "Từ chối", "Không biết", "Có lẽ"], a: 0},
+            {w: "einverstanden", f: "einverstanden", e: "______!", o: ["Đồng ý nhé!", "Từ chối", "Không biết", "Có lẽ"], a: 0},
             {w: "übermorgen", f: "übermorgen", e: "Vielleicht ______. ?", o: ["Ngày kia", "Hôm nay", "Ngày mai", "Hôm qua"], a: 0},
-            {w: "das Stand-up-Paddling/SUP", f: "das Stand-up-Paddling/SUP (Sg.)", e: "Was findet Pekka interessanter? Klettern oder ______?", o: ["Chèo ván đứng", "Leo trèo", "Bơi lội", "Chạy bộ"], a: 0},
+            {w: "das Stand-up-Paddling/SUP", f: "das Stand-up-Paddling/SUP (Sg.)", e: "Was findet Pekka interessanter? Klettern oder ______?", o: ["Chèo ván đứng (SUP)", "Leo trèo", "Bơi lội", "Chạy bộ"], a: 0},
             {w: "das Yoga", f: "das Yoga (Sg.)", e: "Im Moment mag sie Aerial ______ am liebsten.", o: ["Yoga", "Thể dục", "Chạy bộ", "Bơi lội"], a: 0},
-            {w: "die Fitness", f: "die Fitness (Sg.)", e: "______training oder Joggen?", o: ["Thể dục", "Yoga", "Chạy bộ", "Bơi lội"], a: 0},
-            {w: "der Handball", f: "der Handball (Sg.)", e: "Ich mag ______ nicht so gern!", o: ["Bóng ném", "Bóng đá", "Bóng chuyền", "Bóng rổ"], a: 0},
-            {w: "der Tennis", f: "der Tennis (Sg.)", e: "______ schauen oder Filme schauen?", o: ["Tennis", "Bóng đá", "Bóng chuyền", "Bóng rổ"], a: 0},
-            {w: "der Sportler", f: "der Sportler, die Sportler", e: "Meine Lieblings______ lebt in den USA.", o: ["Vận động viên nam", "Vận động viên nữ", "Huấn luyện viên", "Khán giả"], a: 0},
-            {w: "die Sportlerin", f: "die Sportlerin, die Sportlerinnen", e: "Meine Lieblings______ lebt in den USA.", o: ["Vận động viên nữ", "Vận động viên nam", "Huấn luyện viên", "Khán giả"], a: 0},
-            {w: "springen", f: "springen, ist gesprungen", e: "Wer kann hoch ______?", o: ["Nhảy", "Chạy", "Bơi", "Leo"], a: 0},
-            {w: "das Curry", f: "das Curry, die Currys", e: "Ich koche ______, weil das gerne essen.", o: ["Cà ri", "Phở", "Bún", "Cơm"], a: 0},
-            {w: "das Karaoke", f: "das Karaoke (Sg.)", e: "Ich mag kein ______, weil viele Leute schlecht singen.", o: ["Karaoke", "Nhạc sống", "Phim", "Sách"], a: 0},
+            {w: "die Fitness", f: "die Fitness (Sg.)", e: "______training oder Joggen?", o: ["Tập thể dục/ Fitness", "Yoga", "Chạy bộ", "Bơi lội"], a: 0},
+            {w: "der Handball", f: "der Handball (Sg.)", e: "Ich mag ______ nicht so gern!", o: ["Bóng ném tay", "Bóng đá", "Bóng chuyền", "Bóng rổ"], a: 0},
+            {w: "der Tennis", f: "der Tennis (Sg.)", e: "______ schauen oder Filme schauen?", o: ["Quần vợt (Tennis)", "Bóng đá", "Bóng chuyền", "Bóng rổ"], a: 0},
+            {w: "springen", f: "springen, ist gesprungen", e: "Wer kann hoch ______?", o: ["Nhảy cao", "Chạy nhanh", "Bơi xa", "Leo trèo"], a: 0},
+            {w: "das Curry", f: "das Curry, die Currys", e: "Ich koche ______, weil ich das gerne esse.", o: ["Cà ri", "Phở", "Bún bò", "Cơm tấm"], a: 0},
+            {w: "das Karaoke", f: "das Karaoke (Sg.)", e: "Ich mag kein ______, weil viele Leute schlecht singen.", o: ["Karaoke", "Nhạc sống", "Xem phim", "Đọc sách"], a: 0},
             {w: "die Langeweile", f: "die Langeweile (Sg.)", e: "Ich habe nie ______, weil ich gern und oft bastle.", o: ["Sự chán nản", "Sự vui vẻ", "Sự mệt mỏi", "Sự đói"], a: 0},
-            {w: "basteln", f: "basteln, hat gebastelt", e: "Ich habe nie Langeweile, weil ich gern und oft ______. ", o: ["Làm thủ công", "Chơi thể thao", "Ăn uống", "Ngủ nghỉ"], a: 0},
-            {w: "gemütlich", f: "gemütlich", e: "Wir gehen gern ins Café Rosenstein, weil es dort so ______. ist.", o: ["Thoải mái", "Ồn ào", "Lạnh lẽo", "Nóng bức"], a: 0},
-            {w: "das Programm", f: "das Programm, die Programme", e: "Ich mache ein neues Fitness______. ", o: ["Chương trình", "Kế hoạch", "Lịch học", "Danh sách"], a: 0},
+            {w: "basteln", f: "basteln, hat gebastelt", e: "Ich habe nie Langeweile, weil ich gern und oft ______. ", o: ["Làm đồ thủ công", "Chơi thể thao", "Ăn uống", "Ngủ nghỉ"], a: 0},
+            {w: "gemütlich", f: "gemütlich", e: "Wir gehen gern ins Café Rosenstein, weil es dort so ______. ist.", o: ["Thoải mái, ấm cúng", "Ồn ào", "Lạnh lẽo", "Nóng bức"], a: 0},
+            {w: "das Programm", f: "das Programm, die Programme", e: "Ich mache ein neues Fitness______. ", o: ["Chương trình/ Kế hoạch", "Lịch học", "Danh sách", "Bảng"], a: 0},
             {w: "der Luftballon", f: "der Luftballon, die Luftballons", e: "Ich habe ______s und Kerzen gekauft, weil ich eine Party feiere.", o: ["Bóng bay", "Bóng bàn", "Bóng đá", "Bóng chuyền"], a: 0},
             {w: "die Kerze", f: "die Kerze, die Kerzen", e: "Ich habe Luftballons und ______n gekauft, weil ich eine Party feiere.", o: ["Nến", "Đèn", "Đèn pin", "Đèn ngủ"], a: 0},
+            {w: "die Übung", f: "die Übung, die Übungen", e: "Wer will ______en machen?", o: ["Bài tập", "Trò chơi", "Bài hát", "Món ăn"], a: 0},
+            {w: "die Spaghetti", f: "die Spaghetti (Pl.)", e: "Spaghetti schmecken genauso gut wie ...", o: ["Mì Ý (Spaghetti)", "Phở", "Bún", "Cơm"], a: 0},
+            {w: "abwaschen", f: "abwaschen, hat abgewaschen", e: "Abwaschen ist anstrengender als Kochen.", o: ["Rửa chén", "Nấu ăn", "Dọn dẹp", "Giặt giũ"], a: 0},
+            {w: "der Elefant", f: "der Elefant, die Elefanten", e: "Am besten haben mir die ______en gefallen.", o: ["Con voi", "Con hổ", "Con gấu", "Con khỉ"], a: 0},
+            {w: "die Schlange", f: "die Schlange, die Schlangen", e: "Es gibt dort Schlangen, die sind fünf Meter lang.", o: ["Con rắn", "Con rùa", "Con cá", "Con ếch"], a: 0},
+            {w: "anstrengend", f: "anstrengend", e: "Deutsch lernen ist genauso ______ wie nett und hübsch.", o: ["Mệt mỏi", "Vui vẻ", "Dễ dàng", "Thú vị"], a: 0},
+            {w: "hübsch", f: "hübsch", e: "Deutsch lernen ist genauso anstrengend wie nett und ______. ", o: ["Xinh đẹp", "Xấu xí", "Lớn", "Nhỏ"], a: 0},
+            {w: "das Gummibärchen", f: "das Gummibärchen, die Gummibärchen", e: "Gummibärchen schmecken genauso gut wie ...", o: ["Kẹo dẻo hình gấu", "Kẹo mút", "Socola", "Bánh kẹo"], a: 0},
+            {w: "die Maus", f: "die Maus, die Mäuse", e: "Schlangen sind intelligenter als so gut wie ______. ", o: ["Con chuột", "Con mèo", "Con chó", "Con gà"], a: 0},
+            {w: "der Typ", f: "der Typ, die Typen", e: "Welcher Sport______ sind Sie?", o: ["Kiểu người", "Loại người", "Người lạ", "Bạn bè"], a: 0},
+            {w: "der Kontakt", f: "der Kontakt, die Kontakte", e: "Möchten Sie neue ______ knüpfen?", o: ["Liên lạc/ Mối quan hệ", "Bạn bè", "Gia đình", "Đồng nghiệp"], a: 0},
+            {w: "die Sportart", f: "die Sportart, die Sportarten", e: "Welche ______ passt am besten zu Ihnen?", o: ["Môn thể thao", "Trò chơi", "Hoạt động", "Sở thích"], a: 0},
+            {w: "herausfinden", f: "herausfinden, hat herausgefunden", e: "Welche Sportart passt am besten zu Ihnen?", o: ["Tìm ra", "Quên", "Hỏi", "Nói"], a: 0},
+            {w: "rausfinden", f: "rausfinden, hat rausgefunden", e: "Finden Sie es heraus!", o: ["Tìm ra", "Quên", "Hỏi", "Nói"], a: 0},
+            {w: "kämpfen", f: "kämpfen, hat gekämpft", e: "Möchten Sie gerne zusammen mit anderen Menschen ______ und im Team gewinnen?", o: ["Chiến đấu/ Cạnh tranh", "Chơi", "Ăn", "Ngủ"], a: 0},
+            {w: "geeignet", f: "geeignet", e: "Dann ist eine Mannschaftssportart für Sie am ______. ", o: ["Phù hợp", "Không phù hợp", "Khó", "Dễ"], a: 0},
+            {w: "der Basketball", f: "der Basketball (Sg.)", e: "Zum Beispiel Fußball, ______ oder Eishockey.", o: ["Bóng rổ", "Bóng đá", "Bóng chuyền", "Bóng ném"], a: 0},
+            {w: "das Eishockey", f: "das Eishockey (Sg.)", e: "Zum Beispiel Fußball, Basketball oder ______. ", o: ["Khúc côn cầu trên băng", "Bóng đá", "Bóng rổ", "Bóng chuyền"], a: 0},
+            {w: "das Ziel", f: "das Ziel, die Ziele", e: "Ich brauche klare ______. ", o: ["Mục tiêu", "Kế hoạch", "Ý kiến", "Lời khuyên"], a: 0},
+            {w: "die Leichtathletik", f: "die Leichtathletik (Sg.)", e: "Dann sind vielleicht Leichtathletik-Sportarten für Sie am interessantesten.", o: ["Điền kinh", "Bơi lội", "Cầu lông", "Quần vợt"], a: 0},
+            {w: "werfen", f: "werfen, hat geworfen", e: "Zum Beispiel Laufen, Springen oder ______. ", o: ["Ném", "Chạy", "Nhảy", "Bơi"], a: 0},
+            {w: "die Luft", f: "die Luft (Sg.)", e: "Ich liebe frische ______. ", o: ["Không khí", "Nước", "Đất", "Lửa"], a: 0},
+            {w: "das Studio", f: "das Studio, die Studios", e: "Fitness______s und Sporthallen mögen Sie nicht?", o: ["Phòng tập gym", "Sân bóng", "Nhà hàng", "Cửa hàng"], a: 0},
+            {w: "die Halle", f: "die Halle, die Hallen", e: "Fitnessstudios und Sporthallen mögen Sie nicht?", o: ["Sân vận động/ Nhà thi đấu", "Phòng tập", "Nhà hàng", "Cửa hàng"], a: 0},
+            {w: "drinnen", f: "drinnen", e: "Sie sind lieber draußen als ______. ?", o: ["Bên trong", "Bên ngoài", "Trên lầu", "Dưới nhà"], a: 0},
+            {w: "die Wiese", f: "die Wiese, die Wiesen", e: "Finden Sie Parks, Wälder, Seen und ______ am schönsten?", o: ["Bãi cỏ", "Sông", "Hồ", "Núi"], a: 0},
+            {w: "der Ski", f: "der Ski, die Skier", e: "Dann sind die Top-Sportarten für Sie Joggen, Wandern und im Winter ______. ", o: ["Trượt tuyết", "Bơi lội", "Chạy bộ", "Leo núi"], a: 0},
+            {w: "sich interessieren", f: "sich interessieren, hat (sich) interessiert", e: "Interessieren Sie sportliche weniger als der Kontakt zu anderen Menschen?", o: ["Quan tâm", "Không quan tâm", "Thích", "Ghét"], a: 0},
+            {w: "sportlich", f: "sportlich", e: "Interessieren Sie ______ weniger als der Kontakt zu anderen Menschen?", o: ["Thể thao", "Âm nhạc", "Ăn uống", "Ngủ nghỉ"], a: 0},
+            {w: "das Angebot", f: "das Angebot, die Angebote", e: "Angebote für Sie sind zum Beispiel Kochen, ______ oder Tanzen.", o: ["Khóa học/ Chương trình", "Món ăn", "Trò chơi", "Bánh kẹo"], a: 0},
+            {w: "das Walking", f: "das Walking (Sg.)", e: "Walking ______ oder Gymnastik-Gruppen.", o: ["Đi bộ nhanh", "Chạy bộ", "Bơi lội", "Leo trèo"], a: 0},
+            {w: "die Gymnastik", f: "die Gymnastik (Sg.)", e: "Walking oder ______-Gruppen.", o: ["Thể dục nhịp điệu", "Yoga", "Thể hình", "Bóng đá"], a: 0},
+            {w: "der Volleyball", f: "der Volleyball (Sg.)", e: "Ich bin Typ 1: Ich mag Mannschaftssportarten, z.B. ______. ", o: ["Bóng chuyền", "Bóng đá", "Bóng rổ", "Bóng ném"], a: 0},
             {w: "beliebt", f: "beliebt", e: "Joggen ist am ______sten.", o: ["Phổ biến", "Ít phổ biến", "Khó", "Dễ"], a: 0},
             {w: "notieren", f: "notieren, hat notiert", e: "Ich habe 'Fußball' ______. ", o: ["Ghi chú", "Quên", "Nói", "Nghe"], a: 0},
             {w: "vorstellen", f: "vorstellen, hat vorgestellt", e: "Darf ich ______? Das ist ...", o: ["Giới thiệu", "Từ chối", "Chấp nhận", "Hỏi"], a: 0},
             {w: "die Kraft", f: "die Kraft, die Kräfte", e: "Mit SUP kann man ______ und Ausdauer trainieren.", o: ["Sức mạnh", "Sức bền", "Tốc độ", "Kỹ thuật"], a: 0},
             {w: "die Ausdauer", f: "die Ausdauer (Sg.)", e: "Mit SUP kann man Kraft und ______ trainieren.", o: ["Sức bền", "Sức mạnh", "Tốc độ", "Kỹ thuật"], a: 0},
-            {w: "jemand", f: "jemand", e: "Kennt ______ von euch Dart?", o: ["Ai đó", "Không ai", "Mọi người", "Bạn bè"], a: 0},
-            {w: "das Dart"
+            {w: "die Packung", f: "die Packung, die Packungen", e: "Isst jemand von euch vier ______en Gummibärchen am Tag?", o: ["Gói/ Túi", "Hộp", "Lọ", "Cái"], a: 0},
+            {w: "überall", f: "überall", e: "Man kann Yoga ______ machen.", o: ["Khắp nơi", "Một nơi", "Nhà", "Trường"], a: 0},
+            {w: "der Profi", f: "der Profi, die Profis", e: "Seit fünf Jahren ist er ______schwimmer.", o: ["Vận động viên chuyên nghiệp", "Người mới bắt đầu", "Người nghiệp dư", "Người xem"], a: 0}
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const positiveFeedback = ["Gut gemacht!", "Sehr gut!", "Super!", "Toll!", "Weiter so!", "Prima!", "Genau richtig!"];
+        const negativeFeedback = ["Leider falsch!", "Noch nicht richtig!", "Versuch es noch einmal!", "Nicht ganz richtig!", "Schade!", "Falsch!"];
+
+        function speakGerman(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE';
+                utterance.rate = 0.9;
+                utterance.volume = 0.9;
+                const voices = speechSynthesis.getVoices();
+                const deVoice = voices.find(v => v.lang.startsWith('de-'));
+                if (deVoice) utterance.voice = deVoice;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startApp() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("end-screen").style.display = "none";
+            document.getElementById("quiz-ui").style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= vocabData.length) {
+                showResult();
+                return;
+            }
+            const q = vocabData[currentQuestion];
+
+            // Đảo ngẫu nhiên thứ tự đáp án
+            const options = [...q.o];
+            const correctAnswer = q.a;
+            const shuffledOptions = shuffleArray(options);
+            const newCorrectIndex = shuffledOptions.indexOf(q.o[correctAnswer]);
+
+            document.getElementById("stat").textContent = `Frage ${currentQuestion + 1} von ${vocabData.length}`;
+            document.getElementById("w").textContent = q.w;
+            document.getElementById("i").textContent = q.f;
+            document.getElementById("e").innerHTML = q.e.replace(/______/g, "___");
+
+            const optsDiv = document.getElementById("opts");
+            optsDiv.innerHTML = "";
+            shuffledOptions.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "opt-btn";
+                btn.textContent = opt;
+                btn.onclick = () => handleClick(idx, btn, q, newCorrectIndex);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function handleClick(selectedIdx, btn, q, correctIndex) {
+            const allBtns = document.querySelectorAll(".opt-btn");
+
+            if (allBtns[0].disabled) {
+                if (selectedIdx === correctIndex) {
+                    speakGerman(q.f);
+                }
+                return;
+            }
+
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selectedIdx === correctIndex) {
+                score++;
+                const msg = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#27ae60";
+                btn.classList.add("correct");
+
+                speakGerman("Richtig!");
+
+                setTimeout(() => {
+                    speakGerman(q.f);
+                }, 2000);
+            } else {
+                const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#e74c3c";
+                btn.classList.add("wrong");
+
+                allBtns[correctIndex].classList.add("highlight");
+
+                speakGerman("Falsch!");
+
+                setTimeout(() => {
+                    speakGerman(q.f);
+                }, 2000);
+            }
+
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResult() {
+            document.getElementById("quiz-ui").style.display = "none";
+            document.getElementById("end-screen").style.display = "block";
+            const percent = Math.round((score / vocabData.length) * 100);
+            let comment = percent >= 85 ? "Ausgezeichnet! 🌟" : percent >= 70 ? "Sehr gut! 👍" : percent >= 50 ? "Gut – weiter üben! 💪" : "Nächstes Mal besser! 😊";
+            document.getElementById("score").innerHTML = `Du hast <strong>${score}/${vocabData.length}</strong> richtig!<br>(${percent} %)<br><br>${comment}`;
+        }
+
+        function restartQuiz() {
+            startApp();
+        }
+    </script>
+</body>
+</html>
