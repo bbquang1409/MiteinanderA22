@@ -161,6 +161,13 @@
                 return;
             }
             const q = vocabData[currentQuestion];
+
+            // Đảo ngẫu nhiên thứ tự đáp án
+            const options = [...q.o]; // copy mảng lựa chọn
+            const correctAnswer = q.a; // index đáp án đúng gốc
+            const shuffledOptions = shuffleArray(options);
+            const newCorrectIndex = shuffledOptions.indexOf(q.o[correctAnswer]); // tìm index mới của đáp án đúng
+
             document.getElementById("stat").textContent = `Frage ${currentQuestion + 1} von ${vocabData.length}`;
             document.getElementById("w").textContent = q.w;
             document.getElementById("i").textContent = q.f;
@@ -168,11 +175,11 @@
 
             const optsDiv = document.getElementById("opts");
             optsDiv.innerHTML = "";
-            q.o.forEach((opt, idx) => {
+            shuffledOptions.forEach((opt, idx) => {
                 const btn = document.createElement("button");
                 btn.className = "opt-btn";
                 btn.textContent = opt;
-                btn.onclick = () => handleClick(idx, btn, q);
+                btn.onclick = () => handleClick(idx, btn, q, newCorrectIndex); // truyền index đúng mới
                 optsDiv.appendChild(btn);
             });
 
@@ -180,11 +187,21 @@
             document.getElementById("next-btn").style.display = "none";
         }
 
-        function handleClick(selectedIdx, btn, q) {
+        // Hàm shuffle mảng ngẫu nhiên
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function handleClick(selectedIdx, btn, q, correctIndex) {
             const allBtns = document.querySelectorAll(".opt-btn");
 
             if (allBtns[0].disabled) {
-                if (selectedIdx === q.a) {
+                if (selectedIdx === correctIndex) {
                     speakGerman(q.f);
                 }
                 return;
@@ -192,7 +209,7 @@
 
             allBtns.forEach(b => b.disabled = true);
 
-            if (selectedIdx === q.a) {
+            if (selectedIdx === correctIndex) {
                 score++;
                 const msg = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
                 document.getElementById("feedback").textContent = msg;
@@ -210,7 +227,7 @@
                 document.getElementById("feedback").style.color = "#e74c3c";
                 btn.classList.add("wrong");
 
-                allBtns[q.a].classList.add("highlight");
+                allBtns[correctIndex].classList.add("highlight");
 
                 speakGerman("Falsch!");
 
