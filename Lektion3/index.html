@@ -93,198 +93,34 @@
 
     <script>
         const vocabData = [
-            // Lektion 3 - Zofia – Joggen ist prima! (trích đúng từ ảnh PDF)
-            {w: "stressig", f: "stressig", e: "Das findet er ______. ", o: ["Căng thẳng", "Vui vẻ", "Bình thường", "Mệt mỏi"], a: 0},
-            {w: "die Sorge", f: "die Sorge, die Sorgen", e: "Mach dir mal keine ______. ", o: ["Lo lắng", "Vui mừng", "Hy vọng", "Niềm tin"], a: 0},
-            {w: "ordentlich", f: "ordentlich", e: "Toni soll ______ Sachen anziehen.", o: ["Chỉnh tề", "Bẩn thỉu", "Lộn xộn", "Mặc gì cũng được"], a: 0},
-            {w: "die Praline", f: "die Praline, die Pralinen", e: "Toni soll Pralinen ______. ", o: ["Mang theo", "Ăn", "Mua", "Bán"], a: 0},
-            {w: "die Rose", f: "die Rose, die Rosen", e: "Toni soll Rosen ______. ", o: ["Mang theo", "Ăn", "Mua", "Bán"], a: 0},
-            {w: "ganz", f: "ganz", e: "Das ist doch ______ einfach!", o: ["Hoàn toàn", "Hơi", "Không", "Rất"], a: 0},
-            {w: "die Regel", f: "die Regel, die Regeln", e: "Sie sind unsicher, weil sie die ______ nicht kennen?", o: ["Quy tắc", "Lời khuyên", "Ý kiến", "Kế hoạch"], a: 0},
-            {w: "der Abschied", f: "der Abschied, die Abschiede", e: "Also sagen Sie 'Danke!', spätestens beim ______. ", o: ["Lời tạm biệt", "Lời chào", "Lời mời", "Lời cảm ơn"], a: 0},
-            {w: "die Vorspeise", f: "die Vorspeise, die Vorspeisen", e: "Manche Gäste essen die ______, die Hauptspeise und die Nachspeise und gehen dann gleich nach Hause.", o: ["Món khai vị", "Món chính", "Món tráng miệng", "Món phụ"], a: 0},
-            {w: "die Hauptspeise", f: "die Hauptspeise, die Hauptspeisen", e: "Manche Gäste essen die Vorspeise, die ______, die Nachspeise und gehen dann gleich nach Hause.", o: ["Món chính", "Món khai vị", "Món tráng miệng", "Món phụ"], a: 0},
-            {w: "die Nachspeise", f: "die Nachspeise, die Nachspeisen", e: "Manche Gäste essen die Vorspeise, die Hauptspeise und die ______ und gehen dann gleich nach Hause.", o: ["Món tráng miệng", "Món khai vị", "Món chính", "Món phụ"], a: 0},
-            {w: "die Speise", f: "die Speise, die Speisen", e: "Aber auch ein sehr netter Abend muss ein Ende haben.", o: ["Món ăn", "Đồ uống", "Bánh", "Kẹo"], a: 0},
-            {w: "das Ende", f: "das Ende (Sg.)", e: "Aber auch ein sehr netter Abend muss mal ein ______ haben.", o: ["Kết thúc", "Bắt đầu", "Giữa", "Toàn bộ"], a: 0},
-            {w: "plötzlich", f: "plötzlich", e: "Gähnt der Gastgeber oder die Gastgeberin mehrmals ______. ", o: ["Đột nhiên", "Từ từ", "Chậm rãi", "Nhanh chóng"], a: 0},
-            {w: "offen", f: "offen", e: "Noch Fragen ______. ?", o: ["Mở", "Đóng", "Lạnh", "Nóng"], a: 0},
-            {w: "loben", f: "loben, hat gelobt", e: "Wie ______ Sie den Koch / die Köchin?", o: ["Khen", "Chê", "Hỏi", "Trả lời"], a: 0},
-            {w: "ablehnen", f: "ablehnen, hat abgelehnt", e: "Wie lehnt man eine weitere Portion höflich ab?", o: ["Từ chối", "Chấp nhận", "Mời", "Cảm ơn"], a: 0},
-            {w: "die Portion", f: "die Portion, die Portionen", e: "Wie lehnt man eine weitere ______ höflich ab?", o: ["Phần", "Cái", "Miếng", "Tách"], a: 0},
-            {w: "weinen", f: "weinen, hat geweint", e: "Ich bin wach, ich traurig bin.", o: ["Khóc", "Cười", "Ngủ", "Ăn"], a: 0},
-            {w: "verliebt", f: "verliebt", e: "Ich bin ______. ", o: ["Yêu", "Ghét", "Thích", "Không thích"], a: 0},
-            {w: "die Papiere", f: "die Papiere (Pl)", e: "Ich habe meine ______ verloren.", o: ["Giấy tờ", "Sách vở", "Đồ dùng", "Quần áo"], a: 0},
-            {w: "die Wäsche", f: "die Wäsche (Sg.)", e: "Bei mir muss ______ waschen.", o: ["Giặt giũ", "Nấu ăn", "Dọn nhà", "Học bài"], a: 0},
-            {w: "genauso", f: "genauso", e: "Bei uns ist ______ das anders.", o: ["Giống hệt", "Khác", "Tốt hơn", "Xấu hơn"], a: 0},
-            {w: "anders", f: "anders", e: "Bei uns ist ______ das anders.", o: ["Khác", "Giống", "Tốt", "Xấu"], a: 0},
-            {w: "überraschen", f: "überraschen, hat überrascht", e: "Das ______ mich.", o: ["Làm ngạc nhiên", "Làm buồn", "Làm vui", "Làm mệt"], a: 0},
-            {w: "die Gabel", f: "die Gabel, die Gabeln", e: "Hier sind schon Messer und ______. ", o: ["Nĩa", "Thìa", "Dao", "Đũa"], a: 0},
-            {w: "die Kanne", f: "die Kanne, die Kannen", e: "Gib mir mal bitte die ______. ", o: ["Bình", "Ly", "Chén", "Đĩa"], a: 0},
-            {w: "der Löffel", f: "der Löffel, die Löffel", e: "Bitte noch schon kleine ______ für den Nachtisch!", o: ["Thìa", "Nĩa", "Dao", "Đũa"], a: 0},
-            {w: "das Messer", f: "das Messer, die Messer", e: "Hier sind schon ______ und Gabeln.", o: ["Dao", "Thìa", "Nĩa", "Đũa"], a: 0},
-            {w: "die Pfanne", f: "die Pfanne, die Pfannen", e: "Holt ihr bitte die ______ und eine Schüssel?", o: ["Chảo", "Nồi", "Đĩa", "Ly"], a: 0},
-            {w: "die Schüssel", f: "die Schüssel, die Schüsseln", e: "Holt ihr bitte die Pfanne und eine ______?", o: ["Bát tô", "Đĩa", "Ly", "Chén"], a: 0},
-            {w: "der Teller", f: "der Teller, die Teller", e: "Kannst du mir mal deinen ______ geben, bitte?", o: ["Đĩa", "Bát", "Ly", "Chén"], a: 0},
-            {w: "der Topf", f: "der Topf, die Töpfe", e: "Ich nehme den ______. ", o: ["Nồi", "Chảo", "Đĩa", "Ly"], a: 0},
-            {w: "scharf", f: "scharf", e: "Es ist ein bisschen ______. ", o: ["Cay", "Ngọt", "Chua", "Mặn"], a: 0},
-            {w: "süß", f: "süß", e: "Es schmeckt sehr ______. ", o: ["Ngọt", "Cay", "Chua", "Mặn"], a: 0},
-            {w: "salzig", f: "salzig", e: "Das ist hoffentlich nicht zu ______. ", o: ["Mặn", "Ngọt", "Cay", "Chua"], a: 0},
-            {w: "bitter", f: "bitter", e: "Der Kaffee schmeckt viel ______. ", o: ["Đắng", "Ngọt", "Cay", "Chua"], a: 0},
-            {w: "der Honig", f: "der Honig, die Honige", e: "Ja, da ist viel ______ drin.", o: ["Mật ong", "Đường", "Muối", "Tiêu"], a: 0},
-            {w: "die Zitrone", f: "die Zitrone, die Zitronen", e: "Ja, da ist ______ drin.", o: ["Chanh", "Cam", "Táo", "Chuối"], a: 0},
-            {w: "die Grapefruit", f: "die Grapefruit, die Grapefruits", e: "Ja, das ist ______. ", o: ["Bưởi", "Cam", "Chanh", "Táo"], a: 0},
-            {w: "satt", f: "satt", e: "Ich bin ______. ", o: ["No", "Đói", "Khát", "Mệt"], a: 0},
-            {w: "herein", f: "herein", e: "Komm doch ______!", o: ["Vào đây", "Ra ngoài", "Lên trên", "Xuống dưới"], a: 0},
-            {w: "reinkommen", f: "reinkommen, ist reingekommen", e: "Komm doch ______!", o: ["Vào đây", "Ra ngoài", "Lên trên", "Xuống dưới"], a: 0},
-            {w: "riechen", f: "riechen, hat gerochen", e: "Das riecht aber fantastisch ______. ", o: ["Ngửi", "Nếm", "Nhìn", "Nghe"], a: 0},
-            {w: "fantastisch", f: "fantastisch", e: "Das riecht aber ______ hier!", o: ["Tuyệt vời", "Tệ hại", "Bình thường", "Kinh khủng"], a: 0},
-            {w: "das Schwein", f: "das Schwein, die Schweine", e: "Tut mir leid, ich esse kein ______fleisch.", o: ["Thịt lợn", "Thịt bò", "Thịt gà", "Thịt cá"], a: 0},
-            {w: "das Lokal", f: "das Lokal, die Lokale", e: "Wie gefällt Ihnen das ______. ", o: ["Quán ăn", "Nhà hàng", "Cửa hàng", "Siêu thị"], a: 0},
-            {w: "das Mal", f: "das Mal, die Male", e: "Wann waren Sie das letzte ______ in einem Lokal?", o: ["Lần", "Ngày", "Tuần", "Tháng"], a: 0},
-            {w: "das Sandwich", f: "das Sandwich, die Sandwiches", e: "Ich esse in der Mittagspause nur ein ______. ", o: ["Bánh mì kẹp", "Phở", "Cơm", "Bún"], a: 0},
-            {w: "das Hähnchen", f: "das Hähnchen, die Hähnchen", e: "Ich nehme ein Hähnchen-______. ", o: ["Gà", "Bò", "Heo", "Cá"], a: 0},
-            {w: "der Hamburger", f: "der Hamburger, die Hamburger", e: "Ich nehme bitte eine Cola und dazu einen ______. ", o: ["Hamburger", "Sandwich", "Pizza", "Salad"], a: 0},
-            {w: "getrennt", f: "getrennt", e: "______ oder zusammen?", o: ["Riêng", "Cùng", "Mua", "Bán"], a: 0},
-            {w: "der Ofen", f: "der Ofen (Sg.)", e: "Ich nehme eine Ofenkartoffel mit ______. ", o: ["Lò nướng", "Bếp", "Nồi", "Chảo"], a: 0},
-            {w: "der Quark", f: "der Quark (Sg.)", e: "Ich nehme eine Ofenkartoffel mit ______. ", o: ["Phô mai tươi", "Bơ", "Mứt", "Kem"], a: 0},
-            {w: "das Omelett", f: "das Omelett, die Omeletts", e: "Ich nehme ein Omelett mit ______. ", o: ["Trứng ốp la", "Trứng luộc", "Trứng chiên", "Trứng hấp"], a: 0},
-            {w: "der Pilz", f: "der Pilz, die Pilze", e: "Ich nehme ein Omelett mit ______. ", o: ["Nấm", "Cà chua", "Hành", "Khoai tây"], a: 0},
-            {w: "das Rind", f: "das Rind, die Rinder", e: "Ich nehme den Rinderbraten mit ______. ", o: ["Thịt bò", "Thịt heo", "Thịt gà", "Thịt cá"], a: 0},
-            {w: "der Braten", f: "der Braten, die Braten", e: "Ich nehme den Rinder______ mit Klößen.", o: ["Thịt nướng", "Thịt luộc", "Thịt hấp", "Thịt chiên"], a: 0},
-            {w: "die Kirsche", f: "die Kirsche, die Kirschen", e: "Ich nehme ein Stück Kirschen______. ", o: ["Anh đào", "Dâu", "Mâm xôi", "Việt quất"], a: 0},
-            {w: "die Torte", f: "die Torte, die Torten", e: "Ich nehme ein Stück Kirschentorte.", o: ["Bánh kem", "Bánh mì", "Bánh quy", "Bánh flan"], a: 0},
-            {w: "der Kakao", f: "der Kakao, die Kakaos", e: "Ich nehme einen ______. ", o: ["Ca cao", "Trà", "Cà phê", "Sữa"], a: 0}
-        ];
-
-        let currentQuestion = 0;
-        let score = 0;
-
-        const positiveFeedback = ["Gut gemacht!", "Sehr gut!", "Super!", "Toll!", "Weiter so!", "Prima!", "Genau richtig!"];
-        const negativeFeedback = ["Leider falsch!", "Noch nicht richtig!", "Versuch es noch einmal!", "Nicht ganz richtig!", "Schade!", "Falsch!"];
-
-        function speakGerman(text) {
-            if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = 'de-DE';
-                utterance.rate = 0.9;
-                utterance.volume = 0.9;
-                const voices = speechSynthesis.getVoices();
-                const deVoice = voices.find(v => v.lang.startsWith('de-'));
-                if (deVoice) utterance.voice = deVoice;
-                speechSynthesis.cancel();
-                speechSynthesis.speak(utterance);
-            }
-        }
-
-        function startApp() {
-            currentQuestion = 0;
-            score = 0;
-            document.getElementById("start-screen").style.display = "none";
-            document.getElementById("end-screen").style.display = "none";
-            document.getElementById("quiz-ui").style.display = "block";
-            showQuestion();
-        }
-
-        function showQuestion() {
-            if (currentQuestion >= vocabData.length) {
-                showResult();
-                return;
-            }
-            const q = vocabData[currentQuestion];
-
-            // Đảo ngẫu nhiên thứ tự đáp án
-            const options = [...q.o];
-            const correctAnswer = q.a;
-            const shuffledOptions = shuffleArray(options);
-            const newCorrectIndex = shuffledOptions.indexOf(q.o[correctAnswer]);
-
-            document.getElementById("stat").textContent = `Frage ${currentQuestion + 1} von ${vocabData.length}`;
-            document.getElementById("w").textContent = q.w;
-            document.getElementById("i").textContent = q.f;
-            document.getElementById("e").innerHTML = q.e.replace(/______/g, "___");
-
-            const optsDiv = document.getElementById("opts");
-            optsDiv.innerHTML = "";
-            shuffledOptions.forEach((opt, idx) => {
-                const btn = document.createElement("button");
-                btn.className = "opt-btn";
-                btn.textContent = opt;
-                btn.onclick = () => handleClick(idx, btn, q, newCorrectIndex);
-                optsDiv.appendChild(btn);
-            });
-
-            document.getElementById("feedback").textContent = "";
-            document.getElementById("next-btn").style.display = "none";
-        }
-
-        function shuffleArray(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-            }
-            return newArray;
-        }
-
-        function handleClick(selectedIdx, btn, q, correctIndex) {
-            const allBtns = document.querySelectorAll(".opt-btn");
-
-            if (allBtns[0].disabled) {
-                if (selectedIdx === correctIndex) {
-                    speakGerman(q.f);
-                }
-                return;
-            }
-
-            allBtns.forEach(b => b.disabled = true);
-
-            if (selectedIdx === correctIndex) {
-                score++;
-                const msg = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
-                document.getElementById("feedback").textContent = msg;
-                document.getElementById("feedback").style.color = "#27ae60";
-                btn.classList.add("correct");
-
-                speakGerman("Richtig!");
-
-                setTimeout(() => {
-                    speakGerman(q.f);
-                }, 2000);
-            } else {
-                const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
-                document.getElementById("feedback").textContent = msg;
-                document.getElementById("feedback").style.color = "#e74c3c";
-                btn.classList.add("wrong");
-
-                allBtns[correctIndex].classList.add("highlight");
-
-                speakGerman("Falsch!");
-
-                setTimeout(() => {
-                    speakGerman(q.f);
-                }, 2000);
-            }
-
-            document.getElementById("next-btn").style.display = "block";
-        }
-
-        function nextQuestion() {
-            currentQuestion++;
-            showQuestion();
-        }
-
-        function showResult() {
-            document.getElementById("quiz-ui").style.display = "none";
-            document.getElementById("end-screen").style.display = "block";
-            const percent = Math.round((score / vocabData.length) * 100);
-            let comment = percent >= 85 ? "Ausgezeichnet! 🌟" : percent >= 70 ? "Sehr gut! 👍" : percent >= 50 ? "Gut – weiter üben! 💪" : "Nächstes Mal besser! 😊";
-            document.getElementById("score").innerHTML = `Du hast <strong>${score}/${vocabData.length}</strong> richtig!<br>(${percent} %)<br><br>${comment}`;
-        }
-
-        function restartQuiz() {
-            startApp();
-        }
-    </script>
-</body>
-</html>
+            {w: "der Anrufer", f: "der Anrufer, die Anrufer", e: "Aber sie möchte mit dem ______ joggen.", o: ["Người gọi điện", "Người nhận cuộc gọi", "Bạn bè", "Hàng xóm"], a: 0},
+            {w: "die Anruferin", f: "die Anruferin, die Anruferinnen", e: "Aber sie möchte mit dem Anrufer joggen.", o: ["Nữ người gọi điện", "Nữ người nhận cuộc gọi", "Bạn bè", "Hàng xóm"], a: 0},
+            {w: "klettern", f: "klettern, ist geklettert", e: "Sie will nicht so gern ______. ", o: ["Leo trèo", "Chạy bộ", "Bơi lội", "Đi bộ"], a: 0},
+            {w: "vorschlagen", f: "vorschlagen, hat vorgeschlagen", e: "Darf ich etwas ______?", o: ["Đề nghị", "Từ chối", "Chấp nhận", "Hỏi"], a: 0},
+            {w: "der Vorschlag", f: "der Vorschlag, die Vorschläge", e: "Ich habe da einen ______. ", o: ["Đề nghị", "Ý kiến", "Kế hoạch", "Lời khuyên"], a: 0},
+            {w: "zustimmen", f: "zustimmen, hat zugestimmt", e: "Sie / Er stimmt ______. ", o: ["Đồng ý", "Từ chối", "Hỏi lại", "Im lặng"], a: 0},
+            {w: "einverstanden", f: "einverstanden", e: "______!", o: ["Đồng ý", "Từ chối", "Không biết", "Có lẽ"], a: 0},
+            {w: "übermorgen", f: "übermorgen", e: "Vielleicht ______. ?", o: ["Ngày kia", "Hôm nay", "Ngày mai", "Hôm qua"], a: 0},
+            {w: "das Stand-up-Paddling/SUP", f: "das Stand-up-Paddling/SUP (Sg.)", e: "Was findet Pekka interessanter? Klettern oder ______?", o: ["Chèo ván đứng", "Leo trèo", "Bơi lội", "Chạy bộ"], a: 0},
+            {w: "das Yoga", f: "das Yoga (Sg.)", e: "Im Moment mag sie Aerial ______ am liebsten.", o: ["Yoga", "Thể dục", "Chạy bộ", "Bơi lội"], a: 0},
+            {w: "die Fitness", f: "die Fitness (Sg.)", e: "______training oder Joggen?", o: ["Thể dục", "Yoga", "Chạy bộ", "Bơi lội"], a: 0},
+            {w: "der Handball", f: "der Handball (Sg.)", e: "Ich mag ______ nicht so gern!", o: ["Bóng ném", "Bóng đá", "Bóng chuyền", "Bóng rổ"], a: 0},
+            {w: "der Tennis", f: "der Tennis (Sg.)", e: "______ schauen oder Filme schauen?", o: ["Tennis", "Bóng đá", "Bóng chuyền", "Bóng rổ"], a: 0},
+            {w: "der Sportler", f: "der Sportler, die Sportler", e: "Meine Lieblings______ lebt in den USA.", o: ["Vận động viên nam", "Vận động viên nữ", "Huấn luyện viên", "Khán giả"], a: 0},
+            {w: "die Sportlerin", f: "die Sportlerin, die Sportlerinnen", e: "Meine Lieblings______ lebt in den USA.", o: ["Vận động viên nữ", "Vận động viên nam", "Huấn luyện viên", "Khán giả"], a: 0},
+            {w: "springen", f: "springen, ist gesprungen", e: "Wer kann hoch ______?", o: ["Nhảy", "Chạy", "Bơi", "Leo"], a: 0},
+            {w: "das Curry", f: "das Curry, die Currys", e: "Ich koche ______, weil das gerne essen.", o: ["Cà ri", "Phở", "Bún", "Cơm"], a: 0},
+            {w: "das Karaoke", f: "das Karaoke (Sg.)", e: "Ich mag kein ______, weil viele Leute schlecht singen.", o: ["Karaoke", "Nhạc sống", "Phim", "Sách"], a: 0},
+            {w: "die Langeweile", f: "die Langeweile (Sg.)", e: "Ich habe nie ______, weil ich gern und oft bastle.", o: ["Sự chán nản", "Sự vui vẻ", "Sự mệt mỏi", "Sự đói"], a: 0},
+            {w: "basteln", f: "basteln, hat gebastelt", e: "Ich habe nie Langeweile, weil ich gern und oft ______. ", o: ["Làm thủ công", "Chơi thể thao", "Ăn uống", "Ngủ nghỉ"], a: 0},
+            {w: "gemütlich", f: "gemütlich", e: "Wir gehen gern ins Café Rosenstein, weil es dort so ______. ist.", o: ["Thoải mái", "Ồn ào", "Lạnh lẽo", "Nóng bức"], a: 0},
+            {w: "das Programm", f: "das Programm, die Programme", e: "Ich mache ein neues Fitness______. ", o: ["Chương trình", "Kế hoạch", "Lịch học", "Danh sách"], a: 0},
+            {w: "der Luftballon", f: "der Luftballon, die Luftballons", e: "Ich habe ______s und Kerzen gekauft, weil ich eine Party feiere.", o: ["Bóng bay", "Bóng bàn", "Bóng đá", "Bóng chuyền"], a: 0},
+            {w: "die Kerze", f: "die Kerze, die Kerzen", e: "Ich habe Luftballons und ______n gekauft, weil ich eine Party feiere.", o: ["Nến", "Đèn", "Đèn pin", "Đèn ngủ"], a: 0},
+            {w: "beliebt", f: "beliebt", e: "Joggen ist am ______sten.", o: ["Phổ biến", "Ít phổ biến", "Khó", "Dễ"], a: 0},
+            {w: "notieren", f: "notieren, hat notiert", e: "Ich habe 'Fußball' ______. ", o: ["Ghi chú", "Quên", "Nói", "Nghe"], a: 0},
+            {w: "vorstellen", f: "vorstellen, hat vorgestellt", e: "Darf ich ______? Das ist ...", o: ["Giới thiệu", "Từ chối", "Chấp nhận", "Hỏi"], a: 0},
+            {w: "die Kraft", f: "die Kraft, die Kräfte", e: "Mit SUP kann man ______ und Ausdauer trainieren.", o: ["Sức mạnh", "Sức bền", "Tốc độ", "Kỹ thuật"], a: 0},
+            {w: "die Ausdauer", f: "die Ausdauer (Sg.)", e: "Mit SUP kann man Kraft und ______ trainieren.", o: ["Sức bền", "Sức mạnh", "Tốc độ", "Kỹ thuật"], a: 0},
+            {w: "jemand", f: "jemand", e: "Kennt ______ von euch Dart?", o: ["Ai đó", "Không ai", "Mọi người", "Bạn bè"], a: 0},
+            {w: "das Dart"
