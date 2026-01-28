@@ -1,1 +1,269 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Deutsch Lektion 2 - Die Einladung</title>
+    <style>
+        body { 
+            font-family: system-ui, -apple-system, sans-serif; 
+            background: linear-gradient(135deg, #f0f3f9, #e0e7ff); 
+            margin: 0; 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 15px; 
+            box-sizing: border-box;
+        }
+        .quiz-card { 
+            background: white; 
+            width: 100%; 
+            max-width: 520px; 
+            padding: 28px; 
+            border-radius: 24px; 
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15); 
+            text-align: center; 
+        }
+        .flag { 
+            width: 100px; height: 60px; 
+            margin: 0 auto 20px; 
+            display: flex; flex-direction: column; 
+            border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
+        }
+        .f-b { background: #000; flex: 1; } 
+        .f-r { background: #d00; flex: 1; } 
+        .f-g { background: #ff0; flex: 1; }
+        h2 { color: #6c5ce7; margin: 0 0 10px; font-size: 2.1rem; }
+        .subtitle { color: #555; margin-bottom: 28px; font-size: 1.1rem; }
+        .word-de { font-size: 2.5rem; color: #6c5ce7; font-weight: 700; margin: 15px 0; }
+        .info-de { color: #e67e22; font-size: 1.15rem; font-style: italic; margin: 10px 0 20px; }
+        .example-de { 
+            background: #f8fbff; padding: 18px; border-radius: 14px; 
+            margin: 20px 0 28px; text-align: left; 
+            border-left: 6px solid #6c5ce7; font-size: 1.1rem; line-height: 1.5; 
+        }
+        .opt-btn { 
+            width: 100%; background: #fff; border: 2px solid #e0e0e0; 
+            padding: 16px 18px; border-radius: 14px; margin: 10px 0; 
+            font-size: 1.15rem; font-weight: 600; cursor: pointer; 
+            transition: all 0.25s; text-align: left;
+        }
+        .opt-btn:hover:not(:disabled) { border-color: #6c5ce7; background: #f8f5ff; }
+        .opt-btn:disabled { opacity: 0.75; cursor: not-allowed; }
+        .main-btn { 
+            width: 100%; padding: 18px; background: #6c5ce7; color: white; 
+            border: none; border-radius: 16px; font-size: 1.2rem; font-weight: bold; 
+            cursor: pointer; margin-top: 15px;
+        }
+        #feedback { font-size: 1.3rem; font-weight: bold; margin: 20px 0; min-height: 40px; }
+        #stat, #score { font-size: 1rem; color: #666; margin-bottom: 15px; }
+        .correct   { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
+        .wrong     { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
+        .highlight { background: #e8f5e9 !important; border-color: #4caf50 !important; font-weight: bold; cursor: pointer !important; }
+    </style>
+</head>
+<body>
+    <div class="quiz-card">
+        <div id="start-screen">
+            <div class="flag">
+                <div class="f-b"></div><div class="f-r"></div><div class="f-g"></div>
+            </div>
+            <h2>Lektion 2</h2>
+            <div class="subtitle">Die Einladung – Toni / Allem / Ahmet – Alles Toni</div>
+            <button class="main-btn" onclick="startApp()">STARTEN</button>
+        </div>
 
+        <div id="quiz-ui" style="display:none">
+            <div id="stat"></div>
+            <div class="word-de" id="w"></div>
+            <div class="info-de" id="i"></div>
+            <div class="example-de" id="e"></div>
+            <div id="opts"></div>
+            <div id="feedback"></div>
+            <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">WEITER</button>
+        </div>
+
+        <div id="end-screen" style="display:none">
+            <h2 style="color:#27ae60">Fertig!</h2>
+            <div id="score"></div>
+            <button class="main-btn" onclick="restartQuiz()">NOCHMAL</button>
+        </div>
+    </div>
+
+    <script>
+        const vocabData = [
+            // Start Willkommen! (phần nhỏ)
+            {w: "selbstständig", f: "selbstständig", e: "Ich arbeite als ______e Fotografin.", o: ["Tự do", "Làm công", "Học sinh", "Giáo viên"], a: 0},
+            {w: "mega-", f: "mega-", e: "Ich bin meine eigene Chefin! ______cool!", o: ["Siêu", "Rất", "Hơi", "Không"], a: 0},
+            {w: "korrekt", f: "korrekt", e: "Pekka kommt aus Finnland. – ______. ", o: ["Đúng", "Sai", "Không biết", "Có lẽ"], a: 0},
+            {w: "hierher", f: "hierher", e: "Vor zwei Jahren bin ich mit meiner Tochter Alma von Spanien ______gezogen.", o: ["Đến đây", "Đi khỏi", "Ở lại", "Về quê"], a: 0},
+            {w: "die Krise", f: "die Krise, die Krisen", e: "Bei so was krieg ich voll die ______. ", o: ["Khủng hoảng", "Vui vẻ", "Bình thường", "Hạnh phúc"], a: 0},
+            {w: "der Papierkram", f: "der Papierkram (Singular)", e: "Und ich möchte endlich meinen blöden ______ in Ordnung bringen.", o: ["Giấy tờ lằng nhằng", "Sách vở", "Đồ dùng", "Quần áo"], a: 0},
+
+            // Lektion 2 - Die Einladung (từ ảnh anh paste)
+            {w: "die Rose", f: "die Rose, die Rosen", e: "Toni soll Rosen mitbringen.", o: ["Hoa hồng", "Hoa cúc", "Hoa lan", "Hoa hướng dương"], a: 0},
+            {w: "ganz", f: "ganz", e: "Toni ist doch ganz einfach.", o: ["Hoàn toàn", "Hơi", "Không", "Rất"], a: 0},
+            {w: "die Regel", f: "die Regel, die Regeln", e: "Sie sagen die ______.", o: ["Quy tắc", "Lời khuyên", "Ý kiến", "Kế hoạch"], a: 0},
+            {w: "die Abschied", f: "die Abschied, die Abschiede", e: "Toni hat einen ______.", o: ["Lời tạm biệt", "Lời chào", "Lời mời", "Lời cảm ơn"], a: 0},
+            {w: "die Vorspann", f: "die Vorspann, die Vorspanne", e: "Die ______ ist wichtig.", o: ["Phần mở đầu", "Phần kết thúc", "Phần giữa", "Phần chính"], a: 0},
+            {w: "die Hauptsache", f: "die Hauptsache, die Hauptsachen", e: "Die ______ ist, dass alle kommen.", o: ["Điều chính", "Điều phụ", "Điều nhỏ", "Điều lớn"], a: 0},
+            {w: "das Ende", f: "das Ende (Singular)", e: "Aber auch sehr nett Abend muss ein ______ haben.", o: ["Kết thúc", "Bắt đầu", "Giữa", "Toàn bộ"], a: 0},
+            {w: "offen", f: "offen", e: "Toni ist ______.", o: ["Mở", "Đóng", "Lạnh", "Nóng"], a: 0},
+            {w: "lieben", f: "lieben, hat geliebt", e: "Toni ______ seine Familie.", o: ["Yêu", "Ghét", "Thích", "Không thích"], a: 0},
+            {w: "die Portion", f: "die Portion, die Portionen", e: "Ich habe eine große ______.", o: ["Phần", "Cái", "Miếng", "Tách"], a: 0},
+            {w: "die Papaya", f: "die Papaya, die Papayas", e: "Ich habe eine ______.", o: ["Đu đủ", "Chuối", "Xoài", "Dừa"], a: 0},
+            {w: "anders", f: "anders", e: "Das ist ______.", o: ["Khác", "Giống", "Tốt", "Xấu"], a: 0},
+            {w: "das Apfel", f: "das Apfel, die Äpfel", e: "Ich esse einen ______.", o: ["Quả táo", "Quả chuối", "Quả cam", "Quả lê"], a: 0},
+            {w: "die Pizza", f: "die Pizza, die Pizzas", e: "Wir essen ______.", o: ["Pizza", "Hamburger", "Sandwich", "Salad"], a: 0},
+            {w: "die Cola", f: "die Cola, die Colas", e: "Ich trinke ______.", o: ["Coca-Cola", "Nước", "Trà", "Cà phê"], a: 0},
+            {w: "die Milch", f: "die Milch (Singular)", e: "Ich trinke ______.", o: ["Sữa", "Nước", "Nước ngọt", "Rượu"], a: 0},
+            {w: "die Butter", f: "die Butter (Singular)", e: "Ich esse ______.", o: ["Bơ", "Phô mai", "Mứt", "Kem"], a: 0},
+            {w: "das Salz", f: "das Salz (Singular)", e: "Ich brauche ______.", o: ["Muối", "Đường", "Tiêu", "Nước mắm"], a: 0},
+            {w: "die Gurke", f: "die Gurke, die Gurken", e: "Ich esse eine ______.", o: ["Dưa leo", "Cà chua", "Khoai tây", "Cà rốt"], a: 0},
+            {w: "die Tomate", f: "die Tomate, die Tomaten", e: "Ich esse eine ______.", o: ["Cà chua", "Dưa leo", "Khoai tây", "Cà rốt"], a: 0},
+            {w: "die Banane", f: "die Banane, die Bananen", e: "Ich esse eine ______.", o: ["Chuối", "Táo", "Cam", "Lê"], a: 0},
+            {w: "das Brot", f: "das Brot, die Brote", e: "Ich esse ______.", o: ["Bánh mì", "Cơm", "Phở", "Bún"], a: 0},
+            {w: "die Wurst", f: "die Wurst, die Würste", e: "Ich esse ______.", o: ["Xúc xích", "Thịt bò", "Thịt gà", "Cá"], a: 0},
+            {w: "der Käse", f: "der Käse (Singular)", e: "Ich esse ______.", o: ["Phô mai", "Bơ", "Mứt", "Kem"], a: 0},
+            {w: "die Torte", f: "die Torte, die Torten", e: "Ich esse eine ______.", o: ["Bánh kem", "Bánh mì", "Bánh ngọt", "Bánh quy"], a: 0},
+            {w: "der Kuchen", f: "der Kuchen, die Kuchen", e: "Ich esse ______.", o: ["Bánh ngọt", "Bánh mì", "Bánh kem", "Bánh quy"], a: 0},
+            {w: "die Marmelade", f: "die Marmelade (Singular)", e: "Ich esse ______.", o: ["Mứt", "Phô mai", "Bơ", "Kem"], a: 0},
+            {w: "das Getränk", f: "das Getränk, die Getränke", e: "Ich trinke ein ______.", o: ["Đồ uống", "Đồ ăn", "Bánh", "Kẹo"], a: 0},
+            {w: "das Wasser", f: "das Wasser (Singular)", e: "Ich trinke ______.", o: ["Nước", "Coca-Cola", "Trà", "Cà phê"], a: 0},
+            {w: "die Limonade", f: "die Limonade, die Limonaden", e: "Ich trinke ______.", o: ["Nước chanh", "Nước ngọt", "Sữa", "Rượu"], a: 0},
+            {w: "der Saft", f: "der Saft, die Säfte", e: "Ich trinke ______.", o: ["Nước ép", "Nước lọc", "Trà", "Cà phê"], a: 0}
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const positiveFeedback = ["Gut gemacht!", "Sehr gut!", "Super!", "Toll!", "Weiter so!", "Prima!", "Genau richtig!"];
+        const negativeFeedback = ["Leider falsch!", "Noch nicht richtig!", "Versuch es noch einmal!", "Nicht ganz richtig!", "Schade!", "Falsch!"];
+
+        function speakGerman(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE';
+                utterance.rate = 0.9;
+                utterance.volume = 0.9;
+                const voices = speechSynthesis.getVoices();
+                const deVoice = voices.find(v => v.lang.startsWith('de-'));
+                if (deVoice) utterance.voice = deVoice;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startApp() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("end-screen").style.display = "none";
+            document.getElementById("quiz-ui").style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= vocabData.length) {
+                showResult();
+                return;
+            }
+            const q = vocabData[currentQuestion];
+
+            // Đảo ngẫu nhiên thứ tự đáp án
+            const options = [...q.o];
+            const correctAnswer = q.a;
+            const shuffledOptions = shuffleArray(options);
+            const newCorrectIndex = shuffledOptions.indexOf(q.o[correctAnswer]);
+
+            document.getElementById("stat").textContent = `Frage ${currentQuestion + 1} von ${vocabData.length}`;
+            document.getElementById("w").textContent = q.w;
+            document.getElementById("i").textContent = q.f;
+            document.getElementById("e").innerHTML = q.e.replace(/______/g, "___");
+
+            const optsDiv = document.getElementById("opts");
+            optsDiv.innerHTML = "";
+            shuffledOptions.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "opt-btn";
+                btn.textContent = opt;
+                btn.onclick = () => handleClick(idx, btn, q, newCorrectIndex);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        // Hàm shuffle mảng ngẫu nhiên
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function handleClick(selectedIdx, btn, q, correctIndex) {
+            const allBtns = document.querySelectorAll(".opt-btn");
+
+            if (allBtns[0].disabled) {
+                if (selectedIdx === correctIndex) {
+                    speakGerman(q.f);
+                }
+                return;
+            }
+
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selectedIdx === correctIndex) {
+                score++;
+                const msg = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#27ae60";
+                btn.classList.add("correct");
+
+                speakGerman("Richtig!");
+
+                setTimeout(() => {
+                    speakGerman(q.f);
+                }, 2000);
+            } else {
+                const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#e74c3c";
+                btn.classList.add("wrong");
+
+                allBtns[correctIndex].classList.add("highlight");
+
+                speakGerman("Falsch!");
+
+                setTimeout(() => {
+                    speakGerman(q.f);
+                }, 2000);
+            }
+
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResult() {
+            document.getElementById("quiz-ui").style.display = "none";
+            document.getElementById("end-screen").style.display = "block";
+            const percent = Math.round((score / vocabData.length) * 100);
+            let comment = percent >= 85 ? "Ausgezeichnet! 🌟" : percent >= 70 ? "Sehr gut! 👍" : percent >= 50 ? "Gut – weiter üben! 💪" : "Nächstes Mal besser! 😊";
+            document.getElementById("score").innerHTML = `Du hast <strong>${score}/${vocabData.length}</strong> richtig!<br>(${percent} %)<br><br>${comment}`;
+        }
+
+        function restartQuiz() {
+            startApp();
+        }
+    </script>
+</body>
+</html>
