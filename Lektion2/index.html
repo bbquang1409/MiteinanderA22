@@ -70,7 +70,7 @@
                 <div class="f-b"></div><div class="f-r"></div><div class="f-g"></div>
             </div>
             <h2>Lektion 2</h2>
-            <div class="subtitle">Die Einladung – Toni / Allem / Ahmet – Alles Toni</div>
+            <div class="subtitle">Die Einladung – Toni / Ahmet</div>
             <button class="main-btn" onclick="startApp()">STARTEN</button>
         </div>
 
@@ -93,46 +93,68 @@
 
     <script>
         const vocabData = [
-            // Start Willkommen! (phần nhỏ)
-            {w: "selbstständig", f: "selbstständig", e: "Ich arbeite als ______e Fotografin.", o: ["Tự do", "Làm công", "Học sinh", "Giáo viên"], a: 0},
-            {w: "mega-", f: "mega-", e: "Ich bin meine eigene Chefin! ______cool!", o: ["Siêu", "Rất", "Hơi", "Không"], a: 0},
-            {w: "korrekt", f: "korrekt", e: "Pekka kommt aus Finnland. – ______. ", o: ["Đúng", "Sai", "Không biết", "Có lẽ"], a: 0},
-            {w: "hierher", f: "hierher", e: "Vor zwei Jahren bin ich mit meiner Tochter Alma von Spanien ______gezogen.", o: ["Đến đây", "Đi khỏi", "Ở lại", "Về quê"], a: 0},
-            {w: "die Krise", f: "die Krise, die Krisen", e: "Bei so was krieg ich voll die ______. ", o: ["Khủng hoảng", "Vui vẻ", "Bình thường", "Hạnh phúc"], a: 0},
-            {w: "der Papierkram", f: "der Papierkram (Singular)", e: "Und ich möchte endlich meinen blöden ______ in Ordnung bringen.", o: ["Giấy tờ lằng nhằng", "Sách vở", "Đồ dùng", "Quần áo"], a: 0},
-
-            // Lektion 2 - Die Einladung (từ ảnh anh paste)
-            {w: "die Rose", f: "die Rose, die Rosen", e: "Toni soll Rosen mitbringen.", o: ["Hoa hồng", "Hoa cúc", "Hoa lan", "Hoa hướng dương"], a: 0},
-            {w: "ganz", f: "ganz", e: "Toni ist doch ganz einfach.", o: ["Hoàn toàn", "Hơi", "Không", "Rất"], a: 0},
-            {w: "die Regel", f: "die Regel, die Regeln", e: "Sie sagen die ______.", o: ["Quy tắc", "Lời khuyên", "Ý kiến", "Kế hoạch"], a: 0},
-            {w: "die Abschied", f: "die Abschied, die Abschiede", e: "Toni hat einen ______.", o: ["Lời tạm biệt", "Lời chào", "Lời mời", "Lời cảm ơn"], a: 0},
-            {w: "die Vorspann", f: "die Vorspann, die Vorspanne", e: "Die ______ ist wichtig.", o: ["Phần mở đầu", "Phần kết thúc", "Phần giữa", "Phần chính"], a: 0},
-            {w: "die Hauptsache", f: "die Hauptsache, die Hauptsachen", e: "Die ______ ist, dass alle kommen.", o: ["Điều chính", "Điều phụ", "Điều nhỏ", "Điều lớn"], a: 0},
-            {w: "das Ende", f: "das Ende (Singular)", e: "Aber auch sehr nett Abend muss ein ______ haben.", o: ["Kết thúc", "Bắt đầu", "Giữa", "Toàn bộ"], a: 0},
-            {w: "offen", f: "offen", e: "Toni ist ______.", o: ["Mở", "Đóng", "Lạnh", "Nóng"], a: 0},
-            {w: "lieben", f: "lieben, hat geliebt", e: "Toni ______ seine Familie.", o: ["Yêu", "Ghét", "Thích", "Không thích"], a: 0},
-            {w: "die Portion", f: "die Portion, die Portionen", e: "Ich habe eine große ______.", o: ["Phần", "Cái", "Miếng", "Tách"], a: 0},
-            {w: "die Papaya", f: "die Papaya, die Papayas", e: "Ich habe eine ______.", o: ["Đu đủ", "Chuối", "Xoài", "Dừa"], a: 0},
-            {w: "anders", f: "anders", e: "Das ist ______.", o: ["Khác", "Giống", "Tốt", "Xấu"], a: 0},
-            {w: "das Apfel", f: "das Apfel, die Äpfel", e: "Ich esse einen ______.", o: ["Quả táo", "Quả chuối", "Quả cam", "Quả lê"], a: 0},
-            {w: "die Pizza", f: "die Pizza, die Pizzas", e: "Wir essen ______.", o: ["Pizza", "Hamburger", "Sandwich", "Salad"], a: 0},
-            {w: "die Cola", f: "die Cola, die Colas", e: "Ich trinke ______.", o: ["Coca-Cola", "Nước", "Trà", "Cà phê"], a: 0},
-            {w: "die Milch", f: "die Milch (Singular)", e: "Ich trinke ______.", o: ["Sữa", "Nước", "Nước ngọt", "Rượu"], a: 0},
-            {w: "die Butter", f: "die Butter (Singular)", e: "Ich esse ______.", o: ["Bơ", "Phô mai", "Mứt", "Kem"], a: 0},
-            {w: "das Salz", f: "das Salz (Singular)", e: "Ich brauche ______.", o: ["Muối", "Đường", "Tiêu", "Nước mắm"], a: 0},
-            {w: "die Gurke", f: "die Gurke, die Gurken", e: "Ich esse eine ______.", o: ["Dưa leo", "Cà chua", "Khoai tây", "Cà rốt"], a: 0},
-            {w: "die Tomate", f: "die Tomate, die Tomaten", e: "Ich esse eine ______.", o: ["Cà chua", "Dưa leo", "Khoai tây", "Cà rốt"], a: 0},
-            {w: "die Banane", f: "die Banane, die Bananen", e: "Ich esse eine ______.", o: ["Chuối", "Táo", "Cam", "Lê"], a: 0},
-            {w: "das Brot", f: "das Brot, die Brote", e: "Ich esse ______.", o: ["Bánh mì", "Cơm", "Phở", "Bún"], a: 0},
-            {w: "die Wurst", f: "die Wurst, die Würste", e: "Ich esse ______.", o: ["Xúc xích", "Thịt bò", "Thịt gà", "Cá"], a: 0},
-            {w: "der Käse", f: "der Käse (Singular)", e: "Ich esse ______.", o: ["Phô mai", "Bơ", "Mứt", "Kem"], a: 0},
-            {w: "die Torte", f: "die Torte, die Torten", e: "Ich esse eine ______.", o: ["Bánh kem", "Bánh mì", "Bánh ngọt", "Bánh quy"], a: 0},
-            {w: "der Kuchen", f: "der Kuchen, die Kuchen", e: "Ich esse ______.", o: ["Bánh ngọt", "Bánh mì", "Bánh kem", "Bánh quy"], a: 0},
-            {w: "die Marmelade", f: "die Marmelade (Singular)", e: "Ich esse ______.", o: ["Mứt", "Phô mai", "Bơ", "Kem"], a: 0},
-            {w: "das Getränk", f: "das Getränk, die Getränke", e: "Ich trinke ein ______.", o: ["Đồ uống", "Đồ ăn", "Bánh", "Kẹo"], a: 0},
-            {w: "das Wasser", f: "das Wasser (Singular)", e: "Ich trinke ______.", o: ["Nước", "Coca-Cola", "Trà", "Cà phê"], a: 0},
-            {w: "die Limonade", f: "die Limonade, die Limonaden", e: "Ich trinke ______.", o: ["Nước chanh", "Nước ngọt", "Sữa", "Rượu"], a: 0},
-            {w: "der Saft", f: "der Saft, die Säfte", e: "Ich trinke ______.", o: ["Nước ép", "Nước lọc", "Trà", "Cà phê"], a: 0}
+            // Lektion 2 - LERNWORTSCHATZ (đúng theo ảnh PDF anh gửi)
+            {w: "stresig", f: "stressig", e: "Das findet er ______. ", o: ["Căng thẳng", "Vui vẻ", "Bình thường", "Mệt mỏi"], a: 0},
+            {w: "die Sorge", f: "die Sorge, die Sorgen", e: "Mach dir mal keine ______. ", o: ["Lo lắng", "Vui mừng", "Hy vọng", "Niềm tin"], a: 0},
+            {w: "ordentlich", f: "ordentlich", e: "Toni soll ______ Sachen anziehen.", o: ["Chỉnh tề", "Bẩn thỉu", "Lộn xộn", "Mặc gì cũng được"], a: 0},
+            {w: "die Praline", f: "die Praline, die Pralinen", e: "Toni soll Pralinen ______. ", o: ["Mang theo", "Ăn", "Mua", "Bán"], a: 0},
+            {w: "die Rose", f: "die Rose, die Rosen", e: "Toni soll Rosen ______. ", o: ["Mang theo", "Ăn", "Mua", "Bán"], a: 0},
+            {w: "ganz", f: "ganz", e: "Das ist doch ______ einfach!", o: ["Hoàn toàn", "Hơi", "Không", "Rất"], a: 0},
+            {w: "die Regel", f: "die Regel, die Regeln", e: "Sie sind unsicher, weil sie die ______ nicht kennen?", o: ["Quy tắc", "Lời khuyên", "Ý kiến", "Kế hoạch"], a: 0},
+            {w: "der Abschied", f: "der Abschied, die Abschiede", e: "Also sagen Sie 'Danke!', spätestens beim ______. ", o: ["Lời tạm biệt", "Lời chào", "Lời mời", "Lời cảm ơn"], a: 0},
+            {w: "die Vorspeise", f: "die Vorspeise, die Vorspeisen", e: "Manche Gäste essen die ______, die Hauptspeise und die Nachspeise und gehen dann gleich nach Hause.", o: ["Món khai vị", "Món chính", "Món tráng miệng", "Món phụ"], a: 0},
+            {w: "die Hauptspeise", f: "die Hauptspeise, die Hauptspeisen", e: "Manche Gäste essen die Vorspeise, die ______, die Nachspeise und gehen dann gleich nach Hause.", o: ["Món chính", "Món khai vị", "Món tráng miệng", "Món phụ"], a: 0},
+            {w: "die Nachspeise", f: "die Nachspeise, die Nachspeisen", e: "Manche Gäste essen die Vorspeise, die Hauptspeise und die ______ und gehen dann gleich nach Hause.", o: ["Món tráng miệng", "Món khai vị", "Món chính", "Món phụ"], a: 0},
+            {w: "die Speise", f: "die Speise, die Speisen", e: "Aber auch ein sehr netter Abend muss ein Ende haben.", o: ["Món ăn", "Đồ uống", "Bánh", "Kẹo"], a: 0},
+            {w: "das Ende", f: "das Ende (Sg.)", e: "Aber auch ein sehr netter Abend muss mal ein ______ haben.", o: ["Kết thúc", "Bắt đầu", "Giữa", "Toàn bộ"], a: 0},
+            {w: "plötzlich", f: "plötzlich", e: "Gähnt der Gastgeber oder die Gastgeberin mehrmals ______. ", o: ["Đột nhiên", "Từ từ", "Chậm rãi", "Nhanh chóng"], a: 0},
+            {w: "offen", f: "offen (hat gelobt)", e: "Noch Fragen ______. ?", o: ["Mở", "Đóng", "Lạnh", "Nóng"], a: 0},
+            {w: "loben", f: "loben, hat gelobt", e: "Wie ______ Sie den Koch / die Köchin?", o: ["Khen", "Chê", "Hỏi", "Trả lời"], a: 0},
+            {w: "ablehnen", f: "ablehnen, hat abgelehnt", e: "Wie lehnt man eine weitere Portion höflich ab?", o: ["Từ chối", "Chấp nhận", "Mời", "Cảm ơn"], a: 0},
+            {w: "die Portion", f: "die Portion, die Portionen", e: "Wie lehnt man eine weitere ______ höflich ab?", o: ["Phần", "Cái", "Miếng", "Tách"], a: 0},
+            {w: "weinen", f: "weinen, hat geweint", e: "Ich bin wach, ich traurig bin.", o: ["Khóc", "Cười", "Ngủ", "Ăn"], a: 0},
+            {w: "verliebt", f: "verliebt", e: "Ich bin ______. ", o: ["Yêu", "Ghét", "Thích", "Không thích"], a: 0},
+            {w: "die Papiere", f: "die Papiere (Pl)", e: "Ich habe meine ______ verloren.", o: ["Giấy tờ", "Sách vở", "Đồ dùng", "Quần áo"], a: 0},
+            {w: "die Wäsche", f: "die Wäsche (Sg.)", e: "Bei mir muss ______ waschen.", o: ["Giặt giũ", "Nấu ăn", "Dọn nhà", "Học bài"], a: 0},
+            {w: "genauso", f: "genauso", e: "Bei uns ist ______ das anders.", o: ["Giống hệt", "Khác", "Tốt hơn", "Xấu hơn"], a: 0},
+            {w: "anders", f: "anders", e: "Bei uns ist ______ das anders.", o: ["Khác", "Giống", "Tốt", "Xấu"], a: 0},
+            {w: "überraschen", f: "überraschen, hat überrascht", e: "Das ______ mich.", o: ["Làm ngạc nhiên", "Làm buồn", "Làm vui", "Làm mệt"], a: 0},
+            {w: "die Gabel", f: "die Gabel, die Gabeln", e: "Hier sind schon Messer und ______. ", o: ["Nĩa", "Thìa", "Dao", "Đũa"], a: 0},
+            {w: "die Kanne", f: "die Kanne, die Kannen", e: "Gib mir mal bitte die ______. ", o: ["Bình", "Ly", "Chén", "Đĩa"], a: 0},
+            {w: "der Löffel", f: "der Löffel, die Löffel", e: "Bitte noch schon kleine ______ für den Nachtisch!", o: ["Thìa", "Nĩa", "Dao", "Đũa"], a: 0},
+            {w: "das Messer", f: "das Messer, die Messer", e: "Hier sind schon ______ und Gabeln.", o: ["Dao", "Thìa", "Nĩa", "Đũa"], a: 0},
+            {w: "die Pfanne", f: "die Pfanne, die Pfannen", e: "Holt ihr bitte die ______ und eine Schüssel?", o: ["Chảo", "Nồi", "Đĩa", "Ly"], a: 0},
+            {w: "die Schüssel", f: "die Schüssel, die Schüsseln", e: "Holt ihr bitte die Pfanne und eine ______?", o: ["Bát tô", "Đĩa", "Ly", "Chén"], a: 0},
+            {w: "der Teller", f: "der Teller, die Teller", e: "Kannst du mir mal deinen ______ geben, bitte?", o: ["Đĩa", "Bát", "Ly", "Chén"], a: 0},
+            {w: "der Topf", f: "der Topf, die Töpfe", e: "Ich nehme den ______. ", o: ["Nồi", "Chảo", "Đĩa", "Ly"], a: 0},
+            {w: "scharf", f: "scharf", e: "Es ist ein bisschen ______. ", o: ["Cay", "Ngọt", "Chua", "Mặn"], a: 0},
+            {w: "süß", f: "süß", e: "Es schmeckt sehr ______. ", o: ["Ngọt", "Cay", "Chua", "Mặn"], a: 0},
+            {w: "salzig", f: "salzig", e: "Das ist hoffentlich nicht zu ______. ", o: ["Mặn", "Ngọt", "Cay", "Chua"], a: 0},
+            {w: "bitter", f: "bitter", e: "Der Kaffee schmeckt viel ______. ", o: ["Đắng", "Ngọt", "Cay", "Chua"], a: 0},
+            {w: "der Honig", f: "der Honig, die Honige", e: "Ja, da ist viel ______ drin.", o: ["Mật ong", "Đường", "Muối", "Tiêu"], a: 0},
+            {w: "die Zitrone", f: "die Zitrone, die Zitronen", e: "Ja, da ist ______ drin.", o: ["Chanh", "Cam", "Táo", "Chuối"], a: 0},
+            {w: "die Grapefruit", f: "die Grapefruit, die Grapefruits", e: "Ja, das ist ______. ", o: ["Bưởi", "Cam", "Chanh", "Táo"], a: 0},
+            {w: "satt", f: "satt", e: "Ich bin ______. ", o: ["No", "Đói", "Khát", "Mệt"], a: 0},
+            {w: "herein", f: "herein", e: "Komm doch ______!", o: ["Vào đây", "Ra ngoài", "Lên trên", "Xuống dưới"], a: 0},
+            {w: "reinkommen", f: "reinkommen, ist reingekommen", e: "Komm doch ______!", o: ["Vào đây", "Ra ngoài", "Lên trên", "Xuống dưới"], a: 0},
+            {w: "riechen", f: "riechen, hat gerochen", e: "Das riecht aber fantastisch ______. ", o: ["Ngửi", "Nếm", "Nhìn", "Nghe"], a: 0},
+            {w: "fantastisch", f: "fantastisch", e: "Das riecht aber ______ hier!", o: ["Tuyệt vời", "Tệ hại", "Bình thường", "Kinh khủng"], a: 0},
+            {w: "das Schwein", f: "das Schwein, die Schweine", e: "Tut mir leid, ich esse kein ______fleisch.", o: ["Thịt lợn", "Thịt bò", "Thịt gà", "Thịt cá"], a: 0},
+            {w: "das Lokal", f: "das Lokal, die Lokale", e: "Wie gefällt Ihnen das ______. ", o: ["Quán ăn", "Nhà hàng", "Cửa hàng", "Siêu thị"], a: 0},
+            {w: "das Mal", f: "das Mal, die Male", e: "Wann waren Sie das letzte ______ in einem Lokal?", o: ["Lần", "Ngày", "Tuần", "Tháng"], a: 0},
+            {w: "das Sandwich", f: "das Sandwich, die Sandwiches", e: "Ich esse in der Mittagspause nur ein ______. ", o: ["Bánh mì kẹp", "Phở", "Cơm", "Bún"], a: 0},
+            {w: "das Hähnchen", f: "das Hähnchen, die Hähnchen", e: "Ich nehme ein Hähnchen-______. ", o: ["Gà", "Bò", "Heo", "Cá"], a: 0},
+            {w: "der Hamburger", f: "der Hamburger, die Hamburger", e: "Ich nehme bitte eine Cola und dazu einen ______. ", o: ["Hamburger", "Sandwich", "Pizza", "Salad"], a: 0},
+            {w: "getrennt", f: "getrennt", e: "______ oder zusammen?", o: ["Riêng", "Cùng", "Mua", "Bán"], a: 0},
+            {w: "der Ofen", f: "der Ofen (Sg.)", e: "Ich nehme eine Ofenkartoffel mit ______. ", o: ["Lò nướng", "Bếp", "Nồi", "Chảo"], a: 0},
+            {w: "der Quark", f: "der Quark (Sg.)", e: "Ich nehme eine Ofenkartoffel mit ______. ", o: ["Phô mai tươi", "Bơ", "Mứt", "Kem"], a: 0},
+            {w: "das Omelett", f: "das Omelett, die Omeletts", e: "Ich nehme ein Omelett mit ______. ", o: ["Trứng ốp la", "Trứng luộc", "Trứng chiên", "Trứng hấp"], a: 0},
+            {w: "der Pilz", f: "der Pilz, die Pilze", e: "Ich nehme ein Omelett mit ______. ", o: ["Nấm", "Cà chua", "Hành", "Khoai tây"], a: 0},
+            {w: "das Rind", f: "das Rind, die Rinder", e: "Ich nehme den Rinderbraten mit ______. ", o: ["Thịt bò", "Thịt heo", "Thịt gà", "Thịt cá"], a: 0},
+            {w: "der Braten", f: "der Braten, die Braten", e: "Ich nehme den Rinder______ mit Klößen.", o: ["Thịt nướng", "Thịt luộc", "Thịt hấp", "Thịt chiên"], a: 0},
+            {w: "die Kirsche", f: "die Kirsche, die Kirschen", e: "Ich nehme ein Stück Kirschen______. ", o: ["Anh đào", "Dâu", "Mâm xôi", "Việt quất"], a: 0},
+            {w: "die Torte", f: "die Torte, die Torten", e: "Ich nehme ein Stück Kirschentorte.", o: ["Bánh kem", "Bánh mì", "Bánh quy", "Bánh flan"], a: 0},
+            {w: "der Kakao", f: "der Kakao, die Kakaos", e: "Ich nehme einen ______. ", o: ["Ca cao", "Trà", "Cà phê", "Sữa"], a: 0}
         ];
 
         let currentQuestion = 0;
@@ -196,7 +218,6 @@
             document.getElementById("next-btn").style.display = "none";
         }
 
-        // Hàm shuffle mảng ngẫu nhiên
         function shuffleArray(array) {
             const newArray = [...array];
             for (let i = newArray.length - 1; i > 0; i--) {
