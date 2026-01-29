@@ -3,63 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Deutsch Lektion 3 - Joggen ist prima</title>
+    <title>Deutsch Lektion 4 - Der erste Arbeitstag</title>
     <style>
-        body { 
-            font-family: system-ui, -apple-system, sans-serif; 
-            background: linear-gradient(135deg, #f0f3f9, #e0e7ff); 
-            margin: 0; 
-            min-height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 15px; 
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f0f3f9, #e0e7ff);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
             box-sizing: border-box;
         }
-        .quiz-card { 
-            background: white; 
-            width: 100%; 
-            max-width: 520px; 
-            padding: 28px; 
-            border-radius: 24px; 
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15); 
-            text-align: center; 
+        .quiz-card {
+            background: white;
+            width: 100%;
+            max-width: 520px;
+            padding: 28px;
+            border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            text-align: center;
         }
-        .flag { 
-            width: 100px; height: 60px; 
-            margin: 0 auto 20px; 
-            display: flex; flex-direction: column; 
+        .flag {
+            width: 100px; height: 60px;
+            margin: 0 auto 20px;
+            display: flex; flex-direction: column;
             border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
         }
-        .f-b { background: #000; flex: 1; } 
-        .f-r { background: #d00; flex: 1; } 
+        .f-b { background: #000; flex: 1; }
+        .f-r { background: #d00; flex: 1; }
         .f-g { background: #ff0; flex: 1; }
         h2 { color: #6c5ce7; margin: 0 0 10px; font-size: 2.1rem; }
         .subtitle { color: #555; margin-bottom: 28px; font-size: 1.1rem; }
         .word-de { font-size: 2.5rem; color: #6c5ce7; font-weight: 700; margin: 15px 0; }
         .info-de { color: #e67e22; font-size: 1.15rem; font-style: italic; margin: 10px 0 20px; }
-        .example-de { 
-            background: #f8fbff; padding: 18px; border-radius: 14px; 
-            margin: 20px 0 28px; text-align: left; 
-            border-left: 6px solid #6c5ce7; font-size: 1.1rem; line-height: 1.5; 
+        .example-de {
+            background: #f8fbff; padding: 18px; border-radius: 14px;
+            margin: 20px 0 28px; text-align: left;
+            border-left: 6px solid #6c5ce7; font-size: 1.1rem; line-height: 1.5;
         }
-        .opt-btn { 
-            width: 100%; background: #fff; border: 2px solid #e0e0e0; 
-            padding: 16px 18px; border-radius: 14px; margin: 10px 0; 
-            font-size: 1.15rem; font-weight: 600; cursor: pointer; 
+        .opt-btn {
+            width: 100%; background: #fff; border: 2px solid #e0e0e0;
+            padding: 16px 18px; border-radius: 14px; margin: 10px 0;
+            font-size: 1.15rem; font-weight: 600; cursor: pointer;
             transition: all 0.25s; text-align: left;
         }
         .opt-btn:hover:not(:disabled) { border-color: #6c5ce7; background: #f8f5ff; }
         .opt-btn:disabled { opacity: 0.75; cursor: not-allowed; }
-        .main-btn { 
-            width: 100%; padding: 18px; background: #6c5ce7; color: white; 
-            border: none; border-radius: 16px; font-size: 1.2rem; font-weight: bold; 
+        .main-btn {
+            width: 100%; padding: 18px; background: #6c5ce7; color: white;
+            border: none; border-radius: 16px; font-size: 1.2rem; font-weight: bold;
             cursor: pointer; margin-top: 15px;
         }
         #feedback { font-size: 1.3rem; font-weight: bold; margin: 20px 0; min-height: 40px; }
         #stat, #score { font-size: 1rem; color: #666; margin-bottom: 15px; }
-        .correct   { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
-        .wrong     { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
+        .correct { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
+        .wrong { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
         .highlight { background: #e8f5e9 !important; border-color: #4caf50 !important; font-weight: bold; cursor: pointer !important; }
     </style>
 </head>
@@ -69,11 +69,10 @@
             <div class="flag">
                 <div class="f-b"></div><div class="f-r"></div><div class="f-g"></div>
             </div>
-            <h2>Lektion 3</h2>
-            <div class="subtitle">Zofia – Joggen ist prima!</div>
+            <h2>Lektion 4</h2>
+            <div class="subtitle">Amadou – Der erste Arbeitstag</div>
             <button class="main-btn" onclick="startApp()">STARTEN</button>
         </div>
-
         <div id="quiz-ui" style="display:none">
             <div id="stat"></div>
             <div class="word-de" id="w"></div>
@@ -83,7 +82,6 @@
             <div id="feedback"></div>
             <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">WEITER</button>
         </div>
-
         <div id="end-screen" style="display:none">
             <h2 style="color:#27ae60">Fertig!</h2>
             <div id="score"></div>
@@ -93,69 +91,31 @@
 
     <script>
         const vocabData = [
-            {w: "der Anrufer", f: "der Anrufer, die Anrufer", e: "Aber sie möchte mit dem ______ joggen.", o: ["Người gọi điện", "Người nhận cuộc gọi", "Bạn bè", "Hàng xóm"], a: 0},
-            {w: "die Anruferin", f: "die Anruferin, die Anruferinnen", e: "Aber sie möchte mit dem Anrufer joggen.", o: ["Người gọi điện (nữ)", "Người nhận cuộc gọi (nữ)", "Bạn bè", "Hàng xóm"], a: 0},
-            {w: "klettern", f: "klettern, ist geklettert", e: "Sie will nicht so gern ______. ", o: ["Leo trèo", "Chạy bộ", "Bơi lội", "Đi bộ"], a: 0},
-            {w: "vorschlagen", f: "vorschlagen, hat vorgeschlagen", e: "Darf ich etwas ______?", o: ["Đề nghị/ Gợi ý", "Từ chối", "Chấp nhận", "Hỏi"], a: 0},
-            {w: "der Vorschlag", f: "der Vorschlag, die Vorschläge", e: "Ich habe da einen ______. ", o: ["Đề nghị/ Gợi ý", "Ý kiến", "Kế hoạch", "Lời khuyên"], a: 0},
-            {w: "zustimmen", f: "zustimmen, hat zugestimmt", e: "Sie / Er stimmt ______. ", o: ["Đồng ý", "Từ chối", "Hỏi lại", "Im lặng"], a: 0},
-            {w: "einverstanden", f: "einverstanden", e: "______!", o: ["Đồng ý nhé!", "Từ chối", "Không biết", "Có lẽ"], a: 0},
-            {w: "übermorgen", f: "übermorgen", e: "Vielleicht ______. ?", o: ["Ngày kia", "Hôm nay", "Ngày mai", "Hôm qua"], a: 0},
-            {w: "das Stand-up-Paddling/SUP", f: "das Stand-up-Paddling/SUP (Sg.)", e: "Was findet Pekka interessanter? Klettern oder ______?", o: ["Chèo ván đứng (SUP)", "Leo trèo", "Bơi lội", "Chạy bộ"], a: 0},
-            {w: "das Yoga", f: "das Yoga (Sg.)", e: "Im Moment mag sie Aerial ______ am liebsten.", o: ["Yoga", "Thể dục", "Chạy bộ", "Bơi lội"], a: 0},
-            {w: "die Fitness", f: "die Fitness (Sg.)", e: "______training oder Joggen?", o: ["Tập thể dục/ Fitness", "Yoga", "Chạy bộ", "Bơi lội"], a: 0},
-            {w: "der Handball", f: "der Handball (Sg.)", e: "Ich mag ______ nicht so gern!", o: ["Bóng ném tay", "Bóng đá", "Bóng chuyền", "Bóng rổ"], a: 0},
-            {w: "der Tennis", f: "der Tennis (Sg.)", e: "______ schauen oder Filme schauen?", o: ["Quần vợt (Tennis)", "Bóng đá", "Bóng chuyền", "Bóng rổ"], a: 0},
-            {w: "springen", f: "springen, ist gesprungen", e: "Wer kann hoch ______?", o: ["Nhảy cao", "Chạy nhanh", "Bơi xa", "Leo trèo"], a: 0},
-            {w: "das Curry", f: "das Curry, die Currys", e: "Ich koche ______, weil ich das gerne esse.", o: ["Cà ri", "Phở", "Bún bò", "Cơm tấm"], a: 0},
-            {w: "das Karaoke", f: "das Karaoke (Sg.)", e: "Ich mag kein ______, weil viele Leute schlecht singen.", o: ["Karaoke", "Nhạc sống", "Xem phim", "Đọc sách"], a: 0},
-            {w: "die Langeweile", f: "die Langeweile (Sg.)", e: "Ich habe nie ______, weil ich gern und oft bastle.", o: ["Sự chán nản", "Sự vui vẻ", "Sự mệt mỏi", "Sự đói"], a: 0},
-            {w: "basteln", f: "basteln, hat gebastelt", e: "Ich habe nie Langeweile, weil ich gern und oft ______. ", o: ["Làm đồ thủ công", "Chơi thể thao", "Ăn uống", "Ngủ nghỉ"], a: 0},
-            {w: "gemütlich", f: "gemütlich", e: "Wir gehen gern ins Café Rosenstein, weil es dort so ______. ist.", o: ["Thoải mái, ấm cúng", "Ồn ào", "Lạnh lẽo", "Nóng bức"], a: 0},
-            {w: "das Programm", f: "das Programm, die Programme", e: "Ich mache ein neues Fitness______. ", o: ["Chương trình/ Kế hoạch", "Lịch học", "Danh sách", "Bảng"], a: 0},
-            {w: "der Luftballon", f: "der Luftballon, die Luftballons", e: "Ich habe ______s und Kerzen gekauft, weil ich eine Party feiere.", o: ["Bóng bay", "Bóng bàn", "Bóng đá", "Bóng chuyền"], a: 0},
-            {w: "die Kerze", f: "die Kerze, die Kerzen", e: "Ich habe Luftballons und ______n gekauft, weil ich eine Party feiere.", o: ["Nến", "Đèn", "Đèn pin", "Đèn ngủ"], a: 0},
-            {w: "die Übung", f: "die Übung, die Übungen", e: "Wer will ______en machen?", o: ["Bài tập", "Trò chơi", "Bài hát", "Món ăn"], a: 0},
-            {w: "die Spaghetti", f: "die Spaghetti (Pl.)", e: "Spaghetti schmecken genauso gut wie ...", o: ["Mì Ý (Spaghetti)", "Phở", "Bún", "Cơm"], a: 0},
-            {w: "abwaschen", f: "abwaschen, hat abgewaschen", e: "Abwaschen ist anstrengender als Kochen.", o: ["Rửa chén", "Nấu ăn", "Dọn dẹp", "Giặt giũ"], a: 0},
-            {w: "der Elefant", f: "der Elefant, die Elefanten", e: "Am besten haben mir die ______en gefallen.", o: ["Con voi", "Con hổ", "Con gấu", "Con khỉ"], a: 0},
-            {w: "die Schlange", f: "die Schlange, die Schlangen", e: "Es gibt dort Schlangen, die sind fünf Meter lang.", o: ["Con rắn", "Con rùa", "Con cá", "Con ếch"], a: 0},
-            {w: "anstrengend", f: "anstrengend", e: "Deutsch lernen ist genauso ______ wie nett und hübsch.", o: ["Mệt mỏi", "Vui vẻ", "Dễ dàng", "Thú vị"], a: 0},
-            {w: "hübsch", f: "hübsch", e: "Deutsch lernen ist genauso anstrengend wie nett und ______. ", o: ["Xinh đẹp", "Xấu xí", "Lớn", "Nhỏ"], a: 0},
-            {w: "das Gummibärchen", f: "das Gummibärchen, die Gummibärchen", e: "Gummibärchen schmecken genauso gut wie ...", o: ["Kẹo dẻo hình gấu", "Kẹo mút", "Socola", "Bánh kẹo"], a: 0},
-            {w: "die Maus", f: "die Maus, die Mäuse", e: "Schlangen sind intelligenter als so gut wie ______. ", o: ["Con chuột", "Con mèo", "Con chó", "Con gà"], a: 0},
-            {w: "der Typ", f: "der Typ, die Typen", e: "Welcher Sport______ sind Sie?", o: ["Kiểu người", "Loại người", "Người lạ", "Bạn bè"], a: 0},
-            {w: "der Kontakt", f: "der Kontakt, die Kontakte", e: "Möchten Sie neue ______ knüpfen?", o: ["Liên lạc/ Mối quan hệ", "Bạn bè", "Gia đình", "Đồng nghiệp"], a: 0},
-            {w: "die Sportart", f: "die Sportart, die Sportarten", e: "Welche ______ passt am besten zu Ihnen?", o: ["Môn thể thao", "Trò chơi", "Hoạt động", "Sở thích"], a: 0},
-            {w: "herausfinden", f: "herausfinden, hat herausgefunden", e: "Welche Sportart passt am besten zu Ihnen?", o: ["Tìm ra", "Quên", "Hỏi", "Nói"], a: 0},
-            {w: "rausfinden", f: "rausfinden, hat rausgefunden", e: "Finden Sie es heraus!", o: ["Tìm ra", "Quên", "Hỏi", "Nói"], a: 0},
-            {w: "kämpfen", f: "kämpfen, hat gekämpft", e: "Möchten Sie gerne zusammen mit anderen Menschen ______ und im Team gewinnen?", o: ["Chiến đấu/ Cạnh tranh", "Chơi", "Ăn", "Ngủ"], a: 0},
-            {w: "geeignet", f: "geeignet", e: "Dann ist eine Mannschaftssportart für Sie am ______. ", o: ["Phù hợp", "Không phù hợp", "Khó", "Dễ"], a: 0},
-            {w: "der Basketball", f: "der Basketball (Sg.)", e: "Zum Beispiel Fußball, ______ oder Eishockey.", o: ["Bóng rổ", "Bóng đá", "Bóng chuyền", "Bóng ném"], a: 0},
-            {w: "das Eishockey", f: "das Eishockey (Sg.)", e: "Zum Beispiel Fußball, Basketball oder ______. ", o: ["Khúc côn cầu trên băng", "Bóng đá", "Bóng rổ", "Bóng chuyền"], a: 0},
-            {w: "das Ziel", f: "das Ziel, die Ziele", e: "Ich brauche klare ______. ", o: ["Mục tiêu", "Kế hoạch", "Ý kiến", "Lời khuyên"], a: 0},
-            {w: "die Leichtathletik", f: "die Leichtathletik (Sg.)", e: "Dann sind vielleicht Leichtathletik-Sportarten für Sie am interessantesten.", o: ["Điền kinh", "Bơi lội", "Cầu lông", "Quần vợt"], a: 0},
-            {w: "werfen", f: "werfen, hat geworfen", e: "Zum Beispiel Laufen, Springen oder ______. ", o: ["Ném", "Chạy", "Nhảy", "Bơi"], a: 0},
-            {w: "die Luft", f: "die Luft (Sg.)", e: "Ich liebe frische ______. ", o: ["Không khí", "Nước", "Đất", "Lửa"], a: 0},
-            {w: "das Studio", f: "das Studio, die Studios", e: "Fitness______s und Sporthallen mögen Sie nicht?", o: ["Phòng tập gym", "Sân bóng", "Nhà hàng", "Cửa hàng"], a: 0},
-            {w: "die Halle", f: "die Halle, die Hallen", e: "Fitnessstudios und Sporthallen mögen Sie nicht?", o: ["Sân vận động/ Nhà thi đấu", "Phòng tập", "Nhà hàng", "Cửa hàng"], a: 0},
-            {w: "drinnen", f: "drinnen", e: "Sie sind lieber draußen als ______. ?", o: ["Bên trong", "Bên ngoài", "Trên lầu", "Dưới nhà"], a: 0},
-            {w: "die Wiese", f: "die Wiese, die Wiesen", e: "Finden Sie Parks, Wälder, Seen und ______ am schönsten?", o: ["Bãi cỏ", "Sông", "Hồ", "Núi"], a: 0},
-            {w: "der Ski", f: "der Ski, die Skier", e: "Dann sind die Top-Sportarten für Sie Joggen, Wandern und im Winter ______. ", o: ["Trượt tuyết", "Bơi lội", "Chạy bộ", "Leo núi"], a: 0},
-            {w: "sich interessieren", f: "sich interessieren, hat (sich) interessiert", e: "Interessieren Sie sportliche weniger als der Kontakt zu anderen Menschen?", o: ["Quan tâm", "Không quan tâm", "Thích", "Ghét"], a: 0},
-            {w: "sportlich", f: "sportlich", e: "Interessieren Sie ______ weniger als der Kontakt zu anderen Menschen?", o: ["Thể thao", "Âm nhạc", "Ăn uống", "Ngủ nghỉ"], a: 0},
-            {w: "das Angebot", f: "das Angebot, die Angebote", e: "Angebote für Sie sind zum Beispiel Kochen, ______ oder Tanzen.", o: ["Khóa học/ Chương trình", "Món ăn", "Trò chơi", "Bánh kẹo"], a: 0},
-            {w: "das Walking", f: "das Walking (Sg.)", e: "Walking ______ oder Gymnastik-Gruppen.", o: ["Đi bộ nhanh", "Chạy bộ", "Bơi lội", "Leo trèo"], a: 0},
-            {w: "die Gymnastik", f: "die Gymnastik (Sg.)", e: "Walking oder ______-Gruppen.", o: ["Thể dục nhịp điệu", "Yoga", "Thể hình", "Bóng đá"], a: 0},
-            {w: "der Volleyball", f: "der Volleyball (Sg.)", e: "Ich bin Typ 1: Ich mag Mannschaftssportarten, z.B. ______. ", o: ["Bóng chuyền", "Bóng đá", "Bóng rổ", "Bóng ném"], a: 0},
-            {w: "beliebt", f: "beliebt", e: "Joggen ist am ______sten.", o: ["Phổ biến", "Ít phổ biến", "Khó", "Dễ"], a: 0},
-            {w: "notieren", f: "notieren, hat notiert", e: "Ich habe 'Fußball' ______. ", o: ["Ghi chú", "Quên", "Nói", "Nghe"], a: 0},
-            {w: "vorstellen", f: "vorstellen, hat vorgestellt", e: "Darf ich ______? Das ist ...", o: ["Giới thiệu", "Từ chối", "Chấp nhận", "Hỏi"], a: 0},
-            {w: "die Kraft", f: "die Kraft, die Kräfte", e: "Mit SUP kann man ______ und Ausdauer trainieren.", o: ["Sức mạnh", "Sức bền", "Tốc độ", "Kỹ thuật"], a: 0},
-            {w: "die Ausdauer", f: "die Ausdauer (Sg.)", e: "Mit SUP kann man Kraft und ______ trainieren.", o: ["Sức bền", "Sức mạnh", "Tốc độ", "Kỹ thuật"], a: 0},
-            {w: "die Packung", f: "die Packung, die Packungen", e: "Isst jemand von euch vier ______en Gummibärchen am Tag?", o: ["Gói/ Túi", "Hộp", "Lọ", "Cái"], a: 0},
-            {w: "überall", f: "überall", e: "Man kann Yoga ______ machen.", o: ["Khắp nơi", "Một nơi", "Nhà", "Trường"], a: 0},
-            {w: "der Profi", f: "der Profi, die Profis", e: "Seit fünf Jahren ist er ______schwimmer.", o: ["Vận động viên chuyên nghiệp", "Người mới bắt đầu", "Người nghiệp dư", "Người xem"], a: 0}
+            {w: "der / die Azubi", f: "der / die Azubi, -s", e: "Ella Kovacs und Dennis Staudte sind neue ______.", o: ["Thực tập sinh / học nghề", "Nhân viên chính thức", "Quản lý", "Khách hàng"], a: 0},
+            {w: "die Personalchefin", f: "die Personalchefin, -nen", e: "Britta Becker ist ______ bei der Firma Ramaldt-IT.", o: ["Trưởng phòng nhân sự (nữ)", "Trưởng phòng IT", "Thực tập sinh", "Nhân viên hành chính"], a: 0},
+            {w: "der Abteilungsleiter", f: "der Abteilungsleiter, - / die Abteilungsleiterin, -nen", e: "Sprich doch mal mit deinem ______.", o: ["Trưởng bộ phận", "Nhân viên mới", "Bạn đồng nghiệp", "Khách hàng"], a: 0},
+            {w: "der Anruf", f: "der Anruf, -e", e: "Ich arbeite im Bürgerbüro und bekomme sehr viele ______.", o: ["Cuộc gọi điện thoại", "Email", "Tin nhắn", "Họp mặt"], a: 0},
+            {w: "der Arbeitnehmer", f: "der Arbeitnehmer, - / die Arbeitnehmerin, -nen", e: "Die Personalchefin ist für alle ______ da.", o: ["Người lao động / nhân viên", "Người sử dụng lao động", "Thực tập sinh", "Khách hàng"], a: 0},
+            {w: "der Arbeitsplatz", f: "der Arbeitsplatz, -e", e: "Was ist für dich ein guter ______?", o: ["Nơi làm việc", "Nhà ở", "Trường học", "Căng tin"], a: 0},
+            {w: "der Bildschirm", f: "der Bildschirm, -e", e: "Der ______ ist so klein!", o: ["Màn hình", "Bàn phím", "Chuột máy tính", "Máy in"], a: 0},
+            {w: "der Kopierer", f: "der Kopierer, -", e: "Drucker und ______ findest du im Raum 15A.", o: ["Máy photocopy", "Máy in", "Máy scan", "Máy fax"], a: 0},
+            {w: "die Kaffeemaschine", f: "die Kaffeemaschine, -n", e: "Unsere ______ ist gleich hier in der Kaffeeküche.", o: ["Máy pha cà phê", "Máy lọc nước", "Tủ lạnh", "Lò vi sóng"], a: 0},
+            {w: "die Kantine", f: "die Kantine, -n", e: "In der ______ gibt es von 12 bis 15 Uhr etwas Warmes.", o: ["Căng tin công ty", "Phòng họp", "Phòng nghỉ", "Nhà kho"], a: 0},
+            {w: "der Hausmeister", f: "der Hausmeister, - / die Hausmeisterin, -nen", e: "Wann ist der Termin mit ______ Nowak?", o: ["Người quản lý tòa nhà", "Trưởng phòng", "Nhân viên IT", "Thực tập sinh"], a: 0},
+            {w: "gründen", f: "gründen (hat gegründet)", e: "Im Jahr 2000 habe ich Ramaldt-IT ______. ", o: ["Thành lập / sáng lập", "Mua lại", "Đóng cửa", "Mở rộng"], a: 0},
+            {w: "weiterhelfen", f: "weiterhelfen (hat weitergeholfen)", e: "Herr Gohari hilft Ihnen gern ______. ", o: ["Giúp đỡ tiếp / hỗ trợ thêm", "Từ chối giúp", "Hỏi lại", "Im lặng"], a: 0},
+            {w: "das Intranet", f: "das Intranet, -s", e: "Viele Informationen finden Sie über das ______.", o: ["Mạng nội bộ công ty", "Internet", "Email", "Điện thoại"], a: 0},
+            {w: "das Wörterbuch", f: "das Wörterbuch, -er", e: "Wenn ich ein Wort nicht kenne, schaue ich im ______ nach.", o: ["Từ điển", "Sách giáo khoa", "Tạp chí", "Báo"], a: 0},
+            {w: "nachschauen", f: "nachschauen (hat nachgeschaut)", e: "Ich ______ im Online-Wörterbuch nach.", o: ["Tra cứu / xem lại", "Viết lại", "Nói lại", "Nghe lại"], a: 0},
+            {w: "der Akku", f: "der Akku, -s", e: "Wenn mein Handy-______ leer ist, lade ich mein Handy auf.", o: ["Pin (điện thoại)", "Sạc dự phòng", "Ổ cắm", "Dây cáp"], a: 0},
+            {w: "unfreundlich", f: "unfreundlich", e: "Wenn meine Kollegin ______, ...", o: ["Không thân thiện / khó chịu", "Rất vui vẻ", "Hài hước", "Thông minh"], a: 0},
+            {w: "die Überstunde", f: "die Überstunde, -n", e: "Ich habe so viele ______ gemacht.", o: ["Giờ làm thêm", "Giờ nghỉ", "Ngày nghỉ", "Ca làm việc"], a: 0},
+            {w: "die Bewertung", f: "die Bewertung, -en", e: "Bewertung: 4 von 5 Sternen.", o: ["Sự đánh giá / điểm số", "Lời khen", "Lời chê", "Ý kiến"], a: 0},
+            {w: "die Versammlung", f: "die Versammlung, -en", e: "Die nächste Betriebs______ ist am 14. September.", o: ["Cuộc họp / đại hội", "Buổi tiệc", "Hội thảo", "Buổi đào tạo"], a: 0},
+            {w: "die Aktion", f: "die Aktion, -en", e: "Jetzt gibt es die „Aktion Firmenfahrrad“.", o: ["Chiến dịch / chương trình", "Sản phẩm", "Giá cả", "Khuyến mãi"], a: 0},
+            {w: "stolz", f: "stolz (auf + Akk.)", e: "Wir sind so ______ auf euch!", o: ["Tự hào (về)", "Buồn bã", "Ngạc nhiên", "Lo lắng"], a: 0},
+            {w: "das Klima", f: "das Klima (Sg.) (Betriebsklima)", e: "Das Betriebs______ ist prima.", o: ["Bầu không khí làm việc", "Thời tiết", "Nhiệt độ", "Áp suất"], a: 0},
+            {w: "prima", f: "prima", e: "Das Betriebsklima ist ______. ", o: ["Tuyệt vời / rất tốt", "Xấu", "Bình thường", "Khó chịu"], a: 0}
         ];
 
         let currentQuestion = 0;
@@ -193,8 +153,6 @@
                 return;
             }
             const q = vocabData[currentQuestion];
-
-            // Đảo ngẫu nhiên thứ tự đáp án
             const options = [...q.o];
             const correctAnswer = q.a;
             const shuffledOptions = shuffleArray(options);
@@ -230,7 +188,6 @@
 
         function handleClick(selectedIdx, btn, q, correctIndex) {
             const allBtns = document.querySelectorAll(".opt-btn");
-
             if (allBtns[0].disabled) {
                 if (selectedIdx === correctIndex) {
                     speakGerman(q.f);
@@ -246,9 +203,7 @@
                 document.getElementById("feedback").textContent = msg;
                 document.getElementById("feedback").style.color = "#27ae60";
                 btn.classList.add("correct");
-
                 speakGerman("Richtig!");
-
                 setTimeout(() => {
                     speakGerman(q.f);
                 }, 2000);
@@ -257,11 +212,8 @@
                 document.getElementById("feedback").textContent = msg;
                 document.getElementById("feedback").style.color = "#e74c3c";
                 btn.classList.add("wrong");
-
                 allBtns[correctIndex].classList.add("highlight");
-
                 speakGerman("Falsch!");
-
                 setTimeout(() => {
                     speakGerman(q.f);
                 }, 2000);
