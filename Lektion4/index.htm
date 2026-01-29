@@ -5,61 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Deutsch Lektion 4 - Der erste Arbeitstag</title>
     <style>
-        body { 
-            font-family: system-ui, -apple-system, sans-serif; 
-            background: linear-gradient(135deg, #f0f3f9, #e0e7ff); 
-            margin: 0; 
-            min-height: 100vh; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            padding: 15px; 
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f0f3f9, #e0e7ff);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
             box-sizing: border-box;
         }
-        .quiz-card { 
-            background: white; 
-            width: 100%; 
-            max-width: 520px; 
-            padding: 28px; 
-            border-radius: 24px; 
-            box-shadow: 0 15px 50px rgba(0,0,0,0.15); 
-            text-align: center; 
+        .quiz-card {
+            background: white;
+            width: 100%;
+            max-width: 540px;
+            padding: 28px;
+            border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            text-align: center;
         }
-        .flag { 
-            width: 100px; height: 60px; 
-            margin: 0 auto 20px; 
-            display: flex; flex-direction: column; 
+        .flag {
+            width: 100px; height: 60px;
+            margin: 0 auto 20px;
+            display: flex; flex-direction: column;
             border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
         }
-        .f-b { background: #000; flex: 1; } 
-        .f-r { background: #d00; flex: 1; } 
+        .f-b { background: #000; flex: 1; }
+        .f-r { background: #d00; flex: 1; }
         .f-g { background: #ff0; flex: 1; }
         h2 { color: #6c5ce7; margin: 0 0 10px; font-size: 2.1rem; }
         .subtitle { color: #555; margin-bottom: 28px; font-size: 1.1rem; }
-        .word-de { font-size: 2.5rem; color: #6c5ce7; font-weight: 700; margin: 15px 0; }
-        .info-de { color: #e67e22; font-size: 1.15rem; font-style: italic; margin: 10px 0 20px; }
-        .example-de { 
-            background: #f8fbff; padding: 18px; border-radius: 14px; 
-            margin: 20px 0 28px; text-align: left; 
-            border-left: 6px solid #6c5ce7; font-size: 1.1rem; line-height: 1.5; 
+        .word-de { font-size: 2.3rem; color: #6c5ce7; font-weight: 700; margin: 15px 0; }
+        .info-de { color: #e67e22; font-size: 1.1rem; font-style: italic; margin: 8px 0 18px; }
+        .example-de {
+            background: #f8fbff; padding: 16px; border-radius: 14px;
+            margin: 18px 0 24px; text-align: left;
+            border-left: 6px solid #6c5ce7; font-size: 1.05rem; line-height: 1.45;
         }
-        .opt-btn { 
-            width: 100%; background: #fff; border: 2px solid #e0e0e0; 
-            padding: 16px 18px; border-radius: 14px; margin: 10px 0; 
-            font-size: 1.15rem; font-weight: 600; cursor: pointer; 
+        .opt-btn {
+            width: 100%; background: #fff; border: 2px solid #e0e0e0;
+            padding: 14px 16px; border-radius: 12px; margin: 8px 0;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer;
             transition: all 0.25s; text-align: left;
         }
         .opt-btn:hover:not(:disabled) { border-color: #6c5ce7; background: #f8f5ff; }
         .opt-btn:disabled { opacity: 0.75; cursor: not-allowed; }
-        .main-btn { 
-            width: 100%; padding: 18px; background: #6c5ce7; color: white; 
-            border: none; border-radius: 16px; font-size: 1.2rem; font-weight: bold; 
-            cursor: pointer; margin-top: 15px;
+        .main-btn {
+            width: 100%; padding: 16px; background: #6c5ce7; color: white;
+            border: none; border-radius: 14px; font-size: 1.15rem; font-weight: bold;
+            cursor: pointer; margin-top: 12px;
         }
-        #feedback { font-size: 1.3rem; font-weight: bold; margin: 20px 0; min-height: 40px; }
-        #stat, #score { font-size: 1rem; color: #666; margin-bottom: 15px; }
-        .correct   { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
-        .wrong     { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
+        #feedback { font-size: 1.25rem; font-weight: bold; margin: 18px 0; min-height: 35px; }
+        #stat, #score { font-size: 0.95rem; color: #666; margin-bottom: 12px; }
+        .correct { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
+        .wrong { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
         .highlight { background: #e8f5e9 !important; border-color: #4caf50 !important; font-weight: bold; cursor: pointer !important; }
     </style>
 </head>
@@ -73,7 +73,6 @@
             <div class="subtitle">Amadou – Der erste Arbeitstag</div>
             <button class="main-btn" onclick="startApp()">STARTEN</button>
         </div>
-
         <div id="quiz-ui" style="display:none">
             <div id="stat"></div>
             <div class="word-de" id="w"></div>
@@ -83,7 +82,6 @@
             <div id="feedback"></div>
             <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">WEITER</button>
         </div>
-
         <div id="end-screen" style="display:none">
             <h2 style="color:#27ae60">Fertig!</h2>
             <div id="score"></div>
@@ -93,59 +91,42 @@
 
     <script>
         const vocabData = [
-            {w: "die Ausbildende", f: "die Ausbildende, -n", e: "Ella Kovacs und Dennis Staadt sind neue ______. ", o: ["Người hướng dẫn nghề", "Người học nghề", "Giám đốc", "Khách hàng"], a: 0},
-            {w: "der Personalfchef", f: "der Personalfchef, -s", e: "Britta Becker ist ______ bei der Firma Romaldt-IT.", o: ["Trưởng phòng nhân sự", "Trưởng phòng tài chính", "Trưởng phòng marketing", "Giám đốc"], a: 0},
-            {w: "die Personalfchefin", f: "die Personalfchefin, -nen", e: "Britta Becker ist ______ bei der Firma Romaldt-IT.", o: ["Trưởng phòng nhân sự", "Trưởng phòng tài chính", "Trưởng phòng marketing", "Giám đốc"], a: 0},
-            {w: "der Leiter", f: "der Leiter, -", e: "Sprich doch mal mit deinem ______. ", o: ["Trưởng bộ phận", "Nhân viên", "Khách hàng", "Bạn bè"], a: 0},
-            {w: "die Leiterin", f: "die Leiterin, -nen", e: "Sprich doch mal mit deiner ______. ", o: ["Trưởng bộ phận", "Nhân viên", "Khách hàng", "Bạn bè"], a: 0},
-            {w: "der Abteilungsleiter", f: "der Abteilungsleiter, -", e: "Ich arbeite im Bürgerbüro und bekomme sehr viele Anrufe.", o: ["Trưởng phòng ban", "Nhân viên", "Khách hàng", "Bạn bè"], a: 0},
-            {w: "die Abteilungsleiterin", f: "die Abteilungsleiterin, -nen", e: "Die ______ ist für alle Arbeitnehmer- und Arbeitnehmerin da.", o: ["Trưởng phòng ban", "Nhân viên", "Khách hàng", "Bạn bè"], a: 0},
-            {w: "der Anruf", f: "der Anruf, -e", e: "Ich arbeite im Bürgerbüro und bekomme sehr viele ______. ", o: ["Cuộc gọi", "Thư", "Tin nhắn", "Họp"], a: 0},
-            {w: "der Arbeitnehmer", f: "der Arbeitnehmer, -", e: "Die Personalfchefin ist für alle ______ und Arbeitnehmerin da.", o: ["Nhân viên", "Giám đốc", "Khách hàng", "Bạn bè"], a: 0},
-            {w: "die Arbeitnehmerin", f: "die Arbeitnehmerin, -nen", e: "Die Personalfchefin ist für alle Arbeitnehmer und ______ da.", o: ["Nhân viên", "Giám đốc", "Khách hàng", "Bạn bè"], a: 0},
-            {w: "der Arbeitsplatz", f: "der Arbeitsplatz, \"e", e: "Was ist für dich ein guter ______?", o: ["Chỗ làm việc", "Nhà ở", "Trường học", "Cửa hàng"], a: 0},
-            {w: "der Bildschirm", f: "der Bildschirm, -e", e: "Ich arbeite immer an einem Laptop und der ______ ist so klein.", o: ["Màn hình", "Bàn phím", "Chuột", "Loa"], a: 0},
-            {w: "der Kopierer", f: "der Kopierer, -", e: "Drucker und ______ findest du in Raum 15A.", o: ["Máy photocopy", "Máy in", "Máy quét", "Máy fax"], a: 0},
-            {w: "die Maschine", f: "die Maschine, -n", e: "Unsere Kaffee______ ist gleich hier in der Küche.", o: ["Máy (cà phê)", "Xe", "Điện thoại", "Laptop"], a: 0},
-            {w: "dauern", f: "dauern, hat gedauert", e: "Aber das hat lange ______. ", o: ["Kéo dài", "Kết thúc", "Bắt đầu", "Dừng lại"], a: 0},
-            {w: "der / die Azubi", f: "der / die Azubi, -s", e: "Die Azubis arbeiten für sechs Wochen in der Firma.", o: ["Người học nghề", "Người hướng dẫn nghề", "Giám đốc", "Khách hàng"], a: 0},
-            {w: "die Kantine", f: "die Kantine, -n", e: "In der Kantine gibt es 12 bis 15 Uhr etwas Warmes.", o: ["Căng tin", "Phòng ăn", "Quán cà phê", "Nhà hàng"], a: 0},
-            {w: "der Hausmeister", f: "der Hausmeister, -", e: "Wann ist der Termin mit Hausmeister Nowak?", o: ["Quản lý tòa nhà", "Nhân viên vệ sinh", "Bảo vệ", "Giám đốc"], a: 0},
-            {w: "die Hausmeisterin", f: "die Hausmeisterin, -nen", e: "Wann ist der Termin mit Hausmeisterin Nowak?", o: ["Quản lý tòa nhà", "Nhân viên vệ sinh", "Bảo vệ", "Giám đốc"], a: 0},
-            {w: "der Rundgang", f: "der Rundgang, \"e", e: "Wann beginnt der ______ in der Firma?", o: ["Vòng đi kiểm tra", "Buổi họp", "Buổi tiệc", "Buổi học"], a: 0},
-            {w: "seit", f: "seit", e: "Seit einem Jahr.", o: ["Từ", "Đến", "Trong", "Sau"], a: 0},
-            {w: "über", f: "über", e: "Es hat über drei Monate gedauert.", o: ["Hơn", "Dưới", "Khoảng", "Chính xác"], a: 0},
-            {w: "die Psychologie", f: "die Psychologie (Sg.)", e: "Ich habe von 1993 bis 1999 ______ studiert.", o: ["Tâm lý học", "Xã hội học", "Kinh tế học", "Ngôn ngữ học"], a: 0},
-            {w: "die Zusammenarbeit", f: "die Zusammenarbeit (Sg.)", e: "Die ______ mit so vielen Menschen macht mir wirklich große Freude.", o: ["Sự hợp tác", "Sự cạnh tranh", "Sự chia tay", "Sự cô lập"], a: 0},
-            {w: "die Freude", f: "die Freude, -n", e: "Die Zusammenarbeit mit so vielen Menschen macht mir wirklich große ______. ", o: ["Niềm vui", "Nỗi buồn", "Sự giận dữ", "Sự mệt mỏi"], a: 0},
-            {w: "gründen", f: "gründen, hat gegründet", e: "Im Jahr 2000 habe ich Romaldt-IT ______. ", o: ["Thành lập", "Giải thể", "Mở rộng", "Thu hẹp"], a: 0},
-            {w: "der Arbeitstag", f: "der Arbeitstag, -e", e: "Heute ist ihr erster ______ hier bei Romaldt-IT.", o: ["Ngày làm việc", "Ngày nghỉ", "Ngày lễ", "Ngày sinh"], a: 0},
-            {w: "weiterhelfen", f: "weiterhelfen, hat weitergeholfen", e: "Wenn Sie Fragen zu Ihrer täglichen Arbeit haben, hilft Ihnen Herr Gohari gern ______. ", o: ["Giúp tiếp", "Từ chối", "Bỏ qua", "Chờ đợi"], a: 0},
-            {w: "der Betriebsrat", f: "der Betriebsrat, \"e", e: "Die Personalabteilung und der ______ helfen Ihnen gern.", o: ["Hội đồng lao động", "Ban lãnh đạo", "Nhóm nhân viên", "Ban quản lý"], a: 0},
-            {w: "das Intranet", f: "das Intranet, -s", e: "Wenn Sie mehr über Romaldt-IT wissen möchten, finden Sie viele Informationen im ______. ", o: ["Mạng nội bộ", "Internet", "Email", "Điện thoại"], a: 0},
-            {w: "ändern", f: "ändern, hat geändert", e: "Du möchtest etwas ______. ?", o: ["Thay đổi", "Giữ nguyên", "Mua", "Bán"], a: 0},
-            {w: "üben", f: "üben, hat geübt", e: "Wenn ich Deutsch ______ will, mache ich viele Übungen.", o: ["Luyện tập", "Học thuộc", "Nghe", "Nói"], a: 0},
-            {w: "das Wörterbuch", f: "das Wörterbuch, \"er", e: "Wenn ich ein deutsches Wort nicht kenne, schaue ich im Online-______ nach.", o: ["Từ điển", "Sách giáo khoa", "Báo", "Tạp chí"], a: 0},
-            {w: "nachschauen", f: "nachschauen, hat nachgeschaut", e: "Wenn ich ein deutsches Wort nicht kenne, ______ ich im Online-Wörterbuch nach.", o: ["Tra cứu", "Viết", "Đọc", "Nghe"], a: 0},
-            {w: "der Akku", f: "der Akku, -s", e: "Wenn mein Handy-______ leer ist, lade ich mein Handy auf.", o: ["Pin", "Màn hình", "Chuột", "Bàn phím"], a: 0},
-            {w: "leer", f: "leer", e: "Wenn mein Handy-Akku ______ ist, lade ich mein Handy auf.", o: ["Hết pin", "Đầy pin", "Sạc nhanh", "Sạc chậm"], a: 0},
-            {w: "unfreundlich", f: "unfreundlich", e: "Wenn meine Kollegin ______ ist, ...", o: ["Không thân thiện", "Thân thiện", "Vui vẻ", "Buồn"], a: 0},
-            {w: "der Ausweis", f: "der Ausweis, -e", e: "Wenn ich meinen ______ nicht finde, ...", o: ["Thẻ căn cước / giấy tờ", "Điện thoại", "Ví tiền", "Chìa khóa"], a: 0},
-            {w: "der Durst", f: "der Durst (Sg.)", e: "Wenn ich in der Nacht ______ habe, ...", o: ["Khát nước", "Đói bụng", "Ngáp", "Mệt"], a: 0},
-            {w: "die Überstunden", f: "die Überstunden, -", e: "Ich habe so viele ______ gemacht.", o: ["Làm thêm giờ", "Nghỉ phép", "Ngày nghỉ", "Ngày lễ"], a: 0},
-            {w: "die Sprechstunde", f: "die Sprechstunde, -n", e: "Ab sofort sind unsere ______ von 10 bis 12 Uhr.", o: ["Giờ tiếp khách / giờ làm việc", "Giờ nghỉ trưa", "Giờ tan sở", "Giờ họp"], a: 0},
-            {w: "die Bewertung", f: "die Bewertung, -en", e: "Bewertung: 4 von 5 Sternen.", o: ["Đánh giá", "Phần thưởng", "Phạt", "Khen"], a: 0},
-            {w: "die Versammlung", f: "die Versammlung, -en", e: "Die nächste Betriebsversammlung ist am 14. September von 10 bis 13 Uhr.", o: ["Buổi họp", "Buổi tiệc", "Buổi học", "Buổi chơi"], a: 0},
-            {w: "der Betrieb", f: "der Betrieb, -e", e: "Das Hauptthema ist die Zusammenarbeit mit ECTRICA.", o: ["Công ty", "Nhà máy", "Cửa hàng", "Trường học"], a: 0},
-            {w: "die Aktion", f: "die Aktion, -en", e: "Jetzt gibt es die 'Aktion Firmenfahrrad' von Romaldt-IT.", o: ["Chiến dịch", "Kế hoạch", "Ý kiến", "Lời khuyên"], a: 0},
-            {w: "der Kauf", f: "der Kauf, \"e", e: "Die Firma schenkt dir bis zu 250 € für einen Fahrrad______.", o: ["Việc mua", "Việc bán", "Việc thuê", "Việc mượn"], a: 0},
-            {w: "der Marathon", f: "der Marathon, -s", e: "Beim Firmen______ der Stadt Neuberg haben mehr als 400 Betriebe mitgemacht.", o: ["Cuộc chạy marathon", "Cuộc đua xe", "Cuộc thi bơi", "Cuộc thi nhảy"], a: 0},
-            {w: "stolz", f: "stolz", e: "Wir sind so ______ auf euch!", o: ["Tự hào", "Buồn", "Giận", "Mệt"], a: 0},
-            {w: "planen", f: "planen, hat geplant", e: "Wir ______ und konfigurieren IT-Systeme in ganz Europa.", o: ["Lập kế hoạch", "Làm việc", "Ăn uống", "Ngủ nghỉ"], a: 0},
-            {w: "das Klima", f: "das Klima (hier: Sg.)", e: "Das Betriebs______ ist prima und meine Kolleginnen sind sehr nett.", o: ["Không khí làm việc", "Thời tiết", "Khí hậu", "Môi trường"], a: 0},
-            {w: "prima", f: "prima", e: "Das Betriebsklima ist ______ und meine Kolleginnen sind sehr nett.", o: ["Tuyệt vời", "Tệ hại", "Bình thường", "Kinh khủng"], a: 0},
-            {w: "bewerten", f: "bewerten, hat bewertet", e: "Wie ______ die Mitarbeiterinnen und Mitarbeiter Romaldt-IT?", o: ["Đánh giá", "Khen", "Chê", "Hỏi"], a: 0},
-            {w: "eigentlich", f: "eigentlich", e: "Was macht Romaldt-IT ______ für die Umwelt?", o: ["Thực ra", "Về cơ bản", "Không", "Có lẽ"], a: 0}
+            {w: "die Auszubildende", f: "die Auszubildende, die Auszubildenden", e: "Ella Kovacs und Dennis Staudte sind neue ______.", o: ["Thực tập sinh / học nghề (nữ)", "Nhân viên chính thức", "Quản lý", "Khách hàng"], a: 0},
+            {w: "die Personalchefin", f: "die Personalchefin, die Personalchefinnen", e: "Britta Becker ist ______ bei der Firma Ramaldt-IT.", o: ["Trưởng phòng nhân sự (nữ)", "Trưởng phòng IT", "Thực tập sinh", "Nhân viên hành chính"], a: 0},
+            {w: "der Abteilungsleiter / die Abteilungsleiterin", f: "der Abteilungsleiter, die Abteilungsleiter / die Abteilungsleiterin, die Abteilungsleiterinnen", e: "Sprich doch mal mit deinem ______.", o: ["Trưởng bộ phận (nam/nữ)", "Nhân viên mới", "Bạn đồng nghiệp", "Khách hàng"], a: 0},
+            {w: "der Anruf", f: "der Anruf, die Anrufe", e: "Ich arbeite im Bürgerbüro und bekomme sehr viele ______.", o: ["Cuộc gọi điện thoại", "Email", "Tin nhắn", "Họp mặt"], a: 0},
+            {w: "der Arbeitnehmer / die Arbeitnehmerin", f: "der Arbeitnehmer, die Arbeitnehmer / die Arbeitnehmerin, die Arbeitnehmerinnen", e: "Die Personalchefin ist für alle ______ da.", o: ["Người lao động / nhân viên", "Người sử dụng lao động", "Thực tập sinh", "Khách hàng"], a: 0},
+            {w: "der Arbeitsplatz", f: "der Arbeitsplatz, die Arbeitsplätze", e: "Was ist für dich ein guter ______?", o: ["Nơi làm việc", "Nhà ở", "Trường học", "Căng tin"], a: 0},
+            {w: "der Bildschirm", f: "der Bildschirm, die Bildschirme", e: "Der ______ ist so klein!", o: ["Màn hình", "Bàn phím", "Chuột máy tính", "Máy in"], a: 0},
+            {w: "der Kopierer", f: "der Kopierer, die Kopierer", e: "Drucker und ______ findest du im Raum 15A.", o: ["Máy photocopy", "Máy in", "Máy scan", "Máy fax"], a: 0},
+            {w: "die Kaffeemaschine", f: "die Kaffeemaschine, die Kaffeemaschinen", e: "Unsere ______ ist gleich hier in der Kaffeeküche.", o: ["Máy pha cà phê", "Máy lọc nước", "Tủ lạnh", "Lò vi sóng"], a: 0},
+            {w: "die Kantine", f: "die Kantine, die Kantinen", e: "In der ______ gibt es von 12 bis 15 Uhr etwas Warmes.", o: ["Căng tin công ty", "Phòng họp", "Phòng nghỉ", "Nhà kho"], a: 0},
+            {w: "der Hausmeister / die Hausmeisterin", f: "der Hausmeister, die Hausmeister / die Hausmeisterin, die Hausmeisterinnen", e: "Wann ist der Termin mit ______ Nowak?", o: ["Người quản lý tòa nhà", "Trưởng phòng", "Nhân viên IT", "Thực tập sinh"], a: 0},
+            {w: "gründen", f: "gründen, hat gegründet", e: "Im Jahr 2000 habe ich Ramaldt-IT ______. ", o: ["Thành lập / sáng lập", "Mua lại", "Đóng cửa", "Mở rộng"], a: 0},
+            {w: "weiterhelfen", f: "weiterhelfen, hat weitergeholfen", e: "Herr Gohari hilft Ihnen gern ______. ", o: ["Giúp đỡ tiếp / hỗ trợ thêm", "Từ chối giúp", "Hỏi lại", "Im lặng"], a: 0},
+            {w: "das Intranet", f: "das Intranet, die Intranets", e: "Viele Informationen finden Sie über das ______.", o: ["Mạng nội bộ công ty", "Internet", "Email", "Điện thoại"], a: 0},
+            {w: "ändern (sich)", f: "sich ändern, hat sich geändert", e: "Du möchtest etwas ______?", o: ["Thay đổi", "Giữ nguyên", "Mua mới", "Bỏ đi"], a: 0},
+            {w: "üben", f: "üben, hat geübt", e: "Wenn ich Deutsch ______ will, mache ich viele Übungen.", o: ["Luyện tập", "Học thuộc lòng", "Nghe nhạc", "Xem phim"], a: 0},
+            {w: "das Wörterbuch", f: "das Wörterbuch, die Wörterbücher", e: "Wenn ich ein Wort nicht kenne, schaue ich im ______ nach.", o: ["Từ điển", "Sách giáo khoa", "Tạp chí", "Báo"], a: 0},
+            {w: "nachschauen", f: "nachschauen, hat nachgeschaut", e: "Ich ______ im Online-Wörterbuch nach.", o: ["Tra cứu / xem lại", "Viết lại", "Nói lại", "Nghe lại"], a: 0},
+            {w: "der Akku", f: "der Akku, die Akkus", e: "Wenn mein Handy-______ leer ist, lade ich mein Handy auf.", o: ["Pin (thiết bị)", "Sạc dự phòng", "Ổ cắm", "Dây cáp"], a: 0},
+            {w: "unfreundlich", f: "unfreundlich", e: "Wenn meine Kollegin ______, ...", o: ["Không thân thiện / khó chịu", "Rất vui vẻ", "Hài hước", "Thông minh"], a: 0},
+            {w: "der Ausweis", f: "der Ausweis, die Ausweise", e: "Wenn ich meinen ______ nicht finde, ...", o: ["Thẻ căn cước / thẻ nhân viên", "Chìa khóa", "Ví tiền", "Điện thoại"], a: 0},
+            {w: "der Durst", f: "der Durst (Sg.)", e: "Wenn ich in der Nacht ______ habe, ...", o: ["Cơn khát", "Cơn đói", "Cơn buồn ngủ", "Cơn mệt mỏi"], a: 0},
+            {w: "die Überstunde", f: "die Überstunde, die Überstunden", e: "Ich habe so viele ______ gemacht.", o: ["Giờ làm thêm", "Giờ nghỉ", "Ngày nghỉ", "Ca làm việc"], a: 0},
+            {w: "die Sprechstunde", f: "die Sprechstunde, die Sprechstunden", e: "Mittwoch 10 bis 12 Uhr ______.", o: ["Giờ tiếp chuyện / tư vấn", "Giờ họp", "Giờ nghỉ trưa", "Giờ làm việc"], a: 0},
+            {w: "die Bewertung", f: "die Bewertung, die Bewertungen", e: "Bewertung: 4 von 5 Sternen.", o: ["Sự đánh giá / điểm số", "Lời khen", "Lời chê", "Ý kiến"], a: 0},
+            {w: "die Versammlung", f: "die Versammlung, die Versammlungen", e: "Die nächste Betriebs______ ist am 14. September.", o: ["Cuộc họp / đại hội", "Buổi tiệc", "Hội thảo", "Buổi đào tạo"], a: 0},
+            {w: "der Betrieb", f: "der Betrieb, die Betriebe", e: "Das Hauptthema ist die Zusammenarbeit mit unserem neuen Partner______ aus Estland.", o: ["Công ty / xí nghiệp", "Phòng ban", "Nhóm", "Đội"], a: 0},
+            {w: "die Aktion", f: "die Aktion, die Aktionen", e: "Jetzt gibt es die „______ Firmenfahrrad“.", o: ["Chiến dịch / chương trình", "Sản phẩm", "Giá cả", "Khuyến mãi"], a: 0},
+            {w: "der Kauf", f: "der Kauf, die Käufe", e: "Die Firma schenkt dir 250 € für einen ______ oder eine Fahrradreparatur.", o: ["Việc mua", "Việc bán", "Việc sửa", "Việc thuê"], a: 0},
+            {w: "der Marathon", f: "der Marathon, die Marathons", e: "Beim Firmen______ haben mehr als 400 Betriebe mitgemacht.", o: ["Marathon (sự kiện chạy bộ)", "Cuộc đua xe", "Hội nghị", "Buổi tiệc"], a: 0},
+            {w: "stolz", f: "stolz (auf + Akk.)", e: "Wir sind so ______ auf euch!", o: ["Tự hào (về)", "Buồn bã", "Ngạc nhiên", "Lo lắng"], a: 0},
+            {w: "planen", f: "planen, hat geplant", e: "Wir ______ und konfigurieren IT-Systeme für Firmen in ganz Europa.", o: ["Lập kế hoạch", "Thực hiện", "Kiểm tra", "Sửa chữa"], a: 0},
+            {w: "das Klima", f: "das Klima (Sg.)", e: "Das Betriebs______ ist prima.", o: ["Bầu không khí làm việc", "Thời tiết", "Nhiệt độ", "Áp suất"], a: 0},
+            {w: "prima", f: "prima", e: "Das Betriebsklima ist ______. ", o: ["Tuyệt vời / rất tốt", "Xấu", "Bình thường", "Khó chịu"], a: 0},
+            {w: "bewerten", f: "bewerten, hat bewertet", e: "Wie ______ denn Ramaldt-IT?", o: ["Đánh giá", "Khen ngợi", "Phê bình", "Bỏ qua"], a: 0},
+            {w: "eigentlich", f: "eigentlich", e: "Was macht Ramaldt-IT ______?", o: ["Thực ra / thật sự thì", "Có lẽ", "Chắc chắn", "Không biết"], a: 0}
         ];
 
         let currentQuestion = 0;
@@ -183,7 +164,6 @@
                 return;
             }
             const q = vocabData[currentQuestion];
-
             const options = [...q.o];
             const correctAnswer = q.a;
             const shuffledOptions = shuffleArray(options);
@@ -219,13 +199,7 @@
 
         function handleClick(selectedIdx, btn, q, correctIndex) {
             const allBtns = document.querySelectorAll(".opt-btn");
-
-            if (allBtns[0].disabled) {
-                if (selectedIdx === correctIndex) {
-                    speakGerman(q.f);
-                }
-                return;
-            }
+            if (allBtns[0].disabled) return;
 
             allBtns.forEach(b => b.disabled = true);
 
@@ -235,25 +209,20 @@
                 document.getElementById("feedback").textContent = msg;
                 document.getElementById("feedback").style.color = "#27ae60";
                 btn.classList.add("correct");
-
                 speakGerman("Richtig!");
-
                 setTimeout(() => {
-                    speakGerman(q.f);
-                }, 2000);
+                    speakGerman(q.f);  // Đọc đầy đủ: die Auszubildende, die Auszubildenden
+                }, 1800);
             } else {
                 const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
                 document.getElementById("feedback").textContent = msg;
                 document.getElementById("feedback").style.color = "#e74c3c";
                 btn.classList.add("wrong");
-
                 allBtns[correctIndex].classList.add("highlight");
-
                 speakGerman("Falsch!");
-
                 setTimeout(() => {
                     speakGerman(q.f);
-                }, 2000);
+                }, 1800);
             }
 
             document.getElementById("next-btn").style.display = "block";
