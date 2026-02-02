@@ -1,1 +1,264 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Deutsch Lektion 9 - Lotte: Gute Nachbarschaft</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f0f3f9, #e0e7ff);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .quiz-card {
+            background: white;
+            width: 100%;
+            max-width: 540px;
+            padding: 28px;
+            border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .flag {
+            width: 100px; height: 60px;
+            margin: 0 auto 20px;
+            display: flex; flex-direction: column;
+            border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
+        }
+        .f-b { background: #000; flex: 1; }
+        .f-r { background: #d00; flex: 1; }
+        .f-g { background: #ff0; flex: 1; }
+        h2 { color: #6c5ce7; margin: 0 0 10px; font-size: 2.1rem; }
+        .subtitle { color: #555; margin-bottom: 28px; font-size: 1.1rem; }
+        .word-de { font-size: 2.3rem; color: #6c5ce7; font-weight: 700; margin: 15px 0; }
+        .info-de { color: #e67e22; font-size: 1.1rem; font-style: italic; margin: 8px 0 18px; }
+        .example-de {
+            background: #f8fbff; padding: 16px; border-radius: 14px;
+            margin: 18px 0 24px; text-align: left;
+            border-left: 6px solid #6c5ce7; font-size: 1.05rem; line-height: 1.45;
+        }
+        .opt-btn {
+            width: 100%; background: #fff; border: 2px solid #e0e0e0;
+            padding: 14px 16px; border-radius: 12px; margin: 8px 0;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.25s; text-align: left;
+        }
+        .opt-btn:hover:not(:disabled) { border-color: #6c5ce7; background: #f8f5ff; }
+        .opt-btn:disabled { opacity: 0.75; cursor: not-allowed; }
+        .main-btn {
+            width: 100%; padding: 16px; background: #6c5ce7; color: white;
+            border: none; border-radius: 14px; font-size: 1.15rem; font-weight: bold;
+            cursor: pointer; margin-top: 12px;
+        }
+        #feedback { font-size: 1.25rem; font-weight: bold; margin: 18px 0 10px; min-height: 35px; }
+        #example-full { 
+            margin: 15px 0; 
+            padding: 15px; 
+            background: #f0fff0; 
+            border-radius: 12px; 
+            font-size: 1.05rem; 
+            text-align: left; 
+            display: none; 
+            border: 1px solid #c8e6c9;
+        }
+        #meaning-title { font-weight: bold; color: #2e7d32; }
+        #example-vn { 
+            margin-top: 8px; 
+            color: #444; 
+        }
+        #stat, #score { font-size: 0.95rem; color: #666; margin-bottom: 12px; }
+        .correct { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
+        .wrong { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
+        .highlight { background: #e8f5e9 !important; border-color: #4caf50 !important; font-weight: bold; cursor: pointer !important; }
+    </style>
+</head>
+<body>
+    <div class="quiz-card">
+        <div id="start-screen">
+            <div class="flag">
+                <div class="f-b"></div><div class="f-r"></div><div class="f-g"></div>
+            </div>
+            <h2>Lektion 9</h2>
+            <div class="subtitle">Lotte – Gute Nachbarschaft</div>
+            <button class="main-btn" onclick="startApp()">STARTEN</button>
+        </div>
+        <div id="quiz-ui" style="display:none">
+            <div id="stat"></div>
+            <div class="word-de" id="w"></div>
+            <div class="info-de" id="i"></div>
+            <div class="example-de" id="e"></div>
+            <div id="opts"></div>
+            <div id="feedback"></div>
+            <div id="example-full">
+                <span id="meaning-title">Ý nghĩa:</span> <span id="example-vn"></span>
+            </div>
+            <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">WEITER</button>
+        </div>
+        <div id="end-screen" style="display:none">
+            <h2 style="color:#27ae60">Fertig!</h2>
+            <div id="score"></div>
+            <button class="main-btn" onclick="restartQuiz()">NOCHMAL</button>
+        </div>
+    </div>
 
+    <script>
+        const vocabData = [
+            {w: "die Ruhezeit", f: "die Ruhezeit, -en", e: "Wann sind die ______ ?", full: "Wann sind die Ruhezeiten?", vn: "Giờ yên tĩnh là khi nào vậy?", o: ["giờ yên tĩnh", "giờ ồn ào", "giờ làm việc", "giờ nghỉ"], a: 0},
+            {w: "die Haustür", f: "die Haustür, -en", e: "Muss man die ______ immer schließen?", full: "Muss man die Haustür immer schließen?", vn: "Có phải lúc nào cũng khóa cửa chính không?", o: ["cửa chính", "cửa sổ", "cửa gara", "cửa sau"], a: 0},
+            {w: "abstellen", f: "abstellen, hat abgestellt", e: "Du kannst dein Fahrrad ______ .", full: "Du kannst dein Fahrrad abstellen.", vn: "Bạn để xe đạp ở đây được.", o: ["để xe", "đi xe", "mua xe", "sửa xe"], a: 0},
+            {w: "der Rollstuhl", f: "der Rollstuhl, -e", e: "Kinderrwagen und Rollstühle dürfen im Treppenhaus ______ .", full: "Kinderrwagen und Rollstühle dürfen im Treppenhaus abgestellt werden.", vn: "Xe đẩy em bé với xe lăn được để ở cầu thang.", o: ["để", "mang lên", "mang xuống", "đẩy đi"], a: 0},
+            {w: "der Fahrradständer", f: "der Fahrradständer, -", e: "Bitte stellen Sie Fahrräder in den ______ im Hof oder in die Fahrradständer im Hof.", full: "Bitte stellen Sie Fahrräder in den Fahrradständer im Hof oder in die Fahrradständer im Hof.", vn: "Làm ơn để xe đạp vào giá để xe trong sân nhé.", o: ["giá để xe", "cầu thang", "hành lang", "gara"], a: 0},
+            {w: "der Hof", f: "der Hof, -e", e: "Bitte stellen Sie Fahrräder in den Fahrradständer im ______ .", full: "Bitte stellen Sie Fahrräder in den Fahrradständer im Hof.", vn: "Làm ơn để xe đạp vào giá để xe trong sân nhé.", o: ["sân", "phòng", "hành lang", "tầng hầm"], a: 0},
+            {w: "blockieren", f: "blockieren, hat blockiert", e: "Aber bitte ______ Sie nicht die Fluchtwege!", full: "Aber bitte blockieren Sie nicht die Fluchtwege!", vn: "Nhưng đừng chặn lối thoát hiểm nhé!", o: ["chặn", "mở", "đóng", "sửa"], a: 0},
+            {w: "der Fluchtweg", f: "der Fluchtweg, -e", e: "Aber bitte blockieren Sie nicht die ______ !", full: "Aber bitte blockieren Sie nicht die Fluchtwege!", vn: "Nhưng đừng chặn lối thoát hiểm nhé!", o: ["lối thoát hiểm", "lối vào", "cầu thang", "hành lang"], a: 0},
+            {w: "die Mülltrennung", f: "die Mülltrennung, -en", e: "Bitte beachten Sie die Regeln zur ______ .", full: "Bitte beachten Sie die Regeln zur Mülltrennung.", vn: "Làm ơn phân loại rác theo quy định nhé.", o: ["phân loại rác", "vứt rác", "đổ rác", "thu gom rác"], a: 0},
+            {w: "die Tonne", f: "die Tonne, -n", e: "Soll ich meinen Plastikmüll in die braune ______ werfen?", full: "Soll ich meinen Plastikmüll in die braune Tonne werfen?", vn: "Mình vứt rác nhựa vào thùng màu nâu hả?", o: ["thùng rác", "túi rác", "hộp rác", "xe rác"], a: 0},
+            {w: "das Plastik", f: "das Plastik (Sg.)", e: "Im Hof stehen vier Tonnen: für Papier, ______ , Biomüll und Restmüll.", full: "Im Hof stehen vier Tonnen: für Papier, Plastik, Biomüll und Restmüll.", vn: "Trong sân có 4 thùng: giấy, nhựa, rác hữu cơ và rác còn lại.", o: ["nhựa", "giấy", "hữu cơ", "rác còn lại"], a: 0},
+            {w: "biologisch", f: "biologisch", e: "Im Hof stehen vier Tonnen: für Papier, Plastik, ______ und Restmüll.", full: "Im Hof stehen vier Tonnen: für Papier, Plastik, Biomüll und Restmüll.", vn: "Trong sân có 4 thùng: giấy, nhựa, rác hữu cơ và rác còn lại.", o: ["hữu cơ", "vô cơ", "nhựa", "giấy"], a: 0},
+            {w: "der Biomüll", f: "der Biomüll (Sg.)", e: "Im Hof stehen vier Tonnen: für Papier, Plastik, ______ und Restmüll.", full: "Im Hof stehen vier Tonnen: für Papier, Plastik, Biomüll und Restmüll.", vn: "Trong sân có 4 thùng: giấy, nhựa, rác hữu cơ và rác còn lại.", o: ["rác hữu cơ", "rác nhựa", "rác giấy", "rác còn lại"], a: 0},
+            {w: "der Restmüll", f: "der Restmüll (Sg.)", e: "Im Hof stehen vier Tonnen: für Papier, Plastik, Biomüll und ______ .", full: "Im Hof stehen vier Tonnen: für Papier, Plastik, Biomüll und Restmüll.", vn: "Trong sân có 4 thùng: giấy, nhựa, rác hữu cơ và rác còn lại.", o: ["rác còn lại", "rác hữu cơ", "rác nhựa", "rác giấy"], a: 0},
+            {w: "der Resttag", f: "der Resttag, -e", e: "An Sonn- und ______ ist das verboten.", full: "An Sonn- und Feiertagen ist das verboten.", vn: "Vào chủ nhật và ngày lễ thì cấm.", o: ["ngày lễ", "ngày thường", "chủ nhật", "thứ bảy"], a: 0},
+            {w: "der Feiertag", f: "der Feiertag, -e", e: "An Sonn- und ______ ist das verboten.", full: "An Sonn- und Feiertagen ist das verboten.", vn: "Vào chủ nhật và ngày lễ thì cấm.", o: ["ngày lễ", "ngày thường", "chủ nhật", "thứ bảy"], a: 0},
+            {w: "die Trennung", f: "die Trennung, -en", e: "Bitte nutzen Sie Ihre Geräte (Radio, Fernsehgeräte, ...) nur in ______ .", full: "Bitte nutzen Sie Ihre Geräte (Radio, Fernsehgeräte, ...) nur in Zimmerlautstärke.", vn: "Làm ơn dùng đồ điện (radio, TV...) ở mức âm lượng phòng thôi nhé.", o: ["âm lượng phòng", "âm lượng to", "âm lượng nhỏ", "tắt hẳn"], a: 0},
+            {w: "die Lautstärke", f: "die Lautstärke, -n", e: "Bitte nutzen Sie Ihre Geräte nur in Zimmer______ .", full: "Bitte nutzen Sie Ihre Geräte (Radio, Fernsehgeräte, ...) nur in Zimmerlautstärke.", vn: "Làm ơn dùng đồ điện ở mức âm lượng phòng thôi nhé.", o: ["âm lượng phòng", "âm lượng to", "âm lượng nhỏ", "tắt hẳn"], a: 0},
+            {w: "die Sicherheit", f: "die Sicherheit, -en", e: "______ : Bitte schließen Sie von 22 Uhr bis 6 Uhr das Haus.", full: "Sicherheit: Bitte schließen Sie von 22 Uhr bis 6 Uhr das Haus.", vn: "An toàn: Làm ơn khóa cửa từ 10 giờ tối đến 6 giờ sáng nhé.", o: ["an toàn", "thoải mái", "yên tĩnh", "vui vẻ"], a: 0},
+            {w: "die Reinigung", f: "die Reinigung, -en", e: "______ von Flur und Treppenhaus: Alle Mieter/innen müssen abwechselnd Flur und Treppen reinigen.", full: "Reinigung von Flur und Treppenhaus: Alle Mieter/innen müssen abwechselnd Flur und Treppen reinigen.", vn: "Dọn dẹp hành lang và cầu thang: Mọi người thuê nhà phải luân phiên lau dọn.", o: ["dọn dẹp", "trang trí", "sửa chữa", "xây dựng"], a: 0},
+            {w: "der Mieter", f: "der Mieter, -", e: "Alle ______ /innen müssen abwechselnd Flur und Treppen reinigen.", full: "Alle Mieter/innen müssen abwechselnd Flur und Treppen reinigen.", vn: "Mọi người thuê nhà phải luân phiên lau dọn hành lang và cầu thang.", o: ["người thuê", "chủ nhà", "hàng xóm", "bạn bè"], a: 0},
+            {w: "die Mieterin", f: "die Mieterin, -nen", e: "Alle Mieter/______ müssen abwechselnd Flur und Treppen reinigen.", full: "Alle Mieter/innen müssen abwechselnd Flur und Treppen reinigen.", vn: "Mọi người thuê nhà phải luân phiên lau dọn hành lang và cầu thang.", o: ["người thuê (nữ)", "chủ nhà", "hàng xóm", "bạn bè"], a: 0},
+            {w: "abends", f: "abends", e: "An Sonn- und Feiertagen sind die ______ ganztägig.", full: "An Sonn- und Feiertagen sind die Ruhezeiten ganztägig.", vn: "Vào chủ nhật và ngày lễ thì giờ yên tĩnh cả ngày.", o: ["giờ yên tĩnh", "giờ ồn ào", "giờ làm việc", "giờ nghỉ"], a: 0},
+            {w: "das Stockwerk", f: "das Stockwerk, -e", e: "Wie viele ______ hat das Haus?", full: "Wie viele Stockwerke hat das Haus?", vn: "Nhà có bao nhiêu tầng vậy?", o: ["tầng", "phòng", "cửa", "hành lang"], a: 0},
+            {w: "die Nachbarschaft", f: "die Nachbarschaft, -en", e: "Mein Freund Metin hat ein ______ sfest gefeiert.", full: "Mein Freund Metin hat ein Nachbarschaftsfest gefeiert.", vn: "Bạn mình Metin tổ chức tiệc hàng xóm.", o: ["hàng xóm", "bạn bè", "gia đình", "đồng nghiệp"], a: 0},
+            {w: "annehmen", f: "annehmen, nimmt an, hat angenommen", e: "Frau Gruber ______ die Hilfe an.", full: "Frau Gruber nimmt die Hilfe an.", vn: "Bà Gruber nhận sự giúp đỡ.", o: ["nhận", "từ chối", "giao", "chia"], a: 0},
+            {w: "füttern", f: "füttern, hat gefüttert", e: "Soll ich vielleicht Ihre Katze ______ ?", full: "Soll ich vielleicht Ihre Katze füttern?", vn: "Mình cho mèo nhà bạn ăn được không?", o: ["cho ăn", "tắm", "chơi", "ngủ"], a: 0},
+            {w: "der Haushalt", f: "der Haushalt, -e", e: "Frau Radschpi sollte im ______ alles machen.", full: "Frau Radschpi sollte im Haushalt alles machen.", vn: "Bà Radschpi phải làm hết việc nhà.", o: ["việc nhà", "công việc", "học hành", "chơi"], a: 0},
+            {w: "übernachten", f: "übernachten, hat übernachtet", e: "Ich durfte oft bei Nina ______ .", full: "Ich durfte oft bei Nina übernachten.", vn: "Mình hay ngủ lại nhà Nina lắm.", o: ["ngủ lại", "ăn tối", "chơi", "học"], a: 0},
+            {w: "unglaublich", f: "unglaublich", e: "Du konntest schon mit fünf Jahren schwimmen? ______ !", full: "Du konntest schon mit fünf Jahren schwimmen? Unglaublich!", vn: "Mới 5 tuổi mà đã bơi được rồi hả? Không thể tin nổi!", o: ["không thể tin nổi", "bình thường", "hay ho", "vui"], a: 0}
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const positiveFeedback = ["Gut gemacht!", "Sehr gut!", "Super!", "Toll!", "Weiter so!", "Prima!", "Genau richtig!"];
+        const negativeFeedback = ["Leider falsch!", "Noch nicht richtig!", "Versuch es noch einmal!", "Nicht ganz richtig!", "Schade!", "Falsch!"];
+
+        function speakGerman(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE';
+                utterance.rate = 0.9;
+                utterance.volume = 0.9;
+                const voices = speechSynthesis.getVoices();
+                const deVoice = voices.find(v => v.lang.startsWith('de-'));
+                if (deVoice) utterance.voice = deVoice;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startApp() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("end-screen").style.display = "none";
+            document.getElementById("quiz-ui").style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= vocabData.length) {
+                showResult();
+                return;
+            }
+            const q = vocabData[currentQuestion];
+            const options = [...q.o];
+            const correctAnswer = q.a;
+            const shuffledOptions = shuffleArray(options);
+            const newCorrectIndex = shuffledOptions.indexOf(q.o[correctAnswer]);
+
+            document.getElementById("stat").textContent = `Frage ${currentQuestion + 1} von ${vocabData.length}`;
+            document.getElementById("w").textContent = q.w;
+            document.getElementById("i").textContent = q.f;
+            document.getElementById("e").innerHTML = q.e.replace(/______/g, "___");
+            document.getElementById("example-full").style.display = "none";
+
+            const optsDiv = document.getElementById("opts");
+            optsDiv.innerHTML = "";
+            shuffledOptions.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "opt-btn";
+                btn.textContent = opt;
+                btn.onclick = () => handleClick(idx, btn, q, newCorrectIndex);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function handleClick(selectedIdx, btn, q, correctIndex) {
+            const allBtns = document.querySelectorAll(".opt-btn");
+            if (allBtns[0].disabled) return;
+
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selectedIdx === correctIndex) {
+                score++;
+                const msg = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#27ae60";
+                btn.classList.add("correct");
+                speakGerman("Richtig!");
+                setTimeout(() => {
+                    speakGerman(q.f);
+                    document.getElementById("example-vn").textContent = q.vn;
+                    document.getElementById("example-full").style.display = "block";
+                }, 1800);
+            } else {
+                const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#e74c3c";
+                btn.classList.add("wrong");
+                allBtns[correctIndex].classList.add("highlight");
+                speakGerman("Falsch!");
+                setTimeout(() => {
+                    speakGerman(q.f);
+                }, 1800);
+            }
+
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResult() {
+            document.getElementById("quiz-ui").style.display = "none";
+            document.getElementById("end-screen").style.display = "block";
+            const percent = Math.round((score / vocabData.length) * 100);
+            let comment = percent >= 85 ? "Ausgezeichnet! 🌟" : percent >= 70 ? "Sehr gut! 👍" : percent >= 50 ? "Gut – weiter üben! 💪" : "Nächstes Mal besser! 😊";
+            document.getElementById("score").innerHTML = `Du hast <strong>${score}/${vocabData.length}</strong> richtig!<br>(${percent} %)<br><br>${comment}`;
+        }
+
+        function restartQuiz() {
+            startApp();
+        }
+    </script>
+</body>
+</html>
