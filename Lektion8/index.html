@@ -1,1 +1,287 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Deutsch Lektion 8 - Pekka: Unterwegs</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f0f3f9, #e0e7ff);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .quiz-card {
+            background: white;
+            width: 100%;
+            max-width: 540px;
+            padding: 28px;
+            border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .flag {
+            width: 100px; height: 60px;
+            margin: 0 auto 20px;
+            display: flex; flex-direction: column;
+            border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
+        }
+        .f-b { background: #000; flex: 1; }
+        .f-r { background: #d00; flex: 1; }
+        .f-g { background: #ff0; flex: 1; }
+        h2 { color: #6c5ce7; margin: 0 0 10px; font-size: 2.1rem; }
+        .subtitle { color: #555; margin-bottom: 28px; font-size: 1.1rem; }
+        .word-de { font-size: 2.3rem; color: #6c5ce7; font-weight: 700; margin: 15px 0; }
+        .info-de { color: #e67e22; font-size: 1.1rem; font-style: italic; margin: 8px 0 18px; }
+        .example-de {
+            background: #f8fbff; padding: 16px; border-radius: 14px;
+            margin: 18px 0 24px; text-align: left;
+            border-left: 6px solid #6c5ce7; font-size: 1.05rem; line-height: 1.45;
+        }
+        .opt-btn {
+            width: 100%; background: #fff; border: 2px solid #e0e0e0;
+            padding: 14px 16px; border-radius: 12px; margin: 8px 0;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.25s; text-align: left;
+        }
+        .opt-btn:hover:not(:disabled) { border-color: #6c5ce7; background: #f8f5ff; }
+        .opt-btn:disabled { opacity: 0.75; cursor: not-allowed; }
+        .main-btn {
+            width: 100%; padding: 16px; background: #6c5ce7; color: white;
+            border: none; border-radius: 14px; font-size: 1.15rem; font-weight: bold;
+            cursor: pointer; margin-top: 12px;
+        }
+        #feedback { font-size: 1.25rem; font-weight: bold; margin: 18px 0 10px; min-height: 35px; }
+        #example-full { 
+            margin: 15px 0; 
+            padding: 15px; 
+            background: #f0fff0; 
+            border-radius: 12px; 
+            font-size: 1.05rem; 
+            text-align: left; 
+            display: none; 
+            border: 1px solid #c8e6c9;
+        }
+        #full-de { font-weight: bold; }
+        #example-vn { 
+            margin-top: 10px; 
+            color: #444; 
+            font-style: italic;
+        }
+        #stat, #score { font-size: 0.95rem; color: #666; margin-bottom: 12px; }
+        .correct { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
+        .wrong { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
+        .highlight { background: #e8f5e9 !important; border-color: #4caf50 !important; font-weight: bold; cursor: pointer !important; }
+    </style>
+</head>
+<body>
+    <div class="quiz-card">
+        <div id="start-screen">
+            <div class="flag">
+                <div class="f-b"></div><div class="f-r"></div><div class="f-g"></div>
+            </div>
+            <h2>Lektion 8</h2>
+            <div class="subtitle">Pekka – Unterwegs</div>
+            <button class="main-btn" onclick="startApp()">STARTEN</button>
+        </div>
+        <div id="quiz-ui" style="display:none">
+            <div id="stat"></div>
+            <div class="word-de" id="w"></div>
+            <div class="info-de" id="i"></div>
+            <div class="example-de" id="e"></div>
+            <div id="opts"></div>
+            <div id="feedback"></div>
+            <div id="example-full">
+                <strong>Câu đầy đủ:</strong> <span id="full-de"></span><br>
+                <span id="example-vn"></span>
+            </div>
+            <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">WEITER</button>
+        </div>
+        <div id="end-screen" style="display:none">
+            <h2 style="color:#27ae60">Fertig!</h2>
+            <div id="score"></div>
+            <button class="main-btn" onclick="restartQuiz()">NOCHMAL</button>
+        </div>
+    </div>
 
+    <script>
+        const vocabData = [
+            {w: "der Stress", f: "der Stress (Sg.)", e: "Ich glaube, Pekka hat ______ .", full: "Ich glaube, Pekka hat Stress.", vn: "Mình nghĩ Pekka đang stress lắm.", o: ["stress", "vui vẻ", "bình tĩnh", "mệt mỏi"], a: 0},
+            {w: "die Fahrt", f: "die Fahrt, -en", e: "Wie lange dauert die ______ ?", full: "Wie lange dauert die Fahrt?", vn: "Chuyến đi mất bao lâu vậy?", o: ["chuyến đi", "chuyến bay", "chuyến tàu", "chuyến xe"], a: 0},
+            {w: "die Dauer", f: "die Dauer (Sg.)", e: "Wie lange ist die ______ ?", full: "Wie lange ist die Fahrdauer?", vn: "Thời gian đi mất bao lâu?", o: ["thời gian", "khoảng cách", "tốc độ", "giá vé"], a: 0},
+            {w: "die Abfahrt", f: "die Abfahrt, -en", e: "Die ______ in Neuberg ist um 9:22 Uhr.", full: "Die Abfahrt in Neuberg ist um 9:22 Uhr.", vn: "Chuyến khởi hành ở Neuberg lúc 9:22.", o: ["khởi hành", "đến nơi", "dừng", "trễ"], a: 0},
+            {w: "die Ankunft", f: "die Ankunft (Sg.)", e: "Die ______ in Krassenstein ist um 11:36 Uhr.", full: "Die Ankunft in Krassenstein ist um 11:36 Uhr.", vn: "Đến Krassenstein lúc 11:36.", o: ["đến nơi", "khởi hành", "dừng", "trễ"], a: 0},
+            {w: "der Zug", f: "der Zug, -e", e: "Hey, Wilma, such mir eine Bahnverbindung von Neuberg nach Krassenstein mit dem ______ .", full: "Hey, Wilma, such mir eine Bahnverbindung von Neuberg nach Krassenstein mit dem Zug.", vn: "Này Wilma, tìm giúp mình chuyến tàu từ Neuberg đến Krassenstein nhé.", o: ["tàu", "xe buýt", "máy bay", "xe hơi"], a: 0},
+            {w: "das Gleis", f: "das Gleis, -e", e: "Der Zug fährt in Neuberg von ______ 3 ab.", full: "Der Zug fährt in Neuberg von Gleis 3 ab.", vn: "Tàu khởi hành ở Neuberg từ ray số 3.", o: ["ray", "ga", "vé", "hành lý"], a: 0},
+            {w: "die Verbindung", f: "die Verbindung, -en", e: "Hey, Wilma, such mir eine Bahn______ von Neuberg nach Krassenstein.", full: "Hey, Wilma, such mir eine Bahnverbindung von Neuberg nach Krassenstein.", vn: "Này Wilma, tìm giúp mình chuyến tàu từ Neuberg đến Krassenstein nhé.", o: ["chuyến tàu", "vé tàu", "ga tàu", "hành lý"], a: 0},
+            {w: "die Pflanze", f: "die Pflanze, -n", e: "Wohin sollen wir die große ______ stellen?", full: "Wohin sollen wir die große Pflanze stellen?", vn: "Cái cây to này để đâu đây?", o: ["cây", "bình", "ghế", "bàn"], a: 0},
+            {w: "der Zettel", f: "der Zettel, -", e: "Leg den ______ unter das Buch.", full: "Leg den Zettel unter das Buch.", vn: "Đặt tờ giấy dưới cuốn sách.", o: ["tờ giấy", "cuốn sách", "cái bút", "cái kẹp"], a: 0},
+            {w: "aufteilen", f: "aufteilen, hat aufgeteilt", e: "Und wie habt ihr die Zimmer ______ ?", full: "Und wie habt ihr die Zimmer aufgeteilt?", vn: "Vậy các bạn chia phòng thế nào?", o: ["chia", "mua", "bán", "thuê"], a: 0},
+            {w: "das Kinderzimmer", f: "das Kinderzimmer, -", e: "Wohnzimmer, Schlafzimmer, ______ und mir.", full: "Wohnzimmer, Schlafzimmer, Kinderzimmer und mir.", vn: "Phòng khách, phòng ngủ, phòng trẻ con và phòng của tôi.", o: ["phòng trẻ con", "phòng bếp", "phòng tắm", "phòng làm việc"], a: 0},
+            {w: "das Arbeitszimmer", f: "das Arbeitszimmer, -", e: "Wohnzimmer, Schlafzimmer, Kinderzimmer und ______ .", full: "Wohnzimmer, Schlafzimmer, Kinderzimmer und Arbeitszimmer.", vn: "Phòng khách, phòng ngủ, phòng trẻ con và phòng làm việc.", o: ["phòng làm việc", "phòng trẻ con", "phòng bếp", "phòng tắm"], a: 0},
+            {w: "die Ruhe", f: "die Ruhe (Sg.)", e: "Ein Raum, wo man mal in ______ nachdenken kann.", full: "Ein Raum, wo man mal in Ruhe nachdenken kann.", vn: "Một phòng để ngồi yên tĩnh suy nghĩ.", o: ["yên tĩnh", "ồn ào", "vui vẻ", "buồn"], a: 0},
+            {w: "nachdenken", f: "nachdenken, hat nachgedacht", e: "Ein Raum, wo man mal in Ruhe ______ kann.", full: "Ein Raum, wo man mal in Ruhe nachdenken kann.", vn: "Một phòng để ngồi yên tĩnh suy nghĩ.", o: ["suy nghĩ", "ngủ", "ăn", "chơi"], a: 0},
+            {w: "zeichnen", f: "zeichnen, hat gezeichnet", e: "Enrico muss für seine Arbeit oft Gartenpläne ______ .", full: "Enrico muss für seine Arbeit oft Gartenpläne zeichnen.", vn: "Enrico phải vẽ kế hoạch vườn nhiều cho công việc.", o: ["vẽ", "viết", "đọc", "nói"], a: 0},
+            {w: "wahrscheinlich", f: "wahrscheinlich", e: "Und ich brauche das Arbeitszimmer jetzt ______ auch bald.", full: "Und ich brauche das Arbeitszimmer jetzt wahrscheinlich auch bald.", vn: "Và chắc mình cũng cần phòng làm việc sớm thôi.", o: ["chắc chắn", "có lẽ", "không", "chưa"], a: 0},
+            {w: "klappen", f: "klappen, hat geklappt", e: "Hat das mit deiner Bewerbung ______ ?", full: "Hat das mit deiner Bewerbung geklappt?", vn: "Việc xin việc của bạn có được không?", o: ["được", "không được", "chưa", "đang"], a: 0},
+            {w: "die Chance", f: "die Chance, -n", e: "Es ist noch nicht ganz sicher, aber meine ______ sind sehr, sehr gut!", full: "Es ist noch nicht ganz sicher, aber meine Chancen sind sehr, sehr gut!", vn: "Chưa chắc chắn hoàn toàn nhưng cơ hội của mình tốt lắm!", o: ["cơ hội", "thời gian", "tiền bạc", "sức khỏe"], a: 0},
+            {w: "die Hauptsache", f: "die Hauptsache (Sg.)", e: "Aber die ______ ist: Ihr habt endlich eine Wohnung gefunden.", full: "Aber die Hauptsache ist: Ihr habt endlich eine Wohnung gefunden.", vn: "Nhưng điều chính là: Các bạn cuối cùng cũng tìm được nhà rồi.", o: ["điều chính", "điều phụ", "tiền bạc", "thời gian"], a: 0},
+            {w: "die Größe", f: "die Größe, -n", e: "Wohnungs______: 75 m²", full: "Wohnungsgröße: 75 m²", vn: "Diện tích nhà: 75 m²", o: ["diện tích", "giá tiền", "vị trí", "phòng"], a: 0},
+            {w: "eigen", f: "eigen", e: "Alma bekommt ein ______ Kinderzimmer.", full: "Alma bekommt ein eigenes Kinderzimmer.", vn: "Alma có phòng riêng cho trẻ con.", o: ["riêng", "chung", "lớn", "nhỏ"], a: 0},
+            {w: "modern", f: "modern", e: "Die Wohnung ist ______ .", full: "Die Wohnung ist modern.", vn: "Căn nhà hiện đại lắm.", o: ["hiện đại", "cổ điển", "cũ kỹ", "bẩn"], a: 0},
+            {w: "preiswert", f: "preiswert", e: "Die Wohnung ist ______ .", full: "Die Wohnung ist preiswert.", vn: "Căn nhà giá rẻ đấy.", o: ["giá rẻ", "đắt", "miễn phí", "cao cấp"], a: 0},
+            {w: "zentral", f: "zentral", e: "Die Wohnung liegt ______ .", full: "Die Wohnung liegt zentral.", vn: "Căn nhà nằm vị trí trung tâm.", o: ["trung tâm", "ngoại ô", "xa xôi", "gần sông"], a: 0},
+            {w: "das Erdgeschoss", f: "das Erdgeschoss, -e", e: "Die Wohnung liegt im ______ .", full: "Die Wohnung liegt im Erdgeschoss.", vn: "Căn nhà ở tầng trệt.", o: ["tầng trệt", "tầng lầu", "tầng áp mái", "tầng hầm"], a: 0},
+            {w: "erreichen", f: "erreichen, hat erreicht", e: "Die Wohnung ______ man mit einem Lift.", full: "Die Wohnung erreicht man mit einem Lift.", vn: "Đến căn nhà bằng thang máy.", o: ["đến", "rời", "mở", "đóng"], a: 0},
+            {w: "der Lift", f: "der Lift, -e", e: "Die Wohnung erreicht man mit einem ______ .", full: "Die Wohnung erreicht man mit einem Lift.", vn: "Đến căn nhà bằng thang máy.", o: ["thang máy", "cầu thang", "xe hơi", "xe đạp"], a: 0},
+            {w: "die Garage", f: "die Garage, -n", e: "Die Wohnung hat eine ______ .", full: "Die Wohnung hat eine Garage.", vn: "Căn nhà có gara.", o: ["gara", "sân vườn", "ban công", "hầm"], a: 0},
+            {w: "die Übernachtung", f: "die Übernachtung, -en", e: "______ möglichkeiten für bis zu 64 Personen", full: "Übernachtungsmöglichkeiten für bis zu 64 Personen", vn: "Chỗ nghỉ qua đêm cho tối đa 64 người.", o: ["chỗ nghỉ qua đêm", "bữa ăn", "vé xe", "vé máy bay"], a: 0},
+            {w: "das Einzelzimmer", f: "das Einzelzimmer, -", e: "26 ______ und 19 Doppelzimmer", full: "26 Einzelzimmer und 19 Doppelzimmer", vn: "26 phòng đơn và 19 phòng đôi.", o: ["phòng đơn", "phòng đôi", "phòng gia đình", "phòng họp"], a: 0},
+            {w: "das Doppelzimmer", f: "das Doppelzimmer, -", e: "26 Einzelzimmer und 19 ______ , auf Wunsch mit oder ohne Frühstück.", full: "26 Einzelzimmer und 19 Doppelzimmer, auf Wunsch mit oder ohne Frühstück.", vn: "26 phòng đơn và 19 phòng đôi, có thể có hoặc không có bữa sáng tùy ý.", o: ["phòng đôi", "phòng đơn", "phòng gia đình", "phòng họp"], a: 0},
+            {w: "das WC", f: "das WC, -s", e: "Alle Zimmer mit Dusche, ______ und TV.", full: "Alle Zimmer mit Dusche, WC und TV.", vn: "Tất cả phòng đều có vòi sen, nhà vệ sinh và TV.", o: ["nhà vệ sinh", "vòi sen", "TV", "giường"], a: 0},
+            {w: "die Halbpension", f: "die Halbpension (Sg.)", e: "______ oder Vollpension möglich!", full: "Halbpension oder Vollpension möglich!", vn: "Có thể ăn nửa bữa hoặc ăn đầy đủ!", o: ["ăn nửa bữa", "ăn đầy đủ", "không ăn", "ăn sáng"], a: 0},
+            {w: "die Vollpension", f: "die Vollpension (Sg.)", e: "Halbpension oder ______ möglich!", full: "Halbpension oder Vollpension möglich!", vn: "Có thể ăn nửa bữa hoặc ăn đầy đủ!", o: ["ăn đầy đủ", "ăn nửa bữa", "không ăn", "ăn sáng"], a: 0},
+            {w: "der Fitnessraum", f: "der Fitnessraum, -e", e: "Die Benutzung von ______ , Sauna und Schwimmbad ist inklusive.", full: "Die Benutzung von Fitnessraum, Sauna und Schwimmbad ist inklusive.", vn: "Dùng phòng gym, sauna và bể bơi đều miễn phí.", o: ["phòng gym", "sauna", "bể bơi", "quán bar"], a: 0},
+            {w: "die Sauna", f: "die Sauna, -s", e: "Die Benutzung von Fitnessraum, ______ und Schwimmbad ist inklusive.", full: "Die Benutzung von Fitnessraum, Sauna und Schwimmbad ist inklusive.", vn: "Dùng phòng gym, sauna và bể bơi đều miễn phí.", o: ["sauna", "phòng gym", "bể bơi", "quán bar"], a: 0},
+            {w: "inklusive", f: "inklusive", e: "Die Benutzung von Fitnessraum, Sauna und Schwimmbad ist ______ .", full: "Die Benutzung von Fitnessraum, Sauna und Schwimmbad ist inklusive.", vn: "Dùng phòng gym, sauna và bể bơi đều miễn phí.", o: ["miễn phí", "tính thêm", "không có", "đắt đỏ"], a: 0},
+            {w: "der Zugang", f: "der Zugang, -e", e: "Der Internet______ ist kostenlos.", full: "Der Internetzugang ist kostenlos.", vn: "WiFi miễn phí.", o: ["truy cập", "mật khẩu", "tốc độ", "thiết bị"], a: 0},
+            {w: "reservieren", f: "reservieren, hat reserviert", e: "Möchten Sie ein Zimmer ______ ?", full: "Möchten Sie ein Zimmer reservieren?", vn: "Bạn muốn đặt phòng không?", o: ["đặt", "hủy", "thay đổi", "kiểm tra"], a: 0},
+            {w: "die Rezeption", f: "die Rezeption, -en", e: "Oder Sie rufen unsere ______ an.", full: "Oder Sie rufen unsere Rezeption an.", vn: "Hoặc gọi cho quầy lễ tân.", o: ["quầy lễ tân", "phòng ngủ", "nhà hàng", "bể bơi"], a: 0},
+            {w: "die Ferienwohnung", f: "die Ferienwohnung, -en", e: "Schöne, ruhige ______ am Ortsrand von Krassenstein.", full: "Schöne, ruhige Ferienwohnung am Ortsrand von Krassenstein.", vn: "Căn hộ nghỉ dưỡng đẹp, yên tĩnh ở ngoại ô Krassenstein.", o: ["căn hộ nghỉ dưỡng", "khách sạn", "nhà nghỉ", "nhà riêng"], a: 0},
+            {w: "die Küchenzeile", f: "die Küchenzeile, -n", e: "Ferienwohnung: 35 qm im Dachgeschoss; mit Doppelbett, ______ , Badezimmer (Dusche und WC).", full: "Ferienwohnung: 35 qm im Dachgeschoss; mit Doppelbett, Küchenzeile, Badezimmer (Dusche und WC).", vn: "Căn hộ nghỉ dưỡng: 35 m² trên tầng áp mái; có giường đôi, bếp nhỏ, phòng tắm (vòi sen và WC).", o: ["bếp nhỏ", "phòng ngủ", "phòng khách", "ban công"], a: 0},
+            {w: "die Pension", f: "die Pension, -en", e: "Art der Unterkunft: ______", full: "Art der Unterkunft: Pension", vn: "Loại chỗ ở: Nhà nghỉ.", o: ["nhà nghỉ", "khách sạn", "hostel", "căn hộ"], a: 0},
+            {w: "die Jugendherberge", f: "die Jugendherberge, -n", e: "Art der Unterkunft: ______ / Hostel", full: "Art der Unterkunft: Jugendherberge / Hostel", vn: "Loại chỗ ở: Nhà nghỉ thanh niên / Hostel.", o: ["nhà nghỉ thanh niên", "khách sạn", "căn hộ", "nhà riêng"], a: 0},
+            {w: "das Hostel", f: "das Hostel, -s", e: "Art der Unterkunft: Jugendherberge / ______", full: "Art der Unterkunft: Jugendherberge / Hostel", vn: "Loại chỗ ở: Nhà nghỉ thanh niên / Hostel.", o: ["hostel", "khách sạn", "nhà nghỉ", "căn hộ"], a: 0},
+            {w: "die Verpflegung", f: "die Verpflegung (Sg.)", e: "______ : Frühstück", full: "Verpflegung: Frühstück", vn: "Ăn uống: Bữa sáng.", o: ["ăn uống", "ngủ nghỉ", "giặt ủi", "wifi"], a: 0},
+            {w: "das Mehrbettzimmer", f: "das Mehrbettzimmer, -", e: "Zimmertyp: ______", full: "Zimmertyp: Mehrbettzimmer", vn: "Loại phòng: Phòng nhiều giường.", o: ["phòng nhiều giường", "phòng đơn", "phòng đôi", "phòng gia đình"], a: 0},
+            {w: "der Nichtraucher", f: "der Nichtraucher, -", e: "Zimmertyp: ______ zimmer", full: "Zimmertyp: Nichtraucherzimmer", vn: "Loại phòng: Phòng không hút thuốc.", o: ["phòng không hút thuốc", "phòng hút thuốc", "phòng gia đình", "phòng đơn"], a: 0},
+            {w: "das WLAN", f: "das WLAN, -s", e: "Extras: ______", full: "Extras: WLAN", vn: "Tiện ích thêm: WiFi.", o: ["wifi", "bữa sáng", "bãi đỗ xe", "thang máy"], a: 0}
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const positiveFeedback = ["Gut gemacht!", "Sehr gut!", "Super!", "Toll!", "Weiter so!", "Prima!", "Genau richtig!"];
+        const negativeFeedback = ["Leider falsch!", "Noch nicht richtig!", "Versuch es noch einmal!", "Nicht ganz richtig!", "Schade!", "Falsch!"];
+
+        function speakGerman(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE';
+                utterance.rate = 0.9;
+                utterance.volume = 0.9;
+                const voices = speechSynthesis.getVoices();
+                const deVoice = voices.find(v => v.lang.startsWith('de-'));
+                if (deVoice) utterance.voice = deVoice;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startApp() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("end-screen").style.display = "none";
+            document.getElementById("quiz-ui").style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= vocabData.length) {
+                showResult();
+                return;
+            }
+            const q = vocabData[currentQuestion];
+            const options = [...q.o];
+            const correctAnswer = q.a;
+            const shuffledOptions = shuffleArray(options);
+            const newCorrectIndex = shuffledOptions.indexOf(q.o[correctAnswer]);
+
+            document.getElementById("stat").textContent = `Frage ${currentQuestion + 1} von ${vocabData.length}`;
+            document.getElementById("w").textContent = q.w;
+            document.getElementById("i").textContent = q.f;
+            document.getElementById("e").innerHTML = q.e.replace(/______/g, "___");
+            document.getElementById("example-full").style.display = "none";
+
+            const optsDiv = document.getElementById("opts");
+            optsDiv.innerHTML = "";
+            shuffledOptions.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "opt-btn";
+                btn.textContent = opt;
+                btn.onclick = () => handleClick(idx, btn, q, newCorrectIndex);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function handleClick(selectedIdx, btn, q, correctIndex) {
+            const allBtns = document.querySelectorAll(".opt-btn");
+            if (allBtns[0].disabled) return;
+
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selectedIdx === correctIndex) {
+                score++;
+                const msg = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#27ae60";
+                btn.classList.add("correct");
+                speakGerman("Richtig!");
+                setTimeout(() => {
+                    speakGerman(q.f);
+                    document.getElementById("full-de").textContent = q.full;
+                    document.getElementById("example-vn").textContent = q.vn;
+                    document.getElementById("example-full").style.display = "block";
+                }, 1800);
+            } else {
+                const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#e74c3c";
+                btn.classList.add("wrong");
+                allBtns[correctIndex].classList.add("highlight");
+                speakGerman("Falsch!");
+                setTimeout(() => {
+                    speakGerman(q.f);
+                }, 1800);
+            }
+
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResult() {
+            document.getElementById("quiz-ui").style.display = "none";
+            document.getElementById("end-screen").style.display = "block";
+            const percent = Math.round((score / vocabData.length) * 100);
+            let comment = percent >= 85 ? "Ausgezeichnet! 🌟" : percent >= 70 ? "Sehr gut! 👍" : percent >= 50 ? "Gut – weiter üben! 💪" : "Nächstes Mal besser! 😊";
+            document.getElementById("score").innerHTML = `Du hast <strong>${score}/${vocabData.length}</strong> richtig!<br>(${percent} %)<br><br>${comment}`;
+        }
+
+        function restartQuiz() {
+            startApp();
+        }
+    </script>
+</body>
+</html>
