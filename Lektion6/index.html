@@ -1,1 +1,264 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Deutsch Lektion 5 - In der Schule</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f0f3f9, #e0e7ff);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .quiz-card {
+            background: white;
+            width: 100%;
+            max-width: 540px;
+            padding: 28px;
+            border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .flag {
+            width: 100px; height: 60px;
+            margin: 0 auto 20px;
+            display: flex; flex-direction: column;
+            border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
+        }
+        .f-b { background: #000; flex: 1; }
+        .f-r { background: #d00; flex: 1; }
+        .f-g { background: #ff0; flex: 1; }
+        h2 { color: #6c5ce7; margin: 0 0 10px; font-size: 2.1rem; }
+        .subtitle { color: #555; margin-bottom: 28px; font-size: 1.1rem; }
+        .word-de { font-size: 2.3rem; color: #6c5ce7; font-weight: 700; margin: 15px 0; }
+        .info-de { color: #e67e22; font-size: 1.1rem; font-style: italic; margin: 8px 0 18px; }
+        .example-de {
+            background: #f8fbff; padding: 16px; border-radius: 14px;
+            margin: 18px 0 24px; text-align: left;
+            border-left: 6px solid #6c5ce7; font-size: 1.05rem; line-height: 1.45;
+        }
+        .opt-btn {
+            width: 100%; background: #fff; border: 2px solid #e0e0e0;
+            padding: 14px 16px; border-radius: 12px; margin: 8px 0;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.25s; text-align: left;
+        }
+        .opt-btn:hover:not(:disabled) { border-color: #6c5ce7; background: #f8f5ff; }
+        .opt-btn:disabled { opacity: 0.75; cursor: not-allowed; }
+        .main-btn {
+            width: 100%; padding: 16px; background: #6c5ce7; color: white;
+            border: none; border-radius: 14px; font-size: 1.15rem; font-weight: bold;
+            cursor: pointer; margin-top: 12px;
+        }
+        #feedback { font-size: 1.25rem; font-weight: bold; margin: 18px 0 10px; min-height: 35px; }
+        #example-full { 
+            margin: 15px 0; 
+            padding: 15px; 
+            background: #f0fff0; 
+            border-radius: 12px; 
+            font-size: 1.05rem; 
+            text-align: left; 
+            display: none; 
+            border: 1px solid #c8e6c9;
+        }
+        #full-de { font-weight: bold; }
+        #example-vn { 
+            margin-top: 10px; 
+            font-style: italic; 
+            color: #444; 
+        }
+        #stat, #score { font-size: 0.95rem; color: #666; margin-bottom: 12px; }
+        .correct { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
+        .wrong { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
+        .highlight { background: #e8f5e9 !important; border-color: #4caf50 !important; font-weight: bold; cursor: pointer !important; }
+    </style>
+</head>
+<body>
+    <div class="quiz-card">
+        <div id="start-screen">
+            <div class="flag">
+                <div class="f-b"></div><div class="f-r"></div><div class="f-g"></div>
+            </div>
+            <h2>Lektion 5</h2>
+            <div class="subtitle">Yasmin / Hoo – In der Schule</div>
+            <button class="main-btn" onclick="startApp()">STARTEN</button>
+        </div>
+        <div id="quiz-ui" style="display:none">
+            <div id="stat"></div>
+            <div class="word-de" id="w"></div>
+            <div class="info-de" id="i"></div>
+            <div class="example-de" id="e"></div>
+            <div id="opts"></div>
+            <div id="feedback"></div>
+            <div id="example-full">
+                <strong>Câu đầy đủ:</strong> <span id="full-de"></span><br>
+                <span id="example-vn"></span>
+            </div>
+            <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">WEITER</button>
+        </div>
+        <div id="end-screen" style="display:none">
+            <h2 style="color:#27ae60">Fertig!</h2>
+            <div id="score"></div>
+            <button class="main-btn" onclick="restartQuiz()">NOCHMAL</button>
+        </div>
+    </div>
 
+    <script>
+        const vocabData = [
+            {w: "das Bonbon", f: "das Bonbon, die Bonbons", e: "Aber er will Schokolade und ______ .", full: "Aber er will Schokolade und Bonbons.", vn: "Nhưng cậu ấy muốn sô-cô-la với kẹo.", o: ["kẹo", "sô-cô-la", "bánh quy", "kem"], a: 0},
+            {w: "frech", f: "frech", e: "Thien war ______ und hatte eine schlechte Note in Mathe.", full: "Thien war frech und hatte eine schlechte Note in Mathe.", vn: "Thien nghịch ngợm và bị điểm kém môn Toán.", o: ["nghịch ngợm", "ngoan ngoãn", "nhút nhát", "chăm chỉ"], a: 0},
+            {w: "die Note", f: "die Note, die Noten", e: "Thien hatte eine schlechte ______ in Mathe.", full: "Thien hatte eine schlechte Note in Mathe.", vn: "Thien bị điểm kém môn Toán.", o: ["điểm số", "bài kiểm tra", "cô giáo", "trường học"], a: 0},
+            {w: "die Mathematik / Mathe", f: "die Mathematik / Mathe (Sg.)", e: "Das ist mir ______ .", full: "Das ist mir egal.", vn: "Kệ nó đi / Tôi không quan tâm đâu.", o: ["không quan tâm", "quan trọng", "thú vị", "khó khăn"], a: 0},
+            {w: "egal", f: "egal", e: "Das ist mir ______ .", full: "Das ist mir egal.", vn: "Kệ nó đi / Tôi thấy bình thường thôi.", o: ["kệ nó đi", "quan trọng", "khó chịu", "thích thú"], a: 0},
+            {w: "die Broschüre", f: "die Broschüre, die Broschüren", e: "Yasmin hat die Eltern______ auf der Schulwebseite schon heruntergeladen.", full: "Yasmin hat die Elternbroschüre auf der Schulwebseite schon heruntergeladen.", vn: "Yasmin tải tài liệu cho phụ huynh trên trang web trường về rồi.", o: ["tài liệu giới thiệu", "bài báo", "bức thư", "tờ rơi"], a: 0},
+            {w: "die Webseite", f: "die Webseite, die Webseiten", e: "Yasmin hat die Elternbroschüre auf der Schul______ schon heruntergeladen.", full: "Yasmin hat die Elternbroschüre auf der Schulwebseite schon heruntergeladen.", vn: "Yasmin tải tài liệu cho phụ huynh trên trang web trường về rồi.", o: ["trang web", "email", "ứng dụng", "tệp tin"], a: 0},
+            {w: "kontrollieren", f: "kontrollieren, hat kontrolliert", e: "Yasmin kann die Hausaufgaben nicht ______ .", full: "Yasmin kann die Hausaufgaben nicht kontrollieren.", vn: "Yasmin không kiểm tra bài tập về nhà được.", o: ["kiểm tra", "làm", "viết", "đọc"], a: 0},
+            {w: "die Süßigkeiten", f: "die Süßigkeiten (Pl.)", e: "______ sind in der Pause erlaubt.", full: "Süßigkeiten sind in der Pause erlaubt.", vn: "Ăn kẹo bánh trong giờ ra chơi được.", o: ["kẹo bánh", "trái cây", "nước uống", "bánh mì"], a: 0},
+            {w: "musikalisch", f: "musikalisch", e: "Thien ist sehr intelligent und ______ .", full: "Thien ist sehr intelligent und musikalisch.", vn: "Thien thông minh lắm và có khiếu âm nhạc.", o: ["có khiếu âm nhạc", "giỏi thể thao", "yên tĩnh", "ồn ào"], a: 0},
+            {w: "zurzeit", f: "zurzeit", e: "Thien ist ______ in Vietnam beim Vater.", full: "Thien ist zurzeit in Vietnam beim Vater.", vn: "Bây giờ Thien đang ở Việt Nam với bố.", o: ["bây giờ", "trước kia", "sau này", "luôn luôn"], a: 0},
+            {w: "deshalb", f: "deshalb", e: "______ ist Thien nun oft allein zu Hause.", full: "Deshalb ist Thien nun oft allein zu Hause.", vn: "Nên giờ Thien hay ở nhà một mình.", o: ["nên", "tuy nhiên", "mặc dù", "và"], a: 0},
+            {w: "das Instrument", f: "das Instrument, die Instrumente", e: "Deshalb spiele ich kein ______ .", full: "Deshalb spiele ich kein Instrument.", vn: "Vì vậy tôi không chơi nhạc cụ.", o: ["nhạc cụ", "môn học", "trò chơi", "sách vở"], a: 0},
+            {w: "das Fach", f: "das Fach, die Fächer", e: "Musik ist Thiens Lieblings______ .", full: "Musik ist Thiens Lieblingsfach.", vn: "Âm nhạc là môn yêu thích của Thien.", o: ["môn học", "phòng học", "giáo viên", "sách vở"], a: 0},
+            {w: "die Region", f: "die Region, die Regionen", e: "Ich finde Länder und ______ interessant.", full: "Ich finde Länder und Regionen interessant.", vn: "Tôi thấy các nước và vùng miền thú vị lắm.", o: ["vùng miền", "thành phố", "quốc gia", "làng quê"], a: 0},
+            {w: "die Geografie", f: "die Geografie (Sg.)", e: "Deshalb ist ______ mein Lieblingsfach.", full: "Deshalb ist Geografie mein Lieblingsfach.", vn: "Nên Địa lý là môn yêu thích của tôi.", o: ["Địa lý", "Lịch sử", "Toán", "Mỹ thuật"], a: 0},
+            {w: "die Kunst", f: "die Kunst (Sg.)", e: "______ war mein Lieblingsfach.", full: "Kunst war mein Lieblingsfach.", vn: "Mỹ thuật là môn yêu thích của tôi ngày xưa.", o: ["Mỹ thuật", "Âm nhạc", "Thể dục", "Sinh học"], a: 0},
+            {w: "die Physik", f: "die Physik (Sg.)", e: "______ war mein Lieblingsfach.", full: "Physik war mein Lieblingsfach.", vn: "Vật lý là môn yêu thích của tôi ngày xưa.", o: ["Vật lý", "Hóa học", "Sinh học", "Địa lý"], a: 0},
+            {w: "die Chemie", f: "die Chemie (Sg.)", e: "______ war mein Lieblingsfach.", full: "Chemie war mein Lieblingsfach.", vn: "Hóa học là môn yêu thích của tôi ngày xưa.", o: ["Hóa học", "Vật lý", "Sinh học", "Lịch sử"], a: 0},
+            {w: "die Biologie", f: "die Biologie (Sg.)", e: "______ war mein Lieblingsfach.", full: "Biologie war mein Lieblingsfach.", vn: "Sinh học là môn yêu thích của tôi ngày xưa.", o: ["Sinh học", "Hóa học", "Vật lý", "Địa lý"], a: 0},
+            {w: "die Geschichte", f: "die Geschichte (Sg.)", e: "______ war mein Lieblingsfach.", full: "Geschichte war mein Lieblingsfach.", vn: "Lịch sử là môn yêu thích của tôi ngày xưa.", o: ["Lịch sử", "Địa lý", "Mỹ thuật", "Âm nhạc"], a: 0},
+            {w: "die Sozialkunde", f: "die Sozialkunde (Sg.)", e: "______ war mein Lieblingsfach.", full: "Sozialkunde war mein Lieblingsfach.", vn: "Giáo dục công dân là môn yêu thích của tôi ngày xưa.", o: ["Giáo dục công dân", "Toán", "Đức ngữ", "Thể dục"], a: 0},
+            {w: "weg", f: "weg", e: "Entschuldigung, ich muss jetzt ______ .", full: "Entschuldigung, ich muss jetzt weg.", vn: "Xin lỗi nhé, tôi phải đi bây giờ.", o: ["đi", "ở lại", "ngồi xuống", "chạy"], a: 0},
+            {w: "wenigstens", f: "wenigstens", e: "Ist euer Lehrer ______ nett?", full: "Ist euer Lehrer wenigstens nett?", vn: "Thầy cô của các bạn ít nhất là tốt bụng chứ?", o: ["ít nhất", "nhiều nhất", "hoàn toàn không", "rất"], a: 0},
+            {w: "alles", f: "alles", e: "Hier bei uns ist ______ ganz normal.", full: "Hier bei uns ist alles ganz normal.", vn: "Ở chỗ tụi mình thì mọi thứ đều bình thường hết.", o: ["mọi thứ", "không gì cả", "một ít", "nhiều"], a: 0},
+            // Nếu bạn muốn thêm hết các từ còn lại, cứ báo mình sẽ bổ sung đầy đủ
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const positiveFeedback = ["Gut gemacht!", "Sehr gut!", "Super!", "Toll!", "Weiter so!", "Prima!", "Genau richtig!"];
+        const negativeFeedback = ["Leider falsch!", "Noch nicht richtig!", "Versuch es noch einmal!", "Nicht ganz richtig!", "Schade!", "Falsch!"];
+
+        function speakGerman(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE';
+                utterance.rate = 0.9;
+                utterance.volume = 0.9;
+                const voices = speechSynthesis.getVoices();
+                const deVoice = voices.find(v => v.lang.startsWith('de-'));
+                if (deVoice) utterance.voice = deVoice;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startApp() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("end-screen").style.display = "none";
+            document.getElementById("quiz-ui").style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= vocabData.length) {
+                showResult();
+                return;
+            }
+            const q = vocabData[currentQuestion];
+            const options = [...q.o];
+            const correctAnswer = q.a;
+            const shuffledOptions = shuffleArray(options);
+            const newCorrectIndex = shuffledOptions.indexOf(q.o[correctAnswer]);
+
+            document.getElementById("stat").textContent = `Frage ${currentQuestion + 1} von ${vocabData.length}`;
+            document.getElementById("w").textContent = q.w;
+            document.getElementById("i").textContent = q.f;
+            document.getElementById("e").innerHTML = q.e.replace(/______/g, "___");
+            document.getElementById("example-full").style.display = "none";
+
+            const optsDiv = document.getElementById("opts");
+            optsDiv.innerHTML = "";
+            shuffledOptions.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "opt-btn";
+                btn.textContent = opt;
+                btn.onclick = () => handleClick(idx, btn, q, newCorrectIndex);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function handleClick(selectedIdx, btn, q, correctIndex) {
+            const allBtns = document.querySelectorAll(".opt-btn");
+            if (allBtns[0].disabled) return;
+
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selectedIdx === correctIndex) {
+                score++;
+                const msg = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#27ae60";
+                btn.classList.add("correct");
+                speakGerman("Richtig!");
+                setTimeout(() => {
+                    speakGerman(q.f);
+                    // Hiện câu đầy đủ + dịch tiếng Việt ngay dưới
+                    document.getElementById("full-de").textContent = q.full;
+                    document.getElementById("example-vn").textContent = q.vn;
+                    document.getElementById("example-full").style.display = "block";
+                }, 1800);
+            } else {
+                const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#e74c3c";
+                btn.classList.add("wrong");
+                allBtns[correctIndex].classList.add("highlight");
+                speakGerman("Falsch!");
+                setTimeout(() => {
+                    speakGerman(q.f);
+                }, 1800);
+            }
+
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResult() {
+            document.getElementById("quiz-ui").style.display = "none";
+            document.getElementById("end-screen").style.display = "block";
+            const percent = Math.round((score / vocabData.length) * 100);
+            let comment = percent >= 85 ? "Ausgezeichnet! 🌟" : percent >= 70 ? "Sehr gut! 👍" : percent >= 50 ? "Gut – weiter üben! 💪" : "Nächstes Mal besser! 😊";
+            document.getElementById("score").innerHTML = `Du hast <strong>${score}/${vocabData.length}</strong> richtig!<br>(${percent} %)<br><br>${comment}`;
+        }
+
+        function restartQuiz() {
+            startApp();
+        }
+    </script>
+</body>
+</html>
