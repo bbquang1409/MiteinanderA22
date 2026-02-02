@@ -1,1 +1,313 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Deutsch Lektion 7 - Maria: Der Umzug</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f0f3f9, #e0e7ff);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .quiz-card {
+            background: white;
+            width: 100%;
+            max-width: 540px;
+            padding: 28px;
+            border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .flag {
+            width: 100px; height: 60px;
+            margin: 0 auto 20px;
+            display: flex; flex-direction: column;
+            border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
+        }
+        .f-b { background: #000; flex: 1; }
+        .f-r { background: #d00; flex: 1; }
+        .f-g { background: #ff0; flex: 1; }
+        h2 { color: #6c5ce7; margin: 0 0 10px; font-size: 2.1rem; }
+        .subtitle { color: #555; margin-bottom: 28px; font-size: 1.1rem; }
+        .word-de { font-size: 2.3rem; color: #6c5ce7; font-weight: 700; margin: 15px 0; }
+        .info-de { color: #e67e22; font-size: 1.1rem; font-style: italic; margin: 8px 0 18px; }
+        .example-de {
+            background: #f8fbff; padding: 16px; border-radius: 14px;
+            margin: 18px 0 24px; text-align: left;
+            border-left: 6px solid #6c5ce7; font-size: 1.05rem; line-height: 1.45;
+        }
+        .opt-btn {
+            width: 100%; background: #fff; border: 2px solid #e0e0e0;
+            padding: 14px 16px; border-radius: 12px; margin: 8px 0;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.25s; text-align: left;
+        }
+        .opt-btn:hover:not(:disabled) { border-color: #6c5ce7; background: #f8f5ff; }
+        .opt-btn:disabled { opacity: 0.75; cursor: not-allowed; }
+        .main-btn {
+            width: 100%; padding: 16px; background: #6c5ce7; color: white;
+            border: none; border-radius: 14px; font-size: 1.15rem; font-weight: bold;
+            cursor: pointer; margin-top: 12px;
+        }
+        #feedback { font-size: 1.25rem; font-weight: bold; margin: 18px 0 10px; min-height: 35px; }
+        #example-full { 
+            margin: 15px 0; 
+            padding: 15px; 
+            background: #f0fff0; 
+            border-radius: 12px; 
+            font-size: 1.05rem; 
+            text-align: left; 
+            display: none; 
+            border: 1px solid #c8e6c9;
+        }
+        #full-de { font-weight: bold; }
+        #example-vn { 
+            margin-top: 10px; 
+            color: #444; 
+            font-style: italic;
+        }
+        #stat, #score { font-size: 0.95rem; color: #666; margin-bottom: 12px; }
+        .correct { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
+        .wrong { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
+        .highlight { background: #e8f5e9 !important; border-color: #4caf50 !important; font-weight: bold; cursor: pointer !important; }
+    </style>
+</head>
+<body>
+    <div class="quiz-card">
+        <div id="start-screen">
+            <div class="flag">
+                <div class="f-b"></div><div class="f-r"></div><div class="f-g"></div>
+            </div>
+            <h2>Lektion 7</h2>
+            <div class="subtitle">Maria – Der Umzug</div>
+            <button class="main-btn" onclick="startApp()">STARTEN</button>
+        </div>
+        <div id="quiz-ui" style="display:none">
+            <div id="stat"></div>
+            <div class="word-de" id="w"></div>
+            <div class="info-de" id="i"></div>
+            <div class="example-de" id="e"></div>
+            <div id="opts"></div>
+            <div id="feedback"></div>
+            <div id="example-full">
+                <strong>Câu đầy đủ:</strong> <span id="full-de"></span><br>
+                <span id="example-vn"></span>
+            </div>
+            <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">WEITER</button>
+        </div>
+        <div id="end-screen" style="display:none">
+            <h2 style="color:#27ae60">Fertig!</h2>
+            <div id="score"></div>
+            <button class="main-btn" onclick="restartQuiz()">NOCHMAL</button>
+        </div>
+    </div>
 
+    <script>
+        const vocabData = [
+            {w: "einziehen", f: "einziehen, ist eingezogen", e: "Alma und Enrico können erst übermorgen in die neue Wohnung ______ .", full: "Alma und Enrico können erst übermorgen in die neue Wohnung einziehen.", vn: "Alma và Enrico phải đợi đến ngày kia mới dọn vào nhà mới được.", o: ["dọn vào", "dọn ra", "sửa chữa", "bán"], a: 0},
+            {w: "renovieren", f: "renovieren, hat renoviert", e: "Zuerst müssen sie die neue Wohnung ______ .", full: "Zuerst müssen sie die neue Wohnung renovieren.", vn: "Trước tiên phải sửa sang nhà mới một chút.", o: ["sửa sang", "dọn dẹp", "trang trí", "xây dựng"], a: 0},
+            {w: "die Wand", f: "die Wand, die Wände", e: "Dann sind noch Löcher in der ______ .", full: "Dann sind noch Löcher in der Wand.", vn: "Sau đó vẫn còn lỗ trên tường.", o: ["tường", "sàn nhà", "trần nhà", "cửa"], a: 0},
+            {w: "das Loch", f: "das Loch, die Löcher", e: "Ein ______ ist vorne im Flur.", full: "Ein Loch ist vorne im Flur.", vn: "Có một cái lỗ ở hành lang phía trước.", o: ["lỗ", "cửa sổ", "cửa ra vào", "bậc thang"], a: 0},
+            {w: "einrichten", f: "einrichten, hat eingerichtet", e: "Dann müssen sie ihre Möbel holen und die Wohnung ______ .", full: "Dann müssen sie ihre Möbel holen und die Wohnung einrichten.", vn: "Sau đó phải mang đồ đạc vào và sắp xếp nhà cửa.", o: ["sắp xếp nhà cửa", "dọn dẹp", "sửa chữa", "trang trí"], a: 0},
+            {w: "vorne", f: "vorne", e: "Ein Loch ist ______ im Flur.", full: "Ein Loch ist vorne im Flur.", vn: "Có cái lỗ ở phía trước hành lang.", o: ["phía trước", "phía sau", "bên trái", "bên phải"], a: 0},
+            {w: "oben", f: "oben", e: "Es ist ______ in der Wand.", full: "Es ist oben in der Wand.", vn: "Nó ở phía trên tường.", o: ["phía trên", "phía dưới", "bên trong", "bên ngoài"], a: 0},
+            {w: "unten", f: "unten", e: "Es ist ______ in der Wand.", full: "Es ist unten in der Wand.", vn: "Nó ở phía dưới tường.", o: ["phía dưới", "phía trên", "bên trong", "bên ngoài"], a: 0},
+            {w: "die Ecke", f: "die Ecke, -n", e: "Ein Loch ist in der Küche, hinten in der ______ .", full: "Ein Loch ist in der Küche, hinten in der Ecke.", vn: "Có cái lỗ trong bếp, ở góc phía sau.", o: ["góc", "cửa sổ", "cửa ra vào", "bàn"], a: 0},
+            {w: "die Bohrmaschine", f: "die Bohrmaschine, -n", e: "Würdest du mir bitte die ______ mitbringen?", full: "Würdest du mir bitte die Bohrmaschine mitbringen?", vn: "Bạn mang giúp mình cái máy khoan được không?", o: ["máy khoan", "búa", "cưa", "kìm"], a: 0},
+            {w: "der Kofferraum", f: "der Kofferraum, -e", e: "Die war ______ .", full: "Die war Kofferraum.", vn: "Nó ở cốp xe.", o: ["cốp xe", "ghế sau", "bảng điều khiển", "kính chắn gió"], a: 0},
+            {w: "außerdem", f: "außerdem", e: "______ habe ich den Müll rausgebracht.", full: "Außerdem habe ich den Müll rausgebracht.", vn: "Ngoài ra mình còn vứt rác nữa.", o: ["ngoài ra", "vì vậy", "tuy nhiên", "nhưng"], a: 0},
+            {w: "die Kiste", f: "die Kiste, -n", e: "Und ich habe auch noch eine ______ für Mama geholt.", full: "Und ich habe auch noch eine Kiste für Mama geholt.", vn: "Mình còn lấy thêm cái thùng cho mẹ nữa.", o: ["thùng", "túi", "hộp", "vali"], a: 0},
+            {w: "drin", f: "drin", e: "Ich war ganz vorsichtig, weil Sachen aus Glas ______ waren.", full: "Ich war ganz vorsichtig, weil Sachen aus Glas drin waren.", vn: "Mình cẩn thận lắm vì bên trong có đồ thủy tinh.", o: ["bên trong", "bên ngoài", "trên", "dưới"], a: 0},
+            {w: "möglich", f: "möglich", e: "Bitte mach das so bald wie ______ !", full: "Bitte mach das so bald wie möglich!", vn: "Làm càng sớm càng tốt nhé!", o: ["càng sớm càng tốt", "chậm nhất", "không thể", "có thể"], a: 0},
+            {w: "selbstverständlich", f: "selbstverständlich", e: "______ !", full: "Selbstverständlich!", vn: "Đương nhiên rồi!", o: ["đương nhiên", "không đâu", "có lẽ", "chắc chắn"], a: 0},
+            {w: "eilig", f: "eilig", e: "Ich muss zuerst noch diesen Schalter reparieren, ich bin ______ .", full: "Ich muss zuerst noch diesen Schalter reparieren, ich bin eilig.", vn: "Mình phải sửa cái công tắc này trước, đang vội lắm.", o: ["vội", "rảnh", "mệt", "ngáp"], a: 0},
+            {w: "der Schalter", f: "der Schalter, -", e: "Ich muss zuerst noch diesen ______ reparieren.", full: "Ich muss zuerst noch diesen Schalter reparieren.", vn: "Mình phải sửa cái công tắc này trước.", o: ["công tắc", "bóng đèn", "ổ cắm", "dây điện"], a: 0},
+            {w: "auf jeden Fall", f: "auf jeden Fall", e: "Das geht ______ .", full: "Das geht auf jeden Fall.", vn: "Chắc chắn được.", o: ["chắc chắn", "có thể", "không chắc", "chưa chắc"], a: 0},
+            {w: "das Dach", f: "das Dach, -er", e: "Kannst du bitte das ______ fenster putzen?", full: "Kannst du bitte das Dachfenster putzen?", vn: "Bạn lau giúp cửa sổ trên mái được không?", o: ["mái nhà", "cửa sổ", "tường", "sàn"], a: 0},
+            {w: "der Reifen", f: "der Reifen, -", e: "Kannst du bitte den ______ reparieren?", full: "Kannst du bitte den Reifen reparieren?", vn: "Bạn sửa giúp cái lốp xe được không?", o: ["lốp xe", "động cơ", "phanh", "cửa xe"], a: 0},
+            {w: "der Vermieter", f: "der Vermieter, -", e: "Kannst du bitte den ______ anrufen?", full: "Kannst du bitte den Vermieter anrufen?", vn: "Bạn gọi cho chủ nhà giúp được không?", o: ["chủ nhà", "người thuê", "hàng xóm", "bạn bè"], a: 0},
+            {w: "die Kündigung", f: "die Kündigung, -en", e: "Kannst du bitte die ______ schreiben?", full: "Kannst du bitte die Kündigung schreiben?", vn: "Bạn viết thư chấm dứt hợp đồng giúp được không?", o: ["thư chấm dứt hợp đồng", "hợp đồng", "hóa đơn", "thư cảm ơn"], a: 0},
+            {w: "die Treppe", f: "die Treppe, -n", e: "Alma geht die ______ runter.", full: "Alma geht die Treppe runter.", vn: "Alma đi xuống cầu thang.", o: ["cầu thang", "thang máy", "cửa ra vào", "hành lang"], a: 0},
+            {w: "rauf", f: "rauf", e: "Dann trägt sie die Bohrmaschine ______ .", full: "Dann trägt sie die Bohrmaschine rauf.", vn: "Sau đó cô ấy mang máy khoan lên.", o: ["lên", "xuống", "vào", "ra"], a: 0},
+            {w: "rein", f: "rein", e: "Sie bringt vorsichtig die Kiste ______ .", full: "Sie bringt vorsichtig die Kiste rein.", vn: "Cô ấy cẩn thận mang thùng vào.", o: ["vào", "ra", "lên", "xuống"], a: 0},
+            {w: "raus", f: "raus", e: "Und sie bringt den Müll ______ .", full: "Und sie bringt den Müll raus.", vn: "Và cô ấy mang rác ra ngoài.", o: ["ra ngoài", "vào trong", "lên", "xuống"], a: 0},
+            {w: "rüber", f: "rüber", e: "Dann geht sie ______ zu den Nachbarn.", full: "Dann geht sie rüber zu den Nachbarn.", vn: "Sau đó cô ấy đi sang nhà hàng xóm.", o: ["sang bên kia", "vào trong", "lên trên", "xuống dưới"], a: 0},
+            {w: "windig", f: "windig", e: "Wenn es sehr ______ ist und man auf einem Baum sitzt, muss man runterklettern.", full: "Wenn es sehr windig ist und man auf einem Baum sitzt, muss man runterklettern.", vn: "Khi trời gió to mà ngồi trên cây thì phải trèo xuống thôi.", o: ["gió to", "mưa to", "nắng nóng", "lạnh"], a: 0},
+            {w: "nebenan", f: "nebenan", e: "Wenn die Nachbarin von ______ ihre Tasche bei Ihnen vergessen hat, müssen Sie sie rüberbringen.", full: "Wenn die Nachbarin von nebenan ihre Tasche bei Ihnen vergessen hat, müssen Sie sie rüberbringen.", vn: "Khi bà hàng xóm nhà bên quên túi ở nhà bạn thì phải mang sang cho bà ấy.", o: ["nhà bên", "nhà trên", "nhà dưới", "nhà xa"], a: 0},
+            {w: "das Paket", f: "das Paket, -e", e: "Wenn ein ______ für die Nachbarin im Dachgeschoss unten im Flur steht, kann man es rauftragen.", full: "Wenn ein Paket für die Nachbarin im Dachgeschoss unten im Flur steht, kann man es rauftragen.", vn: "Khi có gói hàng cho bà hàng xóm ở tầng áp mái mà để dưới hành lang thì mang lên cho bà ấy.", o: ["gói hàng", "túi xách", "hộp quà", "thùng rác"], a: 0},
+            {w: "organisieren", f: "organisieren, hat organisiert", e: "Du kannst mit einer Umzugsfirma umziehen oder den Umzug privat ______ .", full: "Du kannst mit einer Umzugsfirma umziehen oder den Umzug privat organisieren.", vn: "Bạn có thể thuê công ty chuyển nhà hoặc tự tổ chức chuyển nhà.", o: ["tổ chức", "mua", "bán", "thuê"], a: 0},
+            {w: "der Hinweis", f: "der Hinweis, -e", e: "Schreiben Sie die Aufgaben und ______ auf Kärtchen.", full: "Schreiben Sie die Aufgaben und Hinweise auf Kärtchen.", vn: "Viết công việc và ghi chú lên thẻ nhỏ.", o: ["ghi chú", "hợp đồng", "hóa đơn", "thư"], a: 0},
+            {w: "die Aufgabe", f: "die Aufgabe, -n", e: "Schreiben Sie die ______ und Hinweise auf Kärtchen.", full: "Schreiben Sie die Aufgaben und Hinweise auf Kärtchen.", vn: "Viết công việc và ghi chú lên thẻ nhỏ.", o: ["công việc", "ghi chú", "hợp đồng", "hóa đơn"], a: 0},
+            {w: "ausziehen", f: "ausziehen, ist ausgezogen", e: "Du ______ bald aus.", full: "Du ziehst bald aus.", vn: "Bạn sắp dọn ra khỏi nhà rồi.", o: ["dọn ra", "dọn vào", "sửa chữa", "trang trí"], a: 0},
+            {w: "packen", f: "packen, hat gepackt", e: "Kannst du vielleicht ein paar Kisten ______ ?", full: "Kannst du vielleicht ein paar Kisten packen?", vn: "Bạn gói vài thùng đồ được không?", o: ["gói", "mở", "mang", "để"], a: 0},
+            {w: "der Wagen", f: "der Wagen, -", e: "Kannst du vielleicht den Umzugs______ bringen?", full: "Kannst du vielleicht den Umzugswagen bringen?", vn: "Bạn mang xe tải chuyển nhà đến được không?", o: ["xe tải", "xe máy", "xe đạp", "xe hơi"], a: 0},
+            {w: "der Nagel", f: "der Nagel, -", e: "Kannst du vielleicht die ______ aus der Wand ziehen?", full: "Kannst du vielleicht die Nägel aus der Wand ziehen?", vn: "Bạn rút mấy cái đinh trên tường giúp được không?", o: ["đinh", "ốc vít", "keo", "băng dính"], a: 0},
+            {w: "ziehen", f: "ziehen, hat gezogen", e: "Kannst du vielleicht die Nägel aus der Wand ______ ?", full: "Kannst du vielleicht die Nägel aus der Wand ziehen?", vn: "Bạn rút mấy cái đinh trên tường giúp được không?", o: ["rút", "đóng", "vặn", "gỡ"], a: 0},
+            {w: "streichen", f: "streichen, hat gestrichen", e: "Kannst du die Wände ______ ?", full: "Kannst du die Wände streichen?", vn: "Bạn sơn tường giúp được không?", o: ["sơn", "dán", "lau", "đục"], a: 0},
+            {w: "die Mülltonne", f: "die Mülltonne, -n", e: "Wirf den Müll in die ______ !", full: "Wirf den Müll in die Mülltonne!", vn: "Vứt rác vào thùng rác đi!", o: ["thùng rác", "túi rác", "hộp rác", "xe rác"], a: 0},
+            {w: "der Raum", f: "der Raum, -e", e: "Kannst du vielleicht die ______ putzen?", full: "Kannst du vielleicht die Räume putzen?", vn: "Bạn lau dọn phòng giúp được không?", o: ["phòng", "tường", "sàn", "trần"], a: 0},
+            {w: "abschließen", f: "abschließen, hat abgeschlossen", e: "Kannst du vielleicht die Wohnung ______ ?", full: "Kannst du vielleicht die Wohnung abschließen?", vn: "Bạn khóa cửa nhà giúp được không?", o: ["khóa", "mở", "đóng", "mở khóa"], a: 0},
+            {w: "abgeben", f: "abgeben, hat abgegeben", e: "Wann sollst du den Schlüssel ______ ?", full: "Wann sollst du den Schlüssel abgeben?", vn: "Khi nào bạn phải trả chìa khóa?", o: ["trả", "lấy", "giữ", "mượn"], a: 0},
+            {w: "aufbauen", f: "aufbauen, hat aufgebaut", e: "Wo sollen wir den Schrank ______ ?", full: "Wo sollen wir den Schrank aufbauen?", vn: "Tụi mình lắp tủ ở đâu đây?", o: ["lắp", "tháo", "mang", "để"], a: 0},
+            {w: "auspacken", f: "auspacken, hat ausgepackt", e: "Kannst du vielleicht die Kisten ______ ?", full: "Kannst du vielleicht die Kisten auspacken?", vn: "Bạn mở thùng đồ ra giúp được không?", o: ["mở ra", "gói lại", "mang đi", "để yên"], a: 0},
+            {w: "die Vorsicht", f: "die Vorsicht (Sg.)", e: "______ mit den Möbeln!", full: "Vorsicht mit den Möbeln!", vn: "Cẩn thận với đồ đạc nhé!", o: ["cẩn thận", "nhanh lên", "chậm thôi", "đừng lo"], a: 0},
+            {w: "übernehmen", f: "übernehmen, hat übernommen", e: "Welche Aufgaben ______ Sie gern beim Umzug?", full: "Welche Aufgaben übernehmen Sie gern beim Umzug?", vn: "Bạn thích nhận nhiệm vụ nào khi chuyển nhà?", o: ["nhận", "từ chối", "giao", "chia"], a: 0},
+            {w: "der Mülleimer", f: "der Mülleimer, -", e: "Alma findet die Vase hässlich und will sie in den ______ werfen.", full: "Alma findet die Vase hässlich und will sie in den Mülleimer werfen.", vn: "Alma thấy cái bình xấu và muốn vứt vào thùng rác.", o: ["thùng rác", "tủ kính", "bàn", "kệ"], a: 0},
+            {w: "der Sessel", f: "der Sessel, -", e: "Enrico möchte das Bild über den ______ hängen.", full: "Enrico möchte das Bild über den Sessel hängen.", vn: "Enrico muốn treo bức tranh trên ghế bành.", o: ["ghế bành", "ghế sofa", "bàn", "kệ"], a: 0},
+            {w: "die Vase", f: "die Vase, -n", e: "Der beste Platz für die ______ ist im Mülleimer.", full: "Der beste Platz für die Vase ist im Mülleimer.", vn: "Chỗ tốt nhất cho cái bình là trong thùng rác.", o: ["bình hoa", "ghế", "bàn", "tủ"], a: 0},
+            {w: "stellen", f: "stellen, hat gestellt", e: "Sie ______ die Lampe neben den Schreibtisch.", full: "Sie stellen die Lampe neben den Schreibtisch.", vn: "Họ đặt cái đèn cạnh bàn làm việc.", o: ["đặt", "treo", "nằm", "ngồi"], a: 0},
+            {w: "setzen", f: "setzen, hat gesetzt", e: "Dann ______ ich Bongo auf den Schrank.", full: "Dann setze ich Bongo auf den Schrank.", vn: "Sau đó mình đặt Bongo lên tủ.", o: ["đặt", "treo", "nằm", "ngồi"], a: 0},
+            {w: "legen", f: "legen, hat gelegt", e: "Ich ______ den Teppich unter den Schreibtisch.", full: "Ich lege den Teppich unter den Schreibtisch.", vn: "Mình đặt thảm dưới bàn làm việc.", o: ["đặt", "treo", "nằm", "ngồi"], a: 0},
+            {w: "der Teppich", f: "der Teppich, -e", e: "Ich lege den ______ unter den Schreibtisch.", full: "Ich lege den Teppich unter den Schreibtisch.", vn: "Mình đặt thảm dưới bàn làm việc.", o: ["thảm", "rèm", "cửa sổ", "bình hoa"], a: 0},
+            {w: "die Pflanze", f: "die Pflanze, -n", e: "Wohin sollen wir die große ______ stellen?", full: "Wohin sollen wir die große Pflanze stellen?", vn: "Cái cây to này để đâu đây?", o: ["cây", "bình", "ghế", "bàn"], a: 0},
+            {w: "der Zettel", f: "der Zettel, -", e: "Leg den ______ unter das Buch.", full: "Leg den Zettel unter das Buch.", vn: "Đặt tờ giấy dưới cuốn sách.", o: ["tờ giấy", "cuốn sách", "cái bút", "cái kẹp"], a: 0},
+            {w: "aufteilen", f: "aufteilen, hat aufgeteilt", e: "Und wie habt ihr die Zimmer ______ ?", full: "Und wie habt ihr die Zimmer aufgeteilt?", vn: "Vậy các bạn chia phòng thế nào?", o: ["chia", "mua", "bán", "thuê"], a: 0},
+            {w: "das Kinderzimmer", f: "das Kinderzimmer, -", e: "Wohnzimmer, Schlafzimmer, ______ und mir.", full: "Wohnzimmer, Schlafzimmer, Kinderzimmer und mir.", vn: "Phòng khách, phòng ngủ, phòng trẻ con và phòng của tôi.", o: ["phòng trẻ con", "phòng bếp", "phòng tắm", "phòng làm việc"], a: 0},
+            {w: "das Arbeitszimmer", f: "das Arbeitszimmer, -", e: "Wohnzimmer, Schlafzimmer, Kinderzimmer und ______ .", full: "Wohnzimmer, Schlafzimmer, Kinderzimmer und Arbeitszimmer.", vn: "Phòng khách, phòng ngủ, phòng trẻ con và phòng làm việc.", o: ["phòng làm việc", "phòng trẻ con", "phòng bếp", "phòng tắm"], a: 0},
+            {w: "die Ruhe", f: "die Ruhe (Sg.)", e: "Ein Raum, wo man mal in ______ nachdenken kann.", full: "Ein Raum, wo man mal in Ruhe nachdenken kann.", vn: "Một phòng để ngồi yên tĩnh suy nghĩ.", o: ["yên tĩnh", "ồn ào", "vui vẻ", "buồn"], a: 0},
+            {w: "nachdenken", f: "nachdenken, hat nachgedacht", e: "Ein Raum, wo man mal in Ruhe ______ kann.", full: "Ein Raum, wo man mal in Ruhe nachdenken kann.", vn: "Một phòng để ngồi yên tĩnh suy nghĩ.", o: ["suy nghĩ", "ngủ", "ăn", "chơi"], a: 0},
+            {w: "zeichnen", f: "zeichnen, hat gezeichnet", e: "Enrico muss für seine Arbeit oft Gartenpläne ______ .", full: "Enrico muss für seine Arbeit oft Gartenpläne zeichnen.", vn: "Enrico phải vẽ kế hoạch vườn nhiều cho công việc.", o: ["vẽ", "viết", "đọc", "nói"], a: 0},
+            {w: "wahrscheinlich", f: "wahrscheinlich", e: "Und ich brauche das Arbeitszimmer jetzt ______ auch bald.", full: "Und ich brauche das Arbeitszimmer jetzt wahrscheinlich auch bald.", vn: "Và chắc mình cũng cần phòng làm việc sớm thôi.", o: ["chắc chắn", "có lẽ", "không", "chưa"], a: 0},
+            {w: "klappen", f: "klappen, hat geklappt", e: "Hat das mit deiner Bewerbung ______ ?", full: "Hat das mit deiner Bewerbung geklappt?", vn: "Việc xin việc của bạn có được không?", o: ["được", "không được", "chưa", "đang"], a: 0},
+            {w: "die Chance", f: "die Chance, -n", e: "Es ist noch nicht ganz sicher, aber meine ______ sind sehr, sehr gut!", full: "Es ist noch nicht ganz sicher, aber meine Chancen sind sehr, sehr gut!", vn: "Chưa chắc chắn hoàn toàn nhưng cơ hội của mình tốt lắm!", o: ["cơ hội", "thời gian", "tiền bạc", "sức khỏe"], a: 0},
+            {w: "die Hauptsache", f: "die Hauptsache (Sg.)", e: "Aber die ______ ist: Ihr habt endlich eine Wohnung gefunden.", full: "Aber die Hauptsache ist: Ihr habt endlich eine Wohnung gefunden.", vn: "Nhưng điều chính là: Các bạn cuối cùng cũng tìm được nhà rồi.", o: ["điều chính", "điều phụ", "tiền bạc", "thời gian"], a: 0},
+            {w: "die Größe", f: "die Größe, -n", e: "Wohnungs______: 75 m²", full: "Wohnungsgröße: 75 m²", vn: "Diện tích nhà: 75 m²", o: ["diện tích", "giá tiền", "vị trí", "phòng"], a: 0},
+            {w: "eigen", f: "eigen", e: "Alma bekommt ein ______ Kinderzimmer.", full: "Alma bekommt ein eigenes Kinderzimmer.", vn: "Alma có phòng riêng cho trẻ con.", o: ["riêng", "chung", "lớn", "nhỏ"], a: 0},
+            {w: "modern", f: "modern", e: "Die Wohnung ist ______ .", full: "Die Wohnung ist modern.", vn: "Căn nhà hiện đại lắm.", o: ["hiện đại", "cổ điển", "cũ kỹ", "bẩn"], a: 0},
+            {w: "preiswert", f: "preiswert", e: "Die Wohnung ist ______ .", full: "Die Wohnung ist preiswert.", vn: "Căn nhà giá rẻ đấy.", o: ["giá rẻ", "đắt", "miễn phí", "cao cấp"], a: 0},
+            {w: "zentral", f: "zentral", e: "Die Wohnung liegt ______ .", full: "Die Wohnung liegt zentral.", vn: "Căn nhà nằm vị trí trung tâm.", o: ["trung tâm", "ngoại ô", "xa xôi", "gần sông"], a: 0},
+            {w: "das Erdgeschoss", f: "das Erdgeschoss, -e", e: "Die Wohnung liegt im ______ .", full: "Die Wohnung liegt im Erdgeschoss.", vn: "Căn nhà ở tầng trệt.", o: ["tầng trệt", "tầng lầu", "tầng áp mái", "tầng hầm"], a: 0},
+            {w: "erreichen", f: "erreichen, hat erreicht", e: "Die Wohnung ______ man mit einem Lift.", full: "Die Wohnung erreicht man mit einem Lift.", vn: "Đến căn nhà bằng thang máy.", o: ["đến", "rời", "mở", "đóng"], a: 0},
+            {w: "der Lift", f: "der Lift, -e", e: "Die Wohnung erreicht man mit einem ______ .", full: "Die Wohnung erreicht man mit einem Lift.", vn: "Đến căn nhà bằng thang máy.", o: ["thang máy", "cầu thang", "xe hơi", "xe đạp"], a: 0},
+            {w: "die Garage", f: "die Garage, -n", e: "Die Wohnung hat eine ______ .", full: "Die Wohnung hat eine Garage.", vn: "Căn nhà có gara.", o: ["gara", "sân vườn", "ban công", "hầm"], a: 0}
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const positiveFeedback = ["Gut gemacht!", "Sehr gut!", "Super!", "Toll!", "Weiter so!", "Prima!", "Genau richtig!"];
+        const negativeFeedback = ["Leider falsch!", "Noch nicht richtig!", "Versuch es noch einmal!", "Nicht ganz richtig!", "Schade!", "Falsch!"];
+
+        function speakGerman(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE';
+                utterance.rate = 0.9;
+                utterance.volume = 0.9;
+                const voices = speechSynthesis.getVoices();
+                const deVoice = voices.find(v => v.lang.startsWith('de-'));
+                if (deVoice) utterance.voice = deVoice;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startApp() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("end-screen").style.display = "none";
+            document.getElementById("quiz-ui").style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= vocabData.length) {
+                showResult();
+                return;
+            }
+            const q = vocabData[currentQuestion];
+            const options = [...q.o];
+            const correctAnswer = q.a;
+            const shuffledOptions = shuffleArray(options);
+            const newCorrectIndex = shuffledOptions.indexOf(q.o[correctAnswer]);
+
+            document.getElementById("stat").textContent = `Frage ${currentQuestion + 1} von ${vocabData.length}`;
+            document.getElementById("w").textContent = q.w;
+            document.getElementById("i").textContent = q.f;
+            document.getElementById("e").innerHTML = q.e.replace(/______/g, "___");
+            document.getElementById("example-full").style.display = "none";
+
+            const optsDiv = document.getElementById("opts");
+            optsDiv.innerHTML = "";
+            shuffledOptions.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "opt-btn";
+                btn.textContent = opt;
+                btn.onclick = () => handleClick(idx, btn, q, newCorrectIndex);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function handleClick(selectedIdx, btn, q, correctIndex) {
+            const allBtns = document.querySelectorAll(".opt-btn");
+            if (allBtns[0].disabled) return;
+
+            allBtns.forEach(b => b.disabled = true);
+
+            if (selectedIdx === correctIndex) {
+                score++;
+                const msg = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#27ae60";
+                btn.classList.add("correct");
+                speakGerman("Richtig!");
+                setTimeout(() => {
+                    speakGerman(q.f);
+                    document.getElementById("full-de").textContent = q.full;
+                    document.getElementById("example-vn").textContent = q.vn;
+                    document.getElementById("example-full").style.display = "block";
+                }, 1800);
+            } else {
+                const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#e74c3c";
+                btn.classList.add("wrong");
+                allBtns[correctIndex].classList.add("highlight");
+                speakGerman("Falsch!");
+                setTimeout(() => {
+                    speakGerman(q.f);
+                }, 1800);
+            }
+
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResult() {
+            document.getElementById("quiz-ui").style.display = "none";
+            document.getElementById("end-screen").style.display = "block";
+            const percent = Math.round((score / vocabData.length) * 100);
+            let comment = percent >= 85 ? "Ausgezeichnet! 🌟" : percent >= 70 ? "Sehr gut! 👍" : percent >= 50 ? "Gut – weiter üben! 💪" : "Nächstes Mal besser! 😊";
+            document.getElementById("score").innerHTML = `Du hast <strong>${score}/${vocabData.length}</strong> richtig!<br>(${percent} %)<br><br>${comment}`;
+        }
+
+        function restartQuiz() {
+            startApp();
+        }
+    </script>
+</body>
+</html>
