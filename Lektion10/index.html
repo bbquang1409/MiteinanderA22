@@ -1,1 +1,279 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Deutsch Lektion 10 - Yasmin: Die Bewerbung</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+            background: linear-gradient(135deg, #f0f3f9, #e0e7ff);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            box-sizing: border-box;
+        }
+        .quiz-card {
+            background: white;
+            width: 100%;
+            max-width: 540px;
+            padding: 28px;
+            border-radius: 24px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+        .flag {
+            width: 100px; height: 60px;
+            margin: 0 auto 20px;
+            display: flex; flex-direction: column;
+            border: 1px solid #ccc; border-radius: 5px; overflow: hidden;
+        }
+        .f-b { background: #000; flex: 1; }
+        .f-r { background: #d00; flex: 1; }
+        .f-g { background: #ff0; flex: 1; }
+        h2 { color: #6c5ce7; margin: 0 0 10px; font-size: 2.1rem; }
+        .subtitle { color: #555; margin-bottom: 28px; font-size: 1.1rem; }
+        .word-de { font-size: 2.3rem; color: #6c5ce7; font-weight: 700; margin: 15px 0; }
+        .info-de { color: #e67e22; font-size: 1.1rem; font-style: italic; margin: 8px 0 18px; }
+        .example-de {
+            background: #f8fbff; padding: 16px; border-radius: 14px;
+            margin: 18px 0 24px; text-align: left;
+            border-left: 6px solid #6c5ce7; font-size: 1.05rem; line-height: 1.45;
+        }
+        .opt-btn {
+            width: 100%; background: #fff; border: 2px solid #e0e0e0;
+            padding: 14px 16px; border-radius: 12px; margin: 8px 0;
+            font-size: 1.1rem; font-weight: 600; cursor: pointer;
+            transition: all 0.25s; text-align: left;
+        }
+        .opt-btn:hover:not(:disabled) { border-color: #6c5ce7; background: #f8f5ff; }
+        .opt-btn:disabled { opacity: 0.75; cursor: not-allowed; }
+        .main-btn {
+            width: 100%; padding: 16px; background: #6c5ce7; color: white;
+            border: none; border-radius: 14px; font-size: 1.15rem; font-weight: bold;
+            cursor: pointer; margin-top: 12px;
+        }
+        #feedback { font-size: 1.25rem; font-weight: bold; margin: 18px 0 10px; min-height: 35px; }
+        #example-full { 
+            margin: 15px 0; 
+            padding: 15px; 
+            background: #f0fff0; 
+            border-radius: 12px; 
+            font-size: 1.05rem; 
+            text-align: left; 
+            display: none; 
+            border: 1px solid #c8e6c9;
+        }
+        #meaning-title { font-weight: bold; color: #2e7d32; }
+        #example-vn { 
+            margin-top: 8px; 
+            color: #444; 
+        }
+        #stat, #score { font-size: 0.95rem; color: #666; margin-bottom: 12px; }
+        .correct { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
+        .wrong { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
+        .highlight { background: #e8f5e9 !important; border-color: #4caf50 !important; font-weight: bold; cursor: pointer !important; }
+    </style>
+</head>
+<body>
+    <div class="quiz-card">
+        <div id="start-screen">
+            <div class="flag">
+                <div class="f-b"></div><div class="f-r"></div><div class="f-g"></div>
+            </div>
+            <h2>Lektion 10</h2>
+            <div class="subtitle">Yasmin – Die Bewerbung</div>
+            <button class="main-btn" onclick="startApp()">STARTEN</button>
+        </div>
+        <div id="quiz-ui" style="display:none">
+            <div id="stat"></div>
+            <div class="word-de" id="w"></div>
+            <div class="info-de" id="i"></div>
+            <div class="example-de" id="e"></div>
+            <div id="opts"></div>
+            <div id="feedback"></div>
+            <div id="example-full">
+                <span id="meaning-title">Ý nghĩa:</span> <span id="example-vn"></span>
+            </div>
+            <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">WEITER</button>
+        </div>
+        <div id="end-screen" style="display:none">
+            <h2 style="color:#27ae60">Fertig!</h2>
+            <div id="score"></div>
+            <button class="main-btn" onclick="restartQuiz()">NOCHMAL</button>
+        </div>
+    </div>
 
+    <script>
+        const vocabData = [
+            {w: "die Ausstattung", f: "die Ausstattung, die Ausstattungen", e: "Beste Küche – Das Spezialgeschäft für Küchengeräte und ______ in Neuburg.", vn: "Cửa hàng chuyên đồ bếp và trang thiết bị tốt nhất ở Neuberg.", o: ["trang thiết bị", "đồ ăn", "nội thất", "quần áo"], a: 0},
+            {w: "beraten", f: "beraten, hat beraten", e: "Sie können sehr gut Kunden ______ ?", vn: "Bạn có thể tư vấn khách hàng rất tốt không?", o: ["tư vấn", "bán hàng", "mua hàng", "sửa chữa"], a: 0},
+            {w: "der Laden", f: "der Laden, die Läden", e: "Wir suchen für unser Laden dringend eine ______ oder einen Fahrer.", vn: "Chúng tôi đang tìm gấp người bán hàng hoặc tài xế cho cửa hàng.", o: ["cửa hàng", "nhà hàng", "siêu thị", "kho"], a: 0},
+            {w: "die Bezahlung", f: "die Bezahlung, die Bezahlungen", e: "Sie möchte mehr verdienen und hätte gern ______ und einen sicheren Arbeitsplatz.", vn: "Cô ấy muốn kiếm nhiều hơn và có lương tốt với chỗ làm ổn định.", o: ["lương", "thưởng", "lợi nhuận", "tiền thưởng"], a: 0},
+            {w: "flexibel", f: "flexibel", e: "Sie möchte mehr verdienen und hätte gern Bezahlung und ______ Arbeitszeiten.", vn: "Cô ấy muốn lương cao và giờ làm linh hoạt.", o: ["linh hoạt", "cứng nhắc", "dài", "ngắn"], a: 0},
+            {w: "die Arbeitszeit", f: "die Arbeitszeit, die Arbeitszeiten", e: "Sie möchte mehr verdienen und hätte gern Bezahlung und flexible ______ .", vn: "Cô ấy muốn lương cao và giờ làm linh hoạt.", o: ["giờ làm việc", "ngày nghỉ", "lương", "thưởng"], a: 0},
+            {w: "die Stellenanzeige", f: "die Stellenanzeige, -n", e: "Sie hat eine ______ gefunden.", vn: "Cô ấy tìm thấy tin tuyển dụng rồi.", o: ["tin tuyển dụng", "hợp đồng", "thư xin việc", "CV"], a: 0},
+            {w: "die Bewerbungsunterlagen", f: "die Bewerbungsunterlagen (Pl.)", e: "Sie schickt die ______ noch nicht an die Firma.", vn: "Cô ấy chưa gửi hồ sơ ứng tuyển cho công ty.", o: ["hồ sơ ứng tuyển", "hợp đồng", "thư cảm ơn", "tiền lương"], a: 0},
+            {w: "der Mietvertrag", f: "der Mietvertrag, die Mietverträge", e: "Gestern habe ich den ______ bekommen.", vn: "Hôm qua mình nhận được hợp đồng thuê nhà rồi.", o: ["hợp đồng thuê nhà", "hợp đồng lao động", "hóa đơn", "thư"], a: 0},
+            {w: "der Vertrag", f: "der Vertrag, die Verträge", e: "Zuerst musst du einen netten Brief schreiben, das ______ .", vn: "Trước tiên phải viết thư lịch sự, là thư ứng tuyển.", o: ["hợp đồng", "thư", "CV", "hóa đơn"], a: 0},
+            {w: "das Anschreiben", f: "das Anschreiben, -", e: "Zuerst musst du einen netten Brief schreiben, das ______ .", vn: "Trước tiên phải viết thư lịch sự, là thư ứng tuyển.", o: ["thư ứng tuyển", "hợp đồng", "CV", "hóa đơn"], a: 0},
+            {w: "bieten", f: "bieten, hat geboten", e: "Dafür ______ wir sehr gutes Gehalt und eine weitgehend freie Terminplanung.", vn: "Chúng tôi cung cấp lương tốt và giờ làm linh hoạt khá nhiều.", o: ["cung cấp", "nhận", "từ chối", "thay đổi"], a: 0},
+            {w: "das Gehalt", f: "das Gehalt, die Gehälter", e: "Dafür bieten wir sehr gutes ______ und eine weitgehend freie Terminplanung.", vn: "Chúng tôi cung cấp lương tốt và giờ làm linh hoạt khá nhiều.", o: ["lương", "thưởng", "lợi nhuận", "tiền thưởng"], a: 0},
+            {w: "der Orchester", f: "der Orchester, -", e: "Wir suchen für unser ______ dringend eine Fahrerin oder einen Fahrer.", vn: "Chúng tôi đang tìm gấp tài xế cho dàn nhạc.", o: ["dàn nhạc", "nhóm", "đội", "công ty"], a: 0},
+            {w: "der Fahrer", f: "der Fahrer, -", e: "Wir suchen für unser Orchester dringend eine Fahrerin oder einen ______ .", vn: "Chúng tôi đang tìm gấp tài xế nam hoặc nữ cho dàn nhạc.", o: ["tài xế", "nghệ sĩ", "nhạc công", "quản lý"], a: 0},
+            {w: "die Fahrerin", f: "die Fahrerin, -nen", e: "Wir suchen für unser Orchester dringend eine ______ oder einen Fahrer.", vn: "Chúng tôi đang tìm gấp tài xế nữ hoặc nam cho dàn nhạc.", o: ["tài xế nữ", "nghệ sĩ", "nhạc công", "quản lý"], a: 0},
+            {w: "der Musiker", f: "der Musiker, -", e: "Ihre Aufgabe: unsere ______ innen zu Konzerten und wieder zurück bringen.", vn: "Nhiệm vụ: Đưa đón nhạc công đến buổi hòa nhạc và về lại.", o: ["nhạc công", "tài xế", "nghệ sĩ", "quản lý"], a: 0},
+            {w: "die Musikerin", f: "die Musikerin, -nen", e: "Ihre Aufgabe: unsere Musiker______ zu Konzerten und wieder zurück bringen.", vn: "Nhiệm vụ: Đưa đón nhạc công nữ đến buổi hòa nhạc và về lại.", o: ["nhạc công nữ", "tài xế", "nghệ sĩ", "quản lý"], a: 0},
+            {w: "der Bau", f: "der Bau (Sg.)", e: "Ich arbeite seit vielen Jahren auf dem ______ .", vn: "Mình làm việc trên công trường nhiều năm rồi.", o: ["công trường", "văn phòng", "nhà máy", "cửa hàng"], a: 0},
+            {w: "nebenbei", f: "nebenbei", e: "Ich möchte ______ gern noch etwas dazu verdienen.", vn: "Mình muốn làm thêm để kiếm thêm tiền.", o: ["làm thêm", "làm chính", "nghỉ ngơi", "ngủ"], a: 0},
+            {w: "die Bedienung", f: "die Bedienung, -en", e: "Am liebsten möchte ich am Abend als ______ arbeiten.", vn: "Mình thích làm phục vụ buổi tối nhất.", o: ["phục vụ", "đầu bếp", "thu ngân", "quản lý"], a: 0},
+            {w: "der Erzieher", f: "der Erzieher, -", e: "Ich habe lange als ______ gearbeitet.", vn: "Mình làm giáo viên mầm non lâu rồi.", o: ["giáo viên mầm non", "giáo viên phổ thông", "bảo mẫu", "trợ lý"], a: 0},
+            {w: "die Erzieherin", f: "die Erzieherin, -nen", e: "Ich habe lange als ______ gearbeitet.", vn: "Mình làm giáo viên mầm non nữ lâu rồi.", o: ["giáo viên mầm non nữ", "giáo viên phổ thông", "bảo mẫu", "trợ lý"], a: 0},
+            {w: "sich ausruhen", f: "sich ausruhen, hat sich ausgeruht", e: "Am Abend ______ Benno und sein Sohn sich aus.", vn: "Buổi tối Benno và con trai nghỉ ngơi.", o: ["nghỉ ngơi", "làm việc", "chơi", "ăn"], a: 0},
+            {w: "sich ärgern", f: "sich ärgern, hat sich geärgert", e: "Du ______ dich in der Sohn aus.", vn: "Con trai làm bạn bực mình hả?", o: ["bực mình", "vui vẻ", "bình tĩnh", "mệt mỏi"], a: 0},
+            {w: "sich hinlegen", f: "sich hinlegen, hat sich hingelegt", e: "Ich bin müde. Ich ______ mich hin.", vn: "Mình mệt quá. Nằm nghỉ đây.", o: ["nằm nghỉ", "ngồi dậy", "đứng lên", "đi lại"], a: 0},
+            {w: "sich rasieren", f: "sich rasieren, hat sich rasiert", e: "Du könntest dich wieder einmal ______ .", vn: "Bạn nên cạo râu lại đi.", o: ["cạo râu", "tắm", "gội đầu", "cắt tóc"], a: 0},
+            {w: "sich umziehen", f: "sich umziehen, hat sich umgezogen", e: "Er zieht sich schnell ______ .", vn: "Anh ấy thay đồ nhanh lắm.", o: ["thay đồ", "mặc đồ", "cởi đồ", "giặt đồ"], a: 0},
+            {w: "sich waschen", f: "sich waschen, hat sich gewaschen", e: "Benno ______ sich.", vn: "Benno đang tắm rửa.", o: ["tắm rửa", "ăn uống", "ngủ nghỉ", "chơi đùa"], a: 0},
+            {w: "sich verlieben", f: "sich verlieben, hat sich verliebt", e: "Er hat sich ______ .", vn: "Anh ấy đang yêu rồi.", o: ["yêu", "ghét", "thích", "ghen"], a: 0},
+            {w: "der Fleck", f: "der Fleck, die Flecken", e: "Die Jacke hat einen ______ .", vn: "Cái áo khoác bị dính vết bẩn.", o: ["vết bẩn", "nút áo", "túi áo", "khóa kéo"], a: 0},
+            {w: "sich fühlen", f: "sich fühlen, hat sich gefühlt", e: "Ich ______ mich heute nicht gut.", vn: "Hôm nay mình cảm thấy không khỏe.", o: ["cảm thấy", "nhìn thấy", "nghe thấy", "nếm thấy"], a: 0},
+            {w: "sich beschweren", f: "sich beschweren, hat sich beschwert", e: "Max hat sich ______ .", vn: "Max đang phàn nàn.", o: ["phàn nàn", "khen ngợi", "im lặng", "cười"], a: 0},
+            {w: "der Salon", f: "der Salon, -s", e: "Ich arbeite im Friseursalon ______ schnitt.", vn: "Mình làm ở tiệm cắt tóc.", o: ["tiệm cắt tóc", "tiệm ăn", "cửa hàng", "văn phòng"], a: 0},
+            {w: "die Schreinerei", f: "die Schreinerei, -en", e: "Sagen Sie, warum Sie in der ______ arbeiten möchten.", vn: "Nói xem tại sao bạn muốn làm ở xưởng mộc?", o: ["xưởng mộc", "tiệm cắt tóc", "cửa hàng", "văn phòng"], a: 0},
+            {w: "halbtags", f: "halbtags", e: "Ich möchte gern ______ arbeiten, am liebsten vormittags.", vn: "Mình muốn làm nửa ngày, tốt nhất là buổi sáng.", o: ["nửa ngày", "cả ngày", "toàn thời gian", "tối"], a: 0},
+            {w: "die Vollzeit", f: "die Vollzeit (Sg.)", e: "Sie suchen eine Person in ______ , aber Teilzeit.", vn: "Họ tìm người làm toàn thời gian nhưng cũng chấp nhận bán thời gian.", o: ["toàn thời gian", "nửa thời gian", "linh hoạt", "tự do"], a: 0},
+            {w: "die Teilzeit", f: "die Teilzeit (Sg.)", e: "Sie suchen eine Person in Vollzeit, aber ______ .", vn: "Họ tìm người làm toàn thời gian nhưng cũng chấp nhận bán thời gian.", o: ["bán thời gian", "toàn thời gian", "linh hoạt", "tự do"], a: 0},
+            {w: "der Service", f: "der Service (Sg.)", e: "______ kraft (m/w/d) gesucht.", vn: "Đang tuyển nhân viên phục vụ (nam/nữ/khác).", o: ["phục vụ", "đầu bếp", "thu ngân", "quản lý"], a: 0},
+            {w: "die Ausbildung", f: "die Ausbildung, -en", e: "Wir suchen für sechs Monate eine ______ für unsere Kantine.", vn: "Chúng tôi tuyển học việc 6 tháng cho căng tin.", o: ["học việc", "làm việc", "nghỉ việc", "thăng chức"], a: 0},
+            {w: "das Interesse", f: "das Interesse, -n", e: "Haben Sie ______ ?", vn: "Bạn có hứng thú không?", o: ["hứng thú", "tiền bạc", "thời gian", "sức khỏe"], a: 0},
+            {w: "vereinbaren", f: "vereinbaren, hat vereinbart", e: "Haben Sie Interesse gerne und ______ einen Termin mit uns.", vn: "Bạn có hứng thú thì hẹn gặp chúng tôi nhé.", o: ["hẹn gặp", "hủy gặp", "đến muộn", "đi sớm"], a: 0},
+            {w: "die Einrichtung", f: "die Einrichtung, -en", e: "Das Martha-Maria-Seniorenheim ist eine ______ .", vn: "Nhà dưỡng lão Martha-Maria là một cơ sở.", o: ["cơ sở", "cửa hàng", "trường học", "bệnh viện"], a: 0},
+            {w: "der Tagesvater", f: "der Tagesvater, -", e: "Du liebst Kinder und möchtest gern als ______ jobben?", vn: "Bạn yêu trẻ con và muốn làm bố nuôi ban ngày hả?", o: ["bố nuôi ban ngày", "mẹ nuôi ban ngày", "giáo viên", "bảo mẫu"], a: 0},
+            {w: "die Tagesmutter", f: "die Tagesmutter, -", e: "Du liebst Kinder und möchtest gern als Tagesvater/-______ jobben?", vn: "Bạn yêu trẻ con và muốn làm bố/mẹ nuôi ban ngày hả?", o: ["mẹ nuôi ban ngày", "bố nuôi ban ngày", "giáo viên", "bảo mẫu"], a: 0},
+            {w: "jobben", f: "jobben, hat gejobbt", e: "Du liebst Kinder und möchtest gern als Tagesvater/-mutter ______ ?", vn: "Bạn yêu trẻ con và muốn làm thêm công việc này hả?", o: ["làm thêm", "nghỉ việc", "thăng chức", "học việc"], a: 0},
+            {w: "die Organisation", f: "die Organisation, -en", e: "Aber du hast keine Lust auf ______ /Verwaltung.", vn: "Nhưng bạn không thích làm tổ chức/quản lý.", o: ["tổ chức", "làm việc", "nghỉ ngơi", "chơi"], a: 0},
+            {w: "sich kümmern", f: "sich kümmern, hat sich gekümmert", e: "Wir organisieren die Jobs für dich und ______ ums bei der Zusammenarbeit.", vn: "Chúng tôi sắp xếp công việc cho bạn và lo việc phối hợp.", o: ["chăm sóc", "bỏ mặc", "từ chối", "chuyển giao"], a: 0},
+            {w: "die Betreuung", f: "die Betreuung, -en", e: "______ dich um die Kinderbetreuung.", vn: "Chăm sóc trẻ con.", o: ["chăm sóc", "dạy học", "chơi", "ăn uống"], a: 0},
+            {w: "die Qualifikation", f: "die Qualifikation, -en", e: "Ihre ______ : mehrjährige Erfahrung im Verkauf.", vn: "Yêu cầu: Có kinh nghiệm bán hàng nhiều năm.", o: ["kinh nghiệm", "bằng cấp", "lương", "thời gian"], a: 0}
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        const positiveFeedback = ["Gut gemacht!", "Sehr gut!", "Super!", "Toll!", "Weiter so!", "Prima!", "Genau richtig!"];
+        const negativeFeedback = ["Leider falsch!", "Noch nicht richtig!", "Versuch es noch einmal!", "Nicht ganz richtig!", "Schade!", "Falsch!"];
+
+        function speakGerman(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'de-DE';
+                utterance.rate = 0.9;
+                utterance.volume = 0.9;
+                const voices = speechSynthesis.getVoices();
+                const deVoice = voices.find(v => v.lang.startsWith('de-'));
+                if (deVoice) utterance.voice = deVoice;
+                speechSynthesis.cancel();
+                speechSynthesis.speak(utterance);
+            }
+        }
+
+        function startApp() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById("start-screen").style.display = "none";
+            document.getElementById("end-screen").style.display = "none";
+            document.getElementById("quiz-ui").style.display = "block";
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (currentQuestion >= vocabData.length) {
+                showResult();
+                return;
+            }
+            const q = vocabData[currentQuestion];
+            const options = [...q.o];
+            const correctAnswer = q.a;
+            const shuffledOptions = shuffleArray(options);
+            const newCorrectIndex = shuffledOptions.indexOf(q.o[correctAnswer]);
+
+            document.getElementById("stat").textContent = `Frage ${currentQuestion + 1} von ${vocabData.length}`;
+            document.getElementById("w").textContent = q.w;
+            document.getElementById("i").textContent = q.f;
+            document.getElementById("e").innerHTML = q.e.replace(/______/g, "___");
+            document.getElementById("example-full").style.display = "none";
+
+            const optsDiv = document.getElementById("opts");
+            optsDiv.innerHTML = "";
+            shuffledOptions.forEach((opt, idx) => {
+                const btn = document.createElement("button");
+                btn.className = "opt-btn";
+                btn.textContent = opt;
+                btn.onclick = () => handleClick(idx, btn, q, newCorrectIndex);
+                optsDiv.appendChild(btn);
+            });
+
+            document.getElementById("feedback").textContent = "";
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function shuffleArray(array) {
+            const newArray = [...array];
+            for (let i = newArray.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+            }
+            return newArray;
+        }
+
+        function handleClick(selectedIdx, btn, q, correctIndex) {
+            const allBtns = document.querySelectorAll(".opt-btn");
+            allBtns.forEach(b => b.classList.remove("wrong", "correct", "highlight")); // Reset để chọn lại
+
+            if (selectedIdx === correctIndex) {
+                score++;
+                const msg = positiveFeedback[Math.floor(Math.random() * positiveFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#27ae60";
+                btn.classList.add("correct");
+                speakGerman("Richtig! " + q.f); // Phát âm rõ số ít + số nhiều
+                setTimeout(() => {
+                    document.getElementById("example-vn").textContent = q.vn;
+                    document.getElementById("example-full").style.display = "block";
+                    allBtns.forEach(b => b.disabled = true); // Khóa khi đúng
+                    document.getElementById("next-btn").style.display = "block";
+                }, 1800);
+            } else {
+                const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
+                document.getElementById("feedback").textContent = msg;
+                document.getElementById("feedback").style.color = "#e74c3c";
+                btn.classList.add("wrong");
+                allBtns[correctIndex].classList.add("highlight");
+                speakGerman("Falsch! Die richtige Antwort ist: " + q.f);
+                // KHÔNG disable để thử lại khi sai
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function showResult() {
+            document.getElementById("quiz-ui").style.display = "none";
+            document.getElementById("end-screen").style.display = "block";
+            const percent = Math.round((score / vocabData.length) * 100);
+            let comment = percent >= 85 ? "Ausgezeichnet! 🌟" : percent >= 70 ? "Sehr gut! 👍" : percent >= 50 ? "Gut – weiter üben! 💪" : "Nächstes Mal besser! 😊";
+            document.getElementById("score").innerHTML = `Du hast <strong>${score}/${vocabData.length}</strong> richtig!<br>(${percent} %)<br><br>${comment}`;
+        }
+
+        function restartQuiz() {
+            startApp();
+        }
+    </script>
+</body>
+</html>
