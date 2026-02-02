@@ -56,7 +56,23 @@
             border: none; border-radius: 14px; font-size: 1.15rem; font-weight: bold;
             cursor: pointer; margin-top: 12px;
         }
-        #feedback { font-size: 1.25rem; font-weight: bold; margin: 18px 0; min-height: 35px; }
+        #feedback { font-size: 1.25rem; font-weight: bold; margin: 18px 0 10px; min-height: 35px; }
+        #example-full { 
+            margin: 15px 0; 
+            padding: 15px; 
+            background: #f0fff0; 
+            border-radius: 12px; 
+            font-size: 1.05rem; 
+            text-align: left; 
+            display: none; 
+            border: 1px solid #c8e6c9;
+        }
+        #full-de { font-weight: bold; }
+        #example-vn { 
+            margin-top: 10px; 
+            color: #444; 
+            font-style: italic;
+        }
         #stat, #score { font-size: 0.95rem; color: #666; margin-bottom: 12px; }
         .correct { background: #e8f5e9 !important; border-color: #4caf50 !important; color: #1b5e20; }
         .wrong { background: #ffebee !important; border-color: #e53935 !important; color: #b71c1c; }
@@ -70,7 +86,7 @@
                 <div class="f-b"></div><div class="f-r"></div><div class="f-g"></div>
             </div>
             <h2>Lektion 5</h2>
-            <div class="subtitle">Yasmin / Hoo – In der Schule</div>
+            <div class="subtitle">Yasmin und Hoa – In der Schule</div>
             <button class="main-btn" onclick="startApp()">STARTEN</button>
         </div>
         <div id="quiz-ui" style="display:none">
@@ -80,6 +96,10 @@
             <div class="example-de" id="e"></div>
             <div id="opts"></div>
             <div id="feedback"></div>
+            <div id="example-full">
+                <strong>Câu đầy đủ:</strong> <span id="full-de"></span><br>
+                <span id="example-vn"></span>
+            </div>
             <button id="next-btn" class="main-btn" style="display:none" onclick="nextQuestion()">WEITER</button>
         </div>
         <div id="end-screen" style="display:none">
@@ -91,49 +111,49 @@
 
     <script>
         const vocabData = [
-            {w: "der Schokoriegel", f: "der Schokoriegel, die Schokoriegel", e: "Thien war frech und hatte Schokolade und ______.", o: ["Thanh sô-cô-la", "Kẹo dẻo", "Bánh quy", "Kẹo cao su"], a: 0},
-            {w: "frech", f: "frech", e: "Thien war ______ und hatte Schokolade und Bonbons.", o: ["Hỗn láo / nghịch ngợm", "Nghe lời", "Nhút nhát", "Vui vẻ"], a: 0},
-            {w: "die Note", f: "die Note, die Noten", e: "Thien hatte eine schlechte ______ in Mathe.", o: ["Điểm số", "Bài kiểm tra", "Sách vở", "Giáo viên"], a: 0},
-            {w: "die Mathematik / Mathe", f: "die Mathematik / Mathe (Sg.)", e: "Das ist ______ egal.", o: ["Toán học", "Văn học", "Âm nhạc", "Thể dục"], a: 0},
-            {w: "egal", f: "egal", e: "Das ist mir ______.", o: ["Không quan trọng", "Rất quan trọng", "Thú vị", "Khó khăn"], a: 0},
-            {w: "die Broschüre", f: "die Broschüre, die Broschüren", e: "Yasmin hat die Eltern______ auf der Schulwebseite schon heruntergeladen.", o: ["Tài liệu giới thiệu", "Sách giáo khoa", "Bài kiểm tra", "Lịch học"], a: 0},
-            {w: "die Webseite", f: "die Webseite, die Webseiten", e: "Yasmin kann die Hausaufgaben nicht kontrollieren, weil sie so viel muss.", o: ["Trang web", "Email", "Tài liệu giấy", "Sổ tay"], a: 0},
-            {w: "kontrollieren", f: "kontrollieren, hat kontrolliert", e: "Yasmin kann die Hausaufgaben nicht ______.", o: ["Kiểm tra / kiểm soát", "Làm bài", "Viết", "Đọc"], a: 0},
-            {w: "die Süßigkeiten", f: "die Süßigkeiten (Pl.)", e: "______ sind in der Pause erlaubt.", o: ["Kẹo bánh / đồ ngọt", "Trái cây", "Nước uống", "Bánh mì"], a: 0},
-            {w: "musikalisch", f: "musikalisch", e: "Thien ist sehr intelligent und ______.", o: ["Có năng khiếu âm nhạc", "Thông minh", "Vui tính", "Mạnh mẽ"], a: 0},
-            {w: "zurzeit", f: "zurzeit", e: "Thien ist ______ in Vietnam beim Vater.", o: ["Hiện tại / lúc này", "Trước đây", "Sau này", "Luôn luôn"], a: 0},
-            {w: "deshalb", f: "deshalb", e: "______ ist Thien nun oft allein zu Hause.", o: ["Vì vậy / do đó", "Tuy nhiên", "Mặc dù", "Và"], a: 0},
-            {w: "das Instrument", f: "das Instrument, die Instrumente", e: "Deshalb spiele ich kein ______.", o: ["Nhạc cụ", "Môn thể thao", "Môn học", "Trò chơi"], a: 0},
-            {w: "das Fach", f: "das Fach, die Fächer", e: "Musik ist Thiens Lieblings______.", o: ["Môn học", "Phòng học", "Sách vở", "Giáo viên"], a: 0},
-            {w: "die Region", f: "die Region, die Regionen", e: "Ich finde Länder und ______ interessant.", o: ["Vùng / khu vực", "Thành phố", "Quốc gia", "Làng quê"], a: 0},
-            {w: "die Geografie", f: "die Geografie (Sg.)", e: "Deshalb ist ______ mein Lieblingsfach.", o: ["Địa lý", "Lịch sử", "Toán học", "Văn học"], a: 0},
-            {w: "die Kunst", f: "die Kunst (Sg.)", e: "______ war mein Lieblingsfach.", o: ["Mỹ thuật / nghệ thuật", "Âm nhạc", "Thể dục", "Sinh học"], a: 0},
-            {w: "die Physik", f: "die Physik (Sg.)", e: "______ war mein Lieblingsfach.", o: ["Vật lý", "Hóa học", "Sinh học", "Địa lý"], a: 0},
-            {w: "die Chemie", f: "die Chemie (Sg.)", e: "______ war mein Lieblingsfach.", o: ["Hóa học", "Vật lý", "Sinh học", "Lịch sử"], a: 0},
-            {w: "die Biologie", f: "die Biologie (Sg.)", e: "______ war mein Lieblingsfach.", o: ["Sinh học", "Hóa học", "Vật lý", "Địa lý"], a: 0},
-            {w: "die Geschichte", f: "die Geschichte (Sg.)", e: "______ war mein Lieblingsfach.", o: ["Lịch sử", "Địa lý", "Mỹ thuật", "Âm nhạc"], a: 0},
-            {w: "die Sozialkunde", f: "die Sozialkunde (Sg.)", e: "______ war mein Lieblingsfach.", o: ["Giáo dục công dân", "Toán học", "Văn học", "Thể dục"], a: 0},
-            {w: "weg", f: "weg", e: "Entschuldigung, ich muss jetzt ______.", o: ["Đi khỏi / rời đi", "Ở lại", "Ngồi xuống", "Chạy"], a: 0},
-            {w: "wenigstens", f: "wenigstens", e: "Ist euer Lehrer ______ nett?", o: ["Ít nhất", "Nhiều nhất", "Không hề", "Chỉ có"], a: 0},
-            {w: "alles", f: "alles", e: "Hier bei uns ist ______ ganz normal.", o: ["Mọi thứ", "Không gì", "Một ít", "Nhiều"], a: 0},
-            {w: "die Sendung", f: "die Sendung, die Sendungen", e: "Für unsere ______ „So war das“ brauchen wir eure Hilfe.", o: ["Chương trình phát sóng", "Bài hát", "Phim", "Sách"], a: 0},
-            {w: "das Thema", f: "das Thema, die Themen", e: "Unser ______ ist diesmal: So war das ...", o: ["Chủ đề", "Tiêu đề", "Câu chuyện", "Hình ảnh"], a: 0},
-            {w: "diesmal", f: "diesmal", e: "Unser Thema ist ______: So war das ...", o: ["Lần này", "Lần trước", "Lần sau", "Mọi lúc"], a: 0},
-            {w: "senden", f: "senden, hat gesendet", e: "Dann füllt gleich unseren Fragebogen aus und sendet ihn an uns ______.", o: ["Gửi", "Nhận", "Viết", "Đọc"], a: 0},
-            {w: "das Radio", f: "das Radio, die Radios", e: "Im ______ höre ich gern die Sendung „So war das“.", o: ["Radio", "TV", "Máy tính", "Điện thoại"], a: 0},
-            {w: "streng", f: "streng", e: "Ist ihr Englischlehrer ______?", o: ["Nghiêm khắc", "Dễ tính", "Vui vẻ", "Thân thiện"], a: 0},
-            {w: "spannend", f: "spannend", e: "Unser Studium ist echt ______.", o: ["Hấp dẫn / thú vị", "Nhàm chán", "Khó khăn", "Dễ dàng"], a: 0},
-            {w: "ähnlich", f: "ähnlich", e: "Unsere Schulwege waren sehr ______.", o: ["Giống nhau", "Khác nhau", "Dài", "Ngắn"], a: 0},
-            {w: "unterschiedlich", f: "unterschiedlich", e: "Unsere Lehrer waren sehr ______.", o: ["Khác nhau", "Giống nhau", "Tốt", "Xấu"], a: 0},
-            {w: "schimpfen", f: "schimpfen, hat geschimpft", e: "Sie hat immer ______.", o: ["Mắng / quát", "Khen", "Cười", "Khóc"], a: 0},
-            {w: "die Grundschule", f: "die Grundschule, die Grundschulen", e: "______ am Laurinsplatz.", o: ["Trường tiểu học", "Trường trung học", "Trường đại học", "Nhà trẻ"], a: 0},
-            {w: "der Elternabend", f: "der Elternabend, die Elternabende", e: "______ sind sehr wichtig.", o: ["Buổi họp phụ huynh", "Buổi học thêm", "Buổi ngoại khóa", "Buổi thi"], a: 0},
-            {w: "das Projekt", f: "das Projekt, die Projekte", e: "Was sind unsere Schul______?", o: ["Dự án / đồ án", "Bài kiểm tra", "Sách vở", "Giáo viên"], a: 0},
-            {w: "die Klassenfahrt", f: "die Klassenfahrt, die Klassenfahrten", e: "Wann sind unsere Wandertage oder ______?", o: ["Chuyến đi lớp", "Buổi họp", "Giờ học", "Kỳ thi"], a: 0},
-            {w: "die Grippe", f: "die Grippe (Sg.)", e: "Hat Ihr Kind Fieber oder eine ______?", o: ["Cúm", "Cảm lạnh", "Đau đầu", "Đau bụng"], a: 0},
-            {w: "das Sekretariat", f: "das Sekretariat, die Sekretariate", e: "Es muss im Schul______ krankgemeldet werden.", o: ["Phòng thư ký / văn phòng trường", "Phòng học", "Thư viện", "Căng tin"], a: 0},
-            {w: "sich krankmelden", f: "sich krankmelden, hat sich krankgemeldet", e: "Hat Ihr Kind Fieber oder eine Grippe? Es muss im Sekretariat ______.", o: ["Báo nghỉ ốm", "Báo điểm danh", "Báo muộn", "Báo về sớm"], a: 0},
-            {w: "mindestens", f: "mindestens", e: "Es muss ______ 24 Stunden lang ohne Fieber sein.", o: ["Ít nhất", "Nhiều nhất", "Chính xác", "Khoảng"], a: 0}
+            {w: "das Bonbon", f: "das Bonbon, die Bonbons", e: "Aber er will Schokolade und ______ .", full: "Aber er will Schokolade und Bonbons.", vn: "Mà cậu ấy muốn sô-cô-la với kẹo.", o: ["kẹo", "sô-cô-la", "bánh quy", "kem"], a: 0},
+            {w: "frech", f: "frech", e: "Thien war ______ und hatte eine schlechte Note in Mathe.", full: "Thien war frech und hatte eine schlechte Note in Mathe.", vn: "Thien nghịch ngợm và bị điểm kém môn Toán.", o: ["nghịch ngợm", "ngoan ngoãn", "nhút nhát", "chăm chỉ"], a: 0},
+            {w: "die Note", f: "die Note, die Noten", e: "Thien hatte eine schlechte ______ in Mathe.", full: "Thien hatte eine schlechte Note in Mathe.", vn: "Thien bị điểm kém môn Toán.", o: ["điểm số", "bài kiểm tra", "cô giáo", "trường học"], a: 0},
+            {w: "die Mathematik / Mathe", f: "die Mathematik / Mathe (Sg.)", e: "Das ist mir ______ .", full: "Das ist mir egal.", vn: "Kệ nó đi / Tôi không quan tâm đâu.", o: ["kệ nó đi", "quan trọng", "thú vị", "khó khăn"], a: 0},
+            {w: "egal", f: "egal", e: "Das ist mir ______ .", full: "Das ist mir egal.", vn: "Kệ nó đi / Tôi thấy bình thường thôi.", o: ["kệ nó đi", "quan trọng", "khó chịu", "thích thú"], a: 0},
+            {w: "die Broschüre", f: "die Broschüre, die Broschüren", e: "Yasmin hat die Eltern______ auf der Schulwebseite schon heruntergeladen.", full: "Yasmin hat die Elternbroschüre auf der Schulwebseite schon heruntergeladen.", vn: "Yasmin tải tài liệu cho phụ huynh trên trang web trường về rồi.", o: ["tài liệu giới thiệu", "bài báo", "bức thư", "tờ rơi"], a: 0},
+            {w: "die Webseite", f: "die Webseite, die Webseiten", e: "Yasmin hat die Elternbroschüre auf der Schul______ schon heruntergeladen.", full: "Yasmin hat die Elternbroschüre auf der Schulwebseite schon heruntergeladen.", vn: "Yasmin tải tài liệu cho phụ huynh trên trang web trường về rồi.", o: ["trang web", "email", "ứng dụng", "tệp tin"], a: 0},
+            {w: "kontrollieren", f: "kontrollieren, hat kontrolliert", e: "Yasmin kann die Hausaufgaben nicht ______ .", full: "Yasmin kann die Hausaufgaben nicht kontrollieren.", vn: "Yasmin không kiểm tra bài tập về nhà được.", o: ["kiểm tra", "làm", "viết", "đọc"], a: 0},
+            {w: "die Süßigkeiten", f: "die Süßigkeiten (Pl.)", e: "______ sind in der Pause erlaubt.", full: "Süßigkeiten sind in der Pause erlaubt.", vn: "Ăn kẹo bánh trong giờ ra chơi được.", o: ["kẹo bánh", "trái cây", "nước uống", "bánh mì"], a: 0},
+            {w: "musikalisch", f: "musikalisch", e: "Thien ist sehr intelligent und ______ .", full: "Thien ist sehr intelligent und musikalisch.", vn: "Thien thông minh lắm và có khiếu âm nhạc.", o: ["có khiếu âm nhạc", "giỏi thể thao", "yên tĩnh", "ồn ào"], a: 0},
+            {w: "zurzeit", f: "zurzeit", e: "Thien ist ______ in Vietnam beim Vater.", full: "Thien ist zurzeit in Vietnam beim Vater.", vn: "Bây giờ Thien đang ở Việt Nam với bố.", o: ["bây giờ", "trước kia", "sau này", "luôn luôn"], a: 0},
+            {w: "deshalb", f: "deshalb", e: "______ ist Thien nun oft allein zu Hause.", full: "Deshalb ist Thien nun oft allein zu Hause.", vn: "Nên giờ Thien hay ở nhà một mình.", o: ["nên", "tuy nhiên", "mặc dù", "và"], a: 0},
+            {w: "das Instrument", f: "das Instrument, die Instrumente", e: "Deshalb spiele ich kein ______ .", full: "Deshalb spiele ich kein Instrument.", vn: "Vì vậy tôi không chơi nhạc cụ.", o: ["nhạc cụ", "môn học", "trò chơi", "sách vở"], a: 0},
+            {w: "das Fach", f: "das Fach, die Fächer", e: "Musik ist Thiens Lieblings______ .", full: "Musik ist Thiens Lieblingsfach.", vn: "Âm nhạc là môn yêu thích của Thien.", o: ["môn học", "phòng học", "giáo viên", "sách vở"], a: 0},
+            {w: "die Region", f: "die Region, die Regionen", e: "Ich finde Länder und ______ interessant.", full: "Ich finde Länder und Regionen interessant.", vn: "Tôi thấy các nước và vùng miền thú vị lắm.", o: ["vùng miền", "thành phố", "quốc gia", "làng quê"], a: 0},
+            {w: "die Geografie", f: "die Geografie (Sg.)", e: "Deshalb ist ______ mein Lieblingsfach.", full: "Deshalb ist Geografie mein Lieblingsfach.", vn: "Nên Địa lý là môn yêu thích của tôi.", o: ["Địa lý", "Lịch sử", "Toán", "Mỹ thuật"], a: 0},
+            {w: "die Kunst", f: "die Kunst (Sg.)", e: "______ war mein Lieblingsfach.", full: "Kunst war mein Lieblingsfach.", vn: "Mỹ thuật là môn yêu thích của tôi ngày xưa.", o: ["Mỹ thuật", "Âm nhạc", "Thể dục", "Sinh học"], a: 0},
+            {w: "die Physik", f: "die Physik (Sg.)", e: "______ war mein Lieblingsfach.", full: "Physik war mein Lieblingsfach.", vn: "Vật lý là môn yêu thích của tôi ngày xưa.", o: ["Vật lý", "Hóa học", "Sinh học", "Địa lý"], a: 0},
+            {w: "die Chemie", f: "die Chemie (Sg.)", e: "______ war mein Lieblingsfach.", full: "Chemie war mein Lieblingsfach.", vn: "Hóa học là môn yêu thích của tôi ngày xưa.", o: ["Hóa học", "Vật lý", "Sinh học", "Lịch sử"], a: 0},
+            {w: "die Biologie", f: "die Biologie (Sg.)", e: "______ war mein Lieblingsfach.", full: "Biologie war mein Lieblingsfach.", vn: "Sinh học là môn yêu thích của tôi ngày xưa.", o: ["Sinh học", "Hóa học", "Vật lý", "Địa lý"], a: 0},
+            {w: "die Geschichte", f: "die Geschichte (Sg.)", e: "______ war mein Lieblingsfach.", full: "Geschichte war mein Lieblingsfach.", vn: "Lịch sử là môn yêu thích của tôi ngày xưa.", o: ["Lịch sử", "Địa lý", "Mỹ thuật", "Âm nhạc"], a: 0},
+            {w: "die Sozialkunde", f: "die Sozialkunde (Sg.)", e: "______ war mein Lieblingsfach.", full: "Sozialkunde war mein Lieblingsfach.", vn: "Giáo dục công dân là môn yêu thích của tôi ngày xưa.", o: ["Giáo dục công dân", "Toán", "Đức ngữ", "Thể dục"], a: 0},
+            {w: "weg", f: "weg", e: "Entschuldigung, ich muss jetzt ______ .", full: "Entschuldigung, ich muss jetzt weg.", vn: "Xin lỗi nhé, tôi phải đi bây giờ.", o: ["đi", "ở lại", "ngồi xuống", "chạy"], a: 0},
+            {w: "wenigstens", f: "wenigstens", e: "Ist euer Lehrer ______ nett?", full: "Ist euer Lehrer wenigstens nett?", vn: "Thầy cô của các bạn ít nhất là tốt bụng chứ?", o: ["ít nhất", "nhiều nhất", "hoàn toàn không", "rất"], a: 0},
+            {w: "alles", f: "alles", e: "Hier bei uns ist ______ ganz normal.", full: "Hier bei uns ist alles ganz normal.", vn: "Ở chỗ tụi mình thì mọi thứ đều bình thường hết.", o: ["mọi thứ", "không gì cả", "một ít", "nhiều"], a: 0},
+            {w: "die Sendung", f: "die Sendung, die Sendungen", e: "Für unsere ______ „So war das“ brauchen wir eure Hilfe.", full: "Für unsere Sendung „So war das“ brauchen wir eure Hilfe.", vn: "Chúng tôi cần sự giúp đỡ của các bạn cho chương trình “So war das”.", o: ["chương trình", "bài hát", "phim", "sách"], a: 0},
+            {w: "das Thema", f: "das Thema, die Themen", e: "Unser ______ ist diesmal: So war das …", full: "Unser Thema ist diesmal: So war das …", vn: "Chủ đề lần này của chúng tôi là: So war das …", o: ["chủ đề", "tiêu đề", "câu chuyện", "hình ảnh"], a: 0},
+            {w: "diesmal", f: "diesmal", e: "Unser Thema ist ______ : So war das …", full: "Unser Thema ist diesmal: So war das …", vn: "Chủ đề lần này của chúng tôi là: So war das …", o: ["lần này", "lần trước", "lần sau", "luôn luôn"], a: 0},
+            {w: "senden", f: "senden, hat gesendet", e: "Dann füllt gleich unseren Fragebogen aus und sendet ihn an uns ______ .", full: "Dann füllt gleich unseren Fragebogen aus und sendet ihn an uns zurück.", vn: "Sau đó điền ngay bảng câu hỏi và gửi lại cho chúng tôi.", o: ["gửi lại", "gửi đi", "gửi đến", "gửi về"], a: 0},
+            {w: "das Radio", f: "das Radio, die Radios", e: "Im ______ höre ich gern die Sendung „So war das“.", full: "Im Radio höre ich gern die Sendung „So war das“.", vn: "Tôi thích nghe chương trình “So war das” trên radio.", o: ["radio", "tivi", "máy tính", "điện thoại"], a: 0},
+            {w: "streng", f: "streng", e: "Ist ihr Englischlehrer ______ ?", full: "Ist ihr Englischlehrer streng?", vn: "Thầy giáo tiếng Anh của các bạn nghiêm khắc lắm hả?", o: ["nghiêm khắc", "dễ tính", "vui tính", "thân thiện"], a: 0},
+            {w: "spannend", f: "spannend", e: "Unser Studium ist echt ______ .", full: "Unser Studium ist echt spannend.", vn: "Việc học của tụi mình thú vị thật đấy.", o: ["thú vị", "nhàm chán", "dễ", "khó"], a: 0},
+            {w: "ähnlich", f: "ähnlich", e: "Unsere Schulwege waren sehr ______ .", full: "Unsere Schulwege waren sehr ähnlich.", vn: "Đường đi học của tụi mình giống nhau lắm.", o: ["giống nhau", "khác nhau", "dài", "ngắn"], a: 0},
+            {w: "unterschiedlich", f: "unterschiedlich", e: "Unsere Lehrer waren sehr ______ .", full: "Unsere Lehrer waren sehr unterschiedlich.", vn: "Các thầy cô của tụi mình khác nhau kinh khủng.", o: ["khác nhau", "giống nhau", "tốt", "xấu"], a: 0},
+            {w: "schimpfen", f: "schimpfen, hat geschimpft", e: "Sie hat immer ______ .", full: "Sie hat immer geschimpft.", vn: "Cô ấy lúc nào cũng mắng mỏ.", o: ["mắng mỏ", "khen ngợi", "cười", "khóc"], a: 0},
+            {w: "die Grundschule", f: "die Grundschule, die Grundschulen", e: "______ am Laurinsplatz.", full: "Grundschule am Laurinsplatz.", vn: "Trường tiểu học ở Laurinsplatz.", o: ["trường tiểu học", "trường trung học", "trường đại học", "nhà trẻ"], a: 0},
+            {w: "der Elternabend", f: "der Elternabend, die Elternabende", e: "______ sind sehr wichtig.", full: "Elternabende sind sehr wichtig.", vn: "Buổi họp phụ huynh rất quan trọng.", o: ["buổi họp phụ huynh", "buổi học thêm", "buổi ngoại khóa", "buổi thi"], a: 0},
+            {w: "das Projekt", f: "das Projekt, die Projekte", e: "Was sind unsere Schul______ ?", full: "Was sind unsere Schulprojekte?", vn: "Các dự án trường học của tụi mình là gì?", o: ["dự án", "điểm số", "giáo viên", "sách vở"], a: 0},
+            {w: "die Klassenfahrt", f: "die Klassenfahrt, die Klassenfahrten", e: "Wann sind unsere Wandertage oder ______ ?", full: "Wann sind unsere Wandertage oder Klassenfahrten?", vn: "Ngày đi dã ngoại hoặc chuyến đi lớp của tụi mình là khi nào?", o: ["chuyến đi lớp", "buổi họp", "giờ học", "kỳ thi"], a: 0},
+            {w: "die Grippe", f: "die Grippe (Sg.)", e: "Hat Ihr Kind Fieber oder eine ______ ?", full: "Hat Ihr Kind Fieber oder eine Grippe?", vn: "Con bạn bị sốt hay bị cúm vậy?", o: ["cúm", "cảm lạnh", "đau đầu", "đau bụng"], a: 0},
+            {w: "das Sekretariat", f: "das Sekretariat, die Sekretariate", e: "Es muss im Schul______ krankgemeldet werden.", full: "Es muss im Schulsekretariat krankgemeldet werden.", vn: "Phải báo nghỉ ốm ở văn phòng trường.", o: ["văn phòng trường", "phòng học", "thư viện", "căng tin"], a: 0},
+            {w: "sich krankmelden", f: "sich krankmelden, hat sich krankgemeldet", e: "Hat Ihr Kind Fieber oder eine Grippe? Es muss im Sekretariat ______ .", full: "Hat Ihr Kind Fieber oder eine Grippe? Es muss im Sekretariat krankgemeldet werden.", vn: "Con bạn bị sốt hay bị cúm? Phải báo nghỉ ốm ở văn phòng trường.", o: ["báo nghỉ ốm", "báo điểm danh", "báo muộn", "báo về sớm"], a: 0},
+            {w: "mindestens", f: "mindestens", e: "Es muss ______ 24 Stunden lang ohne Fieber sein.", full: "Es muss mindestens 24 Stunden lang ohne Fieber sein.", vn: "Phải ít nhất 24 tiếng không sốt.", o: ["ít nhất", "nhiều nhất", "chính xác", "khoảng"], a: 0}
         ];
 
         let currentQuestion = 0;
@@ -180,6 +200,7 @@
             document.getElementById("w").textContent = q.w;
             document.getElementById("i").textContent = q.f;
             document.getElementById("e").innerHTML = q.e.replace(/______/g, "___");
+            document.getElementById("example-full").style.display = "none";
 
             const optsDiv = document.getElementById("opts");
             optsDiv.innerHTML = "";
@@ -218,7 +239,10 @@
                 btn.classList.add("correct");
                 speakGerman("Richtig!");
                 setTimeout(() => {
-                    speakGerman(q.f);  // Jetzt korrekt: nur Sg. oder nur Pl. – keine Verdopplung
+                    speakGerman(q.f);
+                    document.getElementById("full-de").textContent = q.full;
+                    document.getElementById("example-vn").textContent = q.vn;
+                    document.getElementById("example-full").style.display = "block";
                 }, 1800);
             } else {
                 const msg = negativeFeedback[Math.floor(Math.random() * negativeFeedback.length)];
